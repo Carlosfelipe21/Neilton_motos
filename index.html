@@ -1423,11 +1423,14 @@ body.store-closed .closed-hero-banner { display: block; }
 
 <script>
 (function(){
+  let clockInterval = null;
   function tickClock(){
+    const el = document.getElementById('hudClock');
+    if (!el) { clearInterval(clockInterval); return; }
     const n=new Date(), pad=x=>String(x).padStart(2,'0');
-    document.getElementById('hudClock').textContent=pad(n.getHours())+':'+pad(n.getMinutes())+':'+pad(n.getSeconds());
+    el.textContent=pad(n.getHours())+':'+pad(n.getMinutes())+':'+pad(n.getSeconds());
   }
-  tickClock(); setInterval(tickClock,1000);
+  tickClock(); clockInterval = setInterval(tickClock,1000);
 
   const canvas=document.getElementById('entradaCanvas');
   const ctx=canvas.getContext('2d');
