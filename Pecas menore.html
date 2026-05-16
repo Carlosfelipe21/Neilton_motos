@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Peças Menores – Neilton Motos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+/* ============ VARIABLES & RESET ============ */
+:root {
+  --red:        #CC0000;
+  --red-hot:    #FF1A1A;
+  --red-glow:   #FF000066;
+  --wine:       #6B0000;
+  --wine-deep:  #3D0000;
+  --black:      #080808;
+  --black-card: #111111;
+  --black-mid:  #1A1A1A;
+  --black-3:    #222222;
+  --white:      #F5F5F5;
+  --white-dim:  #AAAAAA;
+  --chrome:     #C0C0C0;
+  --chrome-dim: #888888;
+  --gold:       #FFB800;
+  --green:      #00CC66;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-ui:      'Rajdhani', sans-serif;
+  --font-tech:    'Orbitron', sans-serif;
+
+  --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+  --glow-red: 0 0 18px #CC000088, 0 0 40px #CC000033;
+  --shadow-card: 0 8px 32px rgba(0,0,0,0.6);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+/* Noise overlay */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.35;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+/* ============ HERO / INTRO CINEMATIC ============ */
+#intro-screen {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  animation: introExit 0.7s ease-in 3.5s forwards;
+}
+
+@keyframes introExit {
+  to { opacity: 0; pointer-events: none; }
+}
+
+.intro-lines {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.intro-line {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+  animation: lineSlide 2s ease-out forwards;
+  opacity: 0;
+}
+
+.intro-line:nth-child(1) { top: 20%; width: 60%; left: -60%; animation-delay: 0.1s; }
+.intro-line:nth-child(2) { top: 40%; width: 80%; left: -80%; animation-delay: 0.3s; }
+.intro-line:nth-child(3) { top: 60%; width: 70%; left: -70%; animation-delay: 0.2s; }
+.intro-line:nth-child(4) { top: 80%; width: 50%; left: -50%; animation-delay: 0.4s; }
+.intro-line:nth-child(5) { top: 30%; width: 90%; right: -90%; left:auto; animation-delay: 0.15s; animation-direction: reverse;}
+.intro-line:nth-child(6) { top: 70%; width: 65%; right: -65%; left:auto; animation-delay: 0.35s; animation-direction: reverse;}
+
+@keyframes lineSlide {
+  0%  { opacity: 0; transform: translateX(0); }
+  20% { opacity: 1; }
+  100%{ opacity: 0.3; transform: translateX(200%); }
+}
+
+.intro-corner {
+  position: absolute;
+  width: 80px; height: 80px;
+  border-color: var(--red);
+  border-style: solid;
+  opacity: 0;
+  animation: cornerReveal 0.5s ease-out 0.6s forwards;
+}
+.intro-corner.tl { top: 40px; left: 40px; border-width: 2px 0 0 2px; }
+.intro-corner.tr { top: 40px; right: 40px; border-width: 2px 2px 0 0; }
+.intro-corner.bl { bottom: 40px; left: 40px; border-width: 0 0 2px 2px; }
+.intro-corner.br { bottom: 40px; right: 40px; border-width: 0 2px 2px 0; }
+
+@keyframes cornerReveal {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.intro-badge {
+  font-family: var(--font-tech);
+  font-size: 0.6rem;
+  letter-spacing: 6px;
+  color: var(--chrome-dim);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease-out 0.8s forwards;
+}
+
+.intro-title {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 12vw, 9rem);
+  line-height: 0.9;
+  text-align: center;
+  letter-spacing: 4px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease-out 1s forwards;
+}
+
+.intro-title .line1 { color: var(--white); display: block; }
+.intro-title .line2 { color: var(--red-hot); display: block; text-shadow: var(--glow-red); }
+
+.intro-sub {
+  font-family: var(--font-ui);
+  font-size: clamp(0.85rem, 2.5vw, 1.1rem);
+  color: var(--white-dim);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 16px;
+  opacity: 0;
+  animation: fadeUp 0.6s ease-out 1.4s forwards;
+}
+
+.intro-bar {
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--wine), var(--red-hot));
+  margin-top: 28px;
+  animation: barGrow 1.2s ease-out 1.8s forwards;
+  box-shadow: var(--glow-red);
+}
+
+@keyframes barGrow { to { width: min(400px, 70vw); } }
+
+.intro-pct {
+  font-family: var(--font-tech);
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  color: var(--red);
+  margin-top: 14px;
+  opacity: 0;
+  animation: fadeUp 0.5s ease-out 2s forwards, countUp 1.2s ease-out 2s forwards;
+}
+
+@keyframes countUp {
+  from { --n: 0; }
+  to   { --n: 100; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============ MAIN CONTENT ============ */
+#main-content {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out 4.1s forwards;
+}
+
+@keyframes fadeIn { to { opacity: 1; } }
+
+/* ============ TOP BAR ============ */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  background: rgba(8,8,8,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #CC000033;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.btn-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-tech);
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  color: var(--white-dim);
+  padding: 8px 14px;
+  border: 1px solid #CC000044;
+  border-radius: 4px;
+  transition: all var(--transition);
+}
+.btn-back:hover {
+  color: var(--white);
+  border-color: var(--red);
+  background: #CC000015;
+  box-shadow: var(--glow-red);
+}
+.btn-back svg { width: 14px; height: 14px; }
+
+.topbar-brand {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+  color: var(--red-hot);
+  text-shadow: 0 0 12px #CC0000AA;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cart-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--white);
+  background: var(--wine);
+  border: 1px solid var(--red);
+  border-radius: 6px;
+  padding: 9px 18px;
+  transition: all var(--transition);
+}
+.cart-btn:hover {
+  background: var(--red);
+  box-shadow: var(--glow-red);
+  transform: translateY(-1px);
+}
+.cart-count {
+  position: absolute;
+  top: -8px; right: -8px;
+  background: var(--red-hot);
+  color: #fff;
+  font-family: var(--font-tech);
+  font-size: 0.6rem;
+  font-weight: 700;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--black);
+  transition: transform 0.2s;
+}
+.cart-count.bump { animation: bump 0.3s ease-out; }
+@keyframes bump { 0%,100%{transform:scale(1)} 50%{transform:scale(1.4)} }
+
+/* ============ HERO SECTION ============ */
+.hero {
+  position: relative;
+  min-height: 340px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 60px 24px 48px;
+  background: linear-gradient(135deg, #0D0000 0%, #1A0000 50%, #0A0000 100%);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 80% at 80% 50%, #CC000022 0%, transparent 70%),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 40px,
+      #CC000008 40px,
+      #CC000008 41px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 40px,
+      #CC000008 40px,
+      #CC000008 41px
+    );
+}
+
+.hero-content {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-tech);
+  font-size: 0.6rem;
+  letter-spacing: 5px;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 2px;
+  background: var(--red);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7vw, 6rem);
+  line-height: 0.9;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+}
+.hero-title span { color: var(--red-hot); text-shadow: var(--glow-red); }
+
+.hero-desc {
+  font-size: 1rem;
+  color: var(--white-dim);
+  max-width: 500px;
+  letter-spacing: 0.5px;
+  margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+}
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--red-hot);
+  line-height: 1;
+}
+.stat-label {
+  font-family: var(--font-tech);
+  font-size: 0.5rem;
+  letter-spacing: 3px;
+  color: var(--chrome-dim);
+  text-transform: uppercase;
+}
+
+/* Decorative gear SVG */
+.hero-deco {
+  position: absolute;
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(380px, 50vw);
+  opacity: 0.06;
+  pointer-events: none;
+  animation: slowSpin 40s linear infinite;
+}
+@keyframes slowSpin { to { transform: translateY(-50%) rotate(360deg); } }
+
+/* ============ FILTER BAR ============ */
+.filter-bar {
+  background: var(--black-card);
+  border-bottom: 1px solid #CC000022;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.filter-bar::-webkit-scrollbar { display: none; }
+
+.filter-btn {
+  flex-shrink: 0;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--white-dim);
+  padding: 14px 18px;
+  border-bottom: 2px solid transparent;
+  transition: all var(--transition);
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+.filter-btn:hover { color: var(--white); }
+.filter-btn.active {
+  color: var(--red-hot);
+  border-bottom-color: var(--red-hot);
+  text-shadow: 0 0 8px #CC000066;
+}
+
+/* ============ PRODUCT GRID ============ */
+.store-wrap {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  margin-top: 12px;
+}
+.category-header:not(:first-of-type) { margin-top: 60px; }
+
+.cat-icon {
+  font-size: 1.6rem;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.cat-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 3px;
+  color: var(--white);
+}
+.cat-title span { color: var(--red-hot); }
+
+.cat-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #CC000044, transparent);
+}
+.cat-count {
+  font-family: var(--font-tech);
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  color: var(--chrome-dim);
+  border: 1px solid #CC000033;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* ============ PRODUCT CARD ============ */
+.product-card {
+  background: var(--black-card);
+  border: 1px solid #CC000022;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: all var(--transition);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.product-card:hover {
+  border-color: #CC000066;
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card), 0 0 30px #CC000022;
+}
+
+.product-card.esgotado {
+  opacity: 0.65;
+  filter: grayscale(0.4);
+}
+
+.product-card.esgotado:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.card-img-wrap {
+  position: relative;
+  height: 200px;
+  background: #0D0000;
+  overflow: hidden;
+}
+
+.card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.product-card:hover .card-img-wrap img { transform: scale(1.06); }
+
+.card-badge {
+  position: absolute;
+  top: 10px; left: 10px;
+  font-family: var(--font-tech);
+  font-size: 0.5rem;
+  letter-spacing: 2px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  text-transform: uppercase;
+}
+.card-badge.destaque {
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 0 10px #CC000077;
+}
+.card-badge.novo {
+  background: #FFB800;
+  color: #000;
+}
+
+.esgotado-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.esgotado-tag {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 4px;
+  color: #fff;
+  background: rgba(204,0,0,0.85);
+  padding: 8px 20px;
+  transform: rotate(-12deg);
+  border: 2px solid var(--red-hot);
+}
+
+.card-body {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-cat {
+  font-family: var(--font-tech);
+  font-size: 0.5rem;
+  letter-spacing: 3px;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.card-name {
+  font-family: var(--font-ui);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.card-desc {
+  font-size: 0.82rem;
+  color: var(--white-dim);
+  line-height: 1.5;
+  margin-bottom: 14px;
+  flex: 1;
+}
+
+.card-price {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--red-hot);
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+.card-price-range {
+  font-size: 0.78rem;
+  color: var(--chrome-dim);
+  font-family: var(--font-ui);
+  margin-bottom: 14px;
+}
+
+.btn-add {
+  width: 100%;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid var(--red);
+  color: var(--white);
+  background: transparent;
+  transition: all var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-add:hover:not(:disabled) {
+  background: var(--red);
+  box-shadow: var(--glow-red);
+  transform: translateY(-1px);
+}
+.btn-add:disabled {
+  border-color: #444;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.btn-add .icon { font-size: 1rem; }
+
+/* ============ CART PANEL ============ */
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  z-index: 800;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition);
+  backdrop-filter: blur(4px);
+}
+.cart-overlay.open { opacity: 1; pointer-events: all; }
+
+.cart-panel {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: min(460px, 100vw);
+  background: var(--black-card);
+  border-left: 1px solid #CC000044;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  overflow: hidden;
+}
+.cart-panel.open { transform: translateX(0); }
+
+.cart-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #CC000033;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #0D0000, #140000);
+}
+
+.cart-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 3px;
+  color: var(--red-hot);
+  text-shadow: 0 0 12px #CC000066;
+}
+
+.cart-close {
+  width: 36px; height: 36px;
+  border: 1px solid #CC000044;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white-dim);
+  font-size: 1.1rem;
+  transition: all var(--transition);
+}
+.cart-close:hover { border-color: var(--red); color: var(--red); background: #CC000015; }
+
+.cart-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cart-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--chrome-dim);
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.cart-empty-icon { font-size: 3rem; opacity: 0.3; }
+
+.cart-item {
+  background: var(--black-mid);
+  border: 1px solid #CC000022;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  animation: slideInRight 0.3s ease-out;
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.cart-item-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #CC000033;
+  flex-shrink: 0;
+}
+
+.cart-item-info { flex: 1; }
+.cart-item-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--white);
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+.cart-item-cat {
+  font-family: var(--font-tech);
+  font-size: 0.5rem;
+  letter-spacing: 2px;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.cart-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.qty-btn {
+  width: 26px; height: 26px;
+  border: 1px solid #CC000044;
+  border-radius: 4px;
+  color: var(--white-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: all var(--transition);
+}
+.qty-btn:hover { border-color: var(--red); color: var(--red); background: #CC000015; }
+.qty-display {
+  font-family: var(--font-tech);
+  font-size: 0.8rem;
+  color: var(--white);
+  min-width: 24px;
+  text-align: center;
+}
+
+.cart-item-price {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--red-hot);
+  flex-shrink: 0;
+}
+
+.btn-remove {
+  width: 28px; height: 28px;
+  border: 1px solid #44000033;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #664444;
+  font-size: 0.75rem;
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+.btn-remove:hover { border-color: #CC0000; color: var(--red-hot); background: #CC000015; }
+
+/* Cart footer */
+.cart-footer {
+  padding: 20px 24px;
+  border-top: 1px solid #CC000033;
+  flex-shrink: 0;
+  background: linear-gradient(180deg, #0D0000, #080808);
+}
+
+.cart-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.cart-total-label {
+  font-family: var(--font-tech);
+  font-size: 0.6rem;
+  letter-spacing: 3px;
+  color: var(--chrome-dim);
+  text-transform: uppercase;
+}
+.cart-total-val {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--red-hot);
+  text-shadow: 0 0 12px #CC000066;
+}
+
+.payment-section { margin-bottom: 16px; }
+.payment-label {
+  font-family: var(--font-tech);
+  font-size: 0.55rem;
+  letter-spacing: 3px;
+  color: var(--chrome-dim);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.payment-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.pay-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 6px;
+  border: 1px solid #CC000033;
+  border-radius: 6px;
+  color: var(--white-dim);
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all var(--transition);
+}
+.pay-btn:hover { border-color: #CC000066; color: var(--white); background: #CC000015; }
+.pay-btn.selected {
+  border-color: var(--red);
+  color: var(--white);
+  background: #CC000020;
+  box-shadow: 0 0 12px #CC000033;
+}
+.pay-icon { font-size: 1.3rem; }
+
+.btn-whatsapp {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #128C7E, #075E54);
+  border: 1px solid #25D366;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+  transition: all var(--transition);
+  box-shadow: 0 4px 16px rgba(18,140,126,0.3);
+}
+.btn-whatsapp:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37,211,102,0.4);
+  background: linear-gradient(135deg, #25D366, #128C7E);
+}
+.btn-whatsapp svg { width: 22px; height: 22px; }
+
+/* ============ FOOTER SECTION ============ */
+.page-footer {
+  position: relative;
+  background: linear-gradient(180deg, #0A0000, #000);
+  border-top: 1px solid #CC000044;
+  padding: 60px 24px 40px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.footer-bg-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 15vw, 12rem);
+  letter-spacing: 8px;
+  color: var(--red);
+  opacity: 0.03;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 4rem);
+  letter-spacing: 6px;
+  color: var(--red-hot);
+  text-shadow: var(--glow-red);
+  margin-bottom: 8px;
+}
+
+.footer-tagline {
+  font-family: var(--font-tech);
+  font-size: 0.6rem;
+  letter-spacing: 5px;
+  color: var(--chrome-dim);
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+
+.footer-divider {
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+  margin: 0 auto 32px;
+}
+
+/* Footer moto quote */
+.moto-quote {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 4vw, 2rem);
+  letter-spacing: 3px;
+  color: var(--white);
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+.moto-quote em {
+  font-style: normal;
+  color: var(--red-hot);
+  text-shadow: var(--glow-red);
+}
+
+.moto-sub {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--white-dim);
+  letter-spacing: 1px;
+  margin-bottom: 32px;
+}
+
+/* Skull icon */
+.footer-skull {
+  font-size: 3rem;
+  opacity: 0.15;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.btn-voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 36px;
+  background: transparent;
+  border: 2px solid var(--red);
+  border-radius: 4px;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 4px;
+  color: var(--white);
+  text-transform: uppercase;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.btn-voltar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--red);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+.btn-voltar:hover::before { transform: translateX(0); }
+.btn-voltar:hover { box-shadow: var(--glow-red); }
+
+.footer-copy {
+  margin-top: 32px;
+  font-family: var(--font-tech);
+  font-size: 0.5rem;
+  letter-spacing: 3px;
+  color: var(--chrome-dim);
+  text-transform: uppercase;
+}
+
+/* ============ REVEAL ANIMATION ============ */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+  .topbar { padding: 0 14px; height: 56px; }
+  .topbar-brand { display: none; }
+  .hero { padding: 40px 16px 32px; min-height: 280px; }
+  .hero-deco { display: none; }
+  .hero-stats { gap: 20px; }
+  .store-wrap { padding: 28px 14px; }
+  .products-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .card-img-wrap { height: 150px; }
+  .card-body { padding: 12px; }
+  .filter-bar { padding: 0 14px; }
+  .filter-btn { padding: 12px 12px; font-size: 0.75rem; }
+  .page-footer { padding: 40px 14px 32px; }
+}
+
+@media (max-width: 480px) {
+  .products-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .cart-panel { width: 100vw; }
+  .payment-options { grid-template-columns: repeat(3, 1fr); }
+  .hero-title { letter-spacing: 1px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ INTRO CINEMATIC ============ -->
+<div id="intro-screen">
+  <div class="intro-lines">
+    <div class="intro-line"></div>
+    <div class="intro-line"></div>
+    <div class="intro-line"></div>
+    <div class="intro-line"></div>
+    <div class="intro-line"></div>
+    <div class="intro-line"></div>
+  </div>
+  <div class="intro-corner tl"></div>
+  <div class="intro-corner tr"></div>
+  <div class="intro-corner bl"></div>
+  <div class="intro-corner br"></div>
+
+  <div class="intro-badge">NEILTON MOTOS · CATÁLOGO OFICIAL</div>
+  <div class="intro-title">
+    <span class="line1">PEÇAS</span>
+    <span class="line2">MENORES</span>
+  </div>
+  <div class="intro-sub">Retrovisores · Manetes · Piscas · Relação · Pedaleiras</div>
+  <div class="intro-bar"></div>
+  <div class="intro-pct" id="introPct">CARREGANDO...</div>
+</div>
+
+<!-- ============ MAIN ============ -->
+<div id="main-content">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <a href="index.html" class="btn-back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        VOLTAR
+      </a>
+      <div class="topbar-brand">NEILTON MOTOS</div>
+    </div>
+    <div class="topbar-right">
+      <button class="cart-btn" onclick="toggleCart()">
+        🛒 CARRINHO
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <svg class="hero-deco" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="100" r="95" fill="none" stroke="red" stroke-width="2"/>
+      <circle cx="100" cy="100" r="75" fill="none" stroke="red" stroke-width="1"/>
+      <circle cx="100" cy="100" r="55" fill="none" stroke="red" stroke-width="1.5"/>
+      <circle cx="100" cy="100" r="10" fill="red"/>
+      <g stroke="red" stroke-width="1.5">
+        <line x1="100" y1="5" x2="100" y2="25"/>
+        <line x1="100" y1="175" x2="100" y2="195"/>
+        <line x1="5" y1="100" x2="25" y2="100"/>
+        <line x1="175" y1="100" x2="195" y2="100"/>
+        <line x1="32" y1="32" x2="46" y2="46"/>
+        <line x1="154" y1="154" x2="168" y2="168"/>
+        <line x1="168" y1="32" x2="154" y2="46"/>
+        <line x1="46" y1="154" x2="32" y2="168"/>
+      </g>
+      <g stroke="red" stroke-width="0.8" opacity="0.5">
+        <line x1="100" y1="25" x2="100" y2="5" transform="rotate(22.5 100 100)"/>
+        <line x1="100" y1="25" x2="100" y2="5" transform="rotate(45 100 100)"/>
+        <line x1="100" y1="25" x2="100" y2="5" transform="rotate(67.5 100 100)"/>
+        <line x1="100" y1="25" x2="100" y2="5" transform="rotate(112.5 100 100)"/>
+        <line x1="100" y1="25" x2="100" y2="5" transform="rotate(135 100 100)"/>
+        <line x1="100" y1="25" x2="100" y2="5" transform="rotate(157.5 100 100)"/>
+        <line x1="100" y1="25" x2="100" y2="5" transform="rotate(202.5 100 100)"/>
+        <line x1="100" y1="25" x2="100" y2="5" transform="rotate(225 100 100)"/>
+        <line x1="100" y1="25" x2="100" y2="5" transform="rotate(247.5 100 100)"/>
+        <line x1="100" y1="25" x2="100" y2="5" transform="rotate(292.5 100 100)"/>
+        <line x1="100" y1="25" x2="100" y2="5" transform="rotate(315 100 100)"/>
+        <line x1="100" y1="25" x2="100" y2="5" transform="rotate(337.5 100 100)"/>
+      </g>
+    </svg>
+    <div class="hero-content">
+      <p class="hero-eyebrow">ESTOQUE DISPONÍVEL</p>
+      <h1 class="hero-title">PEÇAS<br><span>MENORES</span></h1>
+      <p class="hero-desc">Componentes de comando, acessórios de acabamento e transmissão para todas as marcas. Qualidade garantida, entrega rápida.</p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">25+</div>
+          <div class="stat-label">Produtos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">5</div>
+          <div class="stat-label">Categorias</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Garantido</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTER BAR -->
+  <nav class="filter-bar">
+    <button class="filter-btn active" onclick="filterCat('all', this)">TODOS</button>
+    <button class="filter-btn" onclick="filterCat('retrovisores', this)">🪞 RETROVISORES</button>
+    <button class="filter-btn" onclick="filterCat('manetes', this)">🤜 MANETES / MANOPLAS</button>
+    <button class="filter-btn" onclick="filterCat('piscas', this)">💡 PISCAS / SETAS</button>
+    <button class="filter-btn" onclick="filterCat('relacao', this)">⛓️ KIT RELAÇÃO</button>
+    <button class="filter-btn" onclick="filterCat('pedaleiras', this)">🦶 PEDALEIRAS</button>
+  </nav>
+
+  <!-- PRODUCTS -->
+  <div class="store-wrap" id="storeWrap">
+    <!-- Dynamically rendered by JS -->
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="page-footer">
+    <div class="footer-bg-text">MOTOS</div>
+    <div class="footer-logo">NEILTON MOTOS</div>
+    <div class="footer-tagline">Mecânica Especializada · Fortaleza – CE</div>
+    <div class="footer-divider"></div>
+    <span class="footer-skull">💀</span>
+    <div class="moto-quote">NASCIDO PARA <em>ACELERAR.</em><br>PARAR É OPCIONAL.</div>
+    <div class="moto-sub">Peças de confiança para pilotos de verdade.</div>
+    <a href="index.html" class="btn-voltar">
+      ← VOLTAR AO INÍCIO
+    </a>
+    <div class="footer-copy">© 2025 NEILTON MOTOS · RUA CANGURU, 281A · (85) 99673-9891</div>
+  </footer>
+
+</div><!-- /main-content -->
+
+<!-- CART OVERLAY + PANEL -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <div class="cart-title">🛒 CARRINHO</div>
+    <button class="cart-close" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items" id="cartItemsEl">
+    <div class="cart-empty">
+      <span class="cart-empty-icon">🛒</span>
+      Carrinho vazio
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-total-row">
+      <div class="cart-total-label">TOTAL DO PEDIDO</div>
+      <div class="cart-total-val" id="cartTotal">R$ 0,00</div>
+    </div>
+    <div class="payment-section">
+      <div class="payment-label">FORMA DE PAGAMENTO</div>
+      <div class="payment-options">
+        <button class="pay-btn" id="pay-cartao" onclick="selectPayment('Cartão')">
+          <span class="pay-icon">💳</span>CARTÃO
+        </button>
+        <button class="pay-btn" id="pay-pix" onclick="selectPayment('Pix')">
+          <span class="pay-icon">⚡</span>PIX
+        </button>
+        <button class="pay-btn" id="pay-dinheiro" onclick="selectPayment('Dinheiro')">
+          <span class="pay-icon">💵</span>DINHEIRO
+        </button>
+      </div>
+    </div>
+    <button class="btn-whatsapp" onclick="sendWhatsApp()">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      ENVIAR PEDIDO
+    </button>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   DATA — PRODUTOS
+   Para marcar como esgotado: esgotado: true
+   Para disponível: esgotado: false
+============================================================ */
+const PRODUTOS = [
+
+  /* ---- RETROVISORES ---- */
+  {
+    id: 1, cat: 'retrovisores', catLabel: 'RETROVISORES',
+    nome: 'Retrovisor KVS / GVS "Modelo BMW GS650"',
+    desc: 'Formato pentagonal, lente convexa e visual moderno. Adaptado para CG, Bros, Fazer e maioria das motos de baixa cilindrada.',
+    preco: 52.90, precoRange: 'R$ 35 – R$ 70 o par',
+    badge: 'destaque', badgeLabel: '🔥 MAIS VENDIDO',
+    esgotado: false,
+    img: 'https://images.tcdn.com.br/img/img_prod/756761/retrovisor_par_espelho_gvs_cg_fan_titan_biz_bros_nxr_2012_em_diante_espelho_plano_7282_1_99b28803f94adabca7d38ff02c24a6a7.jpg'
+  },
+  {
+    id: 2, cat: 'retrovisores', catLabel: 'RETROVISORES',
+    nome: 'Retrovisor Original Honda CG Titan/Fan',
+    desc: 'Espelho redondo ou oval tradicional. Ideal para quem quer manter o aspecto original de fábrica da moto.',
+    preco: 37.50, precoRange: 'R$ 25 – R$ 50 o par',
+    badge: null,
+    esgotado: false,
+    img: 'https://www.tirautoparts.com.br/wp-content/uploads/2021/02/Retrovisor-Honda-CG150-Titan.jpg'
+  },
+  {
+    id: 3, cat: 'retrovisores', catLabel: 'RETROVISORES',
+    nome: 'Retrovisor "Tomok" Esportivo Alumínio CNC',
+    desc: 'Fabricado em alumínio CNC com lentes azuladas anti-reflexo. Popular em motos naked como CB Twister, FZ25 e MT-03.',
+    preco: 95.00, precoRange: 'R$ 60 – R$ 130 o par',
+    badge: 'novo', badgeLabel: '✨ NOVO',
+    esgotado: false,
+    img: 'https://m.media-amazon.com/images/I/61VyqHC4ViL._AC_SL1001_.jpg'
+  },
+  {
+    id: 4, cat: 'retrovisores', catLabel: 'RETROVISORES',
+    nome: 'Retrovisor Ponta de Guidão (Round/Bar End)',
+    desc: 'Fixado nas extremidades do guidão. Muito popular para motos estilo Cafe Racer, Custom e visual urbano agressivo.',
+    preco: 67.50, precoRange: 'R$ 45 – R$ 90 o par',
+    badge: null,
+    esgotado: false,
+    img: 'https://m.media-amazon.com/images/I/51y5b8v+fFL._AC_SL1000_.jpg'
+  },
+  {
+    id: 5, cat: 'retrovisores', catLabel: 'RETROVISORES',
+    nome: 'Retrovisor Yamaha XT 660 Giro 360°',
+    desc: 'Haste sanfonada ou sistema de esfera que permite dobrar facilmente para rodar em corredores estreitos.',
+    preco: 60.00, precoRange: 'R$ 40 – R$ 80 o par',
+    badge: null,
+    esgotado: true,
+    img: 'https://images.tcdn.com.br/img/img_prod/756761/retrovisor_par_espelho_yamaha_xt_660_tenere_2008_2015_crom_6741_1_20221116145020.jpg'
+  },
+
+  /* ---- MANETES / MANOPLAS ---- */
+  {
+    id: 6, cat: 'manetes', catLabel: 'MANETES / MANOPLAS',
+    nome: 'Manete Esportivo Curto com Regulagem (Spencer/Stark)',
+    desc: 'Alumínio com 4 a 6 níveis de regulagem. Mais curtos para 2 ou 3 dedos. Alta estética e conforto no piloto.',
+    preco: 80.00, precoRange: 'R$ 50 – R$ 110 o par',
+    badge: 'destaque', badgeLabel: '🔥 MAIS VENDIDO',
+    esgotado: false,
+    img: 'https://m.media-amazon.com/images/I/61lFDW-YMVL._AC_SL1000_.jpg'
+  },
+  {
+    id: 7, cat: 'manetes', catLabel: 'MANETES / MANOPLAS',
+    nome: 'Manete Original Alumínio Injetado (Prata)',
+    desc: 'Peça básica de reposição rápida para embreagem e freio dianteiro. Compatibilidade universal.',
+    preco: 22.50, precoRange: 'R$ 15 – R$ 35 o par',
+    badge: null,
+    esgotado: false,
+    img: 'https://images.tcdn.com.br/img/img_prod/756761/manete_embreagem_aluminio_honda_cb300_2009_2016_manete_freio_2_pecas_2_cores_7350_1_07f8ad3f15e2d8ec8ce3c64785d8aea5.jpg'
+  },
+  {
+    id: 8, cat: 'manetes', catLabel: 'MANETES / MANOPLAS',
+    nome: 'Manopla "Cargo" / Diamond Circuit',
+    desc: 'Borracha com ranhuras quadradas. Favorita dos motoboys pela durabilidade extrema e aderência mesmo sob chuva.',
+    preco: 25.00, precoRange: 'R$ 15 – R$ 35 o par',
+    badge: null,
+    esgotado: false,
+    img: 'https://images.tcdn.com.br/img/img_prod/756761/manopla_moto_par_circuit_cargo_diagonal_borracha_preta_com_peso_8028_1_20210716094655.jpg'
+  },
+  {
+    id: 9, cat: 'manetes', catLabel: 'MANETES / MANOPLAS',
+    nome: 'Manopla Esportiva com Peso de Guidão Embutido',
+    desc: 'Mistura alumínio anodizado colorido com borracha macia. Peso na ponta reduz vibração do guidão.',
+    preco: 50.00, precoRange: 'R$ 30 – R$ 70 o par',
+    badge: 'novo', badgeLabel: '✨ NOVO',
+    esgotado: false,
+    img: 'https://m.media-amazon.com/images/I/61Mc4+TE2OL._AC_SL1000_.jpg'
+  },
+  {
+    id: 10, cat: 'manetes', catLabel: 'MANETES / MANOPLAS',
+    nome: 'Manopla Intermediária "Spider" Pro Tork / Scud',
+    desc: 'Design estilo teia de aranha com gel mais macio para diminuir o cansaço nas mãos em longas viagens.',
+    preco: 30.00, precoRange: 'R$ 20 – R$ 40 o par',
+    badge: null,
+    esgotado: true,
+    img: 'https://images.tcdn.com.br/img/img_prod/756761/manopla_moto_par_pro_tork_spider_borracha_preta_6988_1_20210716094655.jpg'
+  },
+
+  /* ---- PISCAS / SETAS ---- */
+  {
+    id: 11, cat: 'piscas', catLabel: 'PISCAS / SETAS',
+    nome: 'Seta LED "Modelo CB Twister / Titan 160 Flex"',
+    desc: 'Piscas modernos, finos e com tecnologia LED. Amplamente comprados para atualizar o visual de motos mais antigas.',
+    preco: 65.00, precoRange: 'R$ 40 – R$ 90 kit c/ 4',
+    badge: 'destaque', badgeLabel: '🔥 MAIS VENDIDO',
+    esgotado: false,
+    img: 'https://images.tcdn.com.br/img/img_prod/756761/pisca_seta_dianteiro_traseiro_led_honda_cg_150_titan_2004_2013_par_4_pecas_10498_1_7e3c88b8f6c3a86ff3c6be6cbfa77db9.jpg'
+  },
+  {
+    id: 12, cat: 'piscas', catLabel: 'PISCAS / SETAS',
+    nome: 'Seta LED Sequencial / Progressiva (Estilo Audi)',
+    desc: 'Quando acionada, a luz de LED "corre" de dentro para fora. Muito popular no mercado de personalização.',
+    preco: 55.00, precoRange: 'R$ 35 – R$ 75 kit c/ 4',
+    badge: 'novo', badgeLabel: '✨ NOVO',
+    esgotado: false,
+    img: 'https://m.media-amazon.com/images/I/51y2t6p0nYL._AC_SL1000_.jpg'
+  },
+  {
+    id: 13, cat: 'piscas', catLabel: 'PISCAS / SETAS',
+    nome: 'Pisca Original Amarelo CG 125/150 Antigo',
+    desc: 'Formato quadrado ou ovalado tradicional com lente âmbar e lâmpada de filamento. Reposição fiel ao original.',
+    preco: 32.50, precoRange: 'R$ 20 – R$ 45 kit c/ 4',
+    badge: null,
+    esgotado: false,
+    img: 'https://images.tcdn.com.br/img/img_prod/756761/pisca_seta_cg_125_150_1992_1999_ambar_universal_par_diant_tras_2_pecas_5694_1_ab6df8fc4b4da0e6af9cc00d07f0c08e.jpg'
+  },
+  {
+    id: 14, cat: 'piscas', catLabel: 'PISCAS / SETAS',
+    nome: 'Pisca Mini Flecha Universal',
+    desc: 'Setas extremamente pequenas em formato de ponta de flecha. Usadas para despoluir o visual traseiro da moto.',
+    preco: 37.50, precoRange: 'R$ 25 – R$ 50 o par',
+    badge: null,
+    esgotado: false,
+    img: 'https://m.media-amazon.com/images/I/51Xb3hf5TXL._AC_SL1000_.jpg'
+  },
+  {
+    id: 15, cat: 'piscas', catLabel: 'PISCAS / SETAS',
+    nome: 'Pisca de Embutir (Carenagem LED)',
+    desc: 'Placas de LED rentes à carenagem lateral de motos esportivas (Ninja, R3), eliminando a haste saliente.',
+    preco: 45.00, precoRange: 'R$ 30 – R$ 60 o par',
+    badge: null,
+    esgotado: true,
+    img: 'https://m.media-amazon.com/images/I/51n1yI8ZQJL._AC_SL1000_.jpg'
+  },
+
+  /* ---- KIT RELAÇÃO ---- */
+  {
+    id: 16, cat: 'relacao', catLabel: 'KIT RELAÇÃO',
+    nome: 'Kit Relação com Retentor (Riffel / DID / Vaz)',
+    desc: 'O modelo mais vendido. Corrente com anéis de borracha nos elos que seguram a lubrificação e dobram a vida útil.',
+    preco: 200.00, precoRange: 'R$ 120 – R$ 280',
+    badge: 'destaque', badgeLabel: '🔥 MAIS VENDIDO',
+    esgotado: false,
+    img: 'https://images.tcdn.com.br/img/img_prod/756761/kit_relacao_riffel_cg_150_titan_fan_mix_2009_2013_corrente_428hv_coroa_428_42d_pinhao_428_15d_7442_1_de0d44fb073d6f14c1b57a19dc7dea86.jpg'
+  },
+  {
+    id: 17, cat: 'relacao', catLabel: 'KIT RELAÇÃO',
+    nome: 'Kit Relação Sem Retentor (Econômico)',
+    desc: 'Para motos de trabalho de 100cc a 160cc. Exige mais lubrificação, mas com custo muito acessível.',
+    preco: 85.00, precoRange: 'R$ 60 – R$ 110',
+    badge: null,
+    esgotado: false,
+    img: 'https://images.tcdn.com.br/img/img_prod/756761/kit_de_transmissao_completo_cg125_biz125_titan125_fan125_yamaha_ybr125_corrente_428_sem_retentor_7318_1_20220901165400.jpg'
+  },
+  {
+    id: 18, cat: 'relacao', catLabel: 'KIT RELAÇÃO',
+    nome: 'Corrente de Transmissão Dourada (Gold)',
+    desc: 'Elos com banho de cromo dourado que evita oxidação e destaca a roda traseira. Muito procurada para personalização.',
+    preco: 130.00, precoRange: 'R$ 80 – R$ 180',
+    badge: 'novo', badgeLabel: '✨ NOVO',
+    esgotado: false,
+    img: 'https://m.media-amazon.com/images/I/61XkiVIcxkL._AC_SL1000_.jpg'
+  },
+  {
+    id: 19, cat: 'relacao', catLabel: 'KIT RELAÇÃO',
+    nome: 'Pinhão de Alta Performance / Alongado',
+    desc: 'Pinhão com um dente a mais para aliviado o motor em estradas e ganhar velocidade final. Popular entre viajantes.',
+    preco: 27.50, precoRange: 'R$ 15 – R$ 40 avulso',
+    badge: null,
+    esgotado: false,
+    img: 'https://images.tcdn.com.br/img/img_prod/756761/pinhao_moto_14_dentes_cg_125_150_titan_fan_biz_nxr_ybr_fazer_cbx_250_5612_1_20220901165400.jpg'
+  },
+  {
+    id: 20, cat: 'relacao', catLabel: 'KIT RELAÇÃO',
+    nome: 'Coroa de Alumínio / Passe Fino (Competição)',
+    desc: 'Ligas leves ou menos dentes para modificar a arrancada da moto ou aliviar peso rotacional.',
+    preco: 85.00, precoRange: 'R$ 50 – R$ 120',
+    badge: null,
+    esgotado: true,
+    img: 'https://images.tcdn.com.br/img/img_prod/756761/coroa_aluminio_anodizado_cg_150_titan_fan_2009_2015_42_dentes_laranja_7818_1_20220901165400.jpg'
+  },
+
+  /* ---- PEDALEIRAS ---- */
+  {
+    id: 21, cat: 'pedaleiras', catLabel: 'PEDALEIRAS',
+    nome: 'Pedaleira Dianteira Borracha Padrão Honda/Yamaha',
+    desc: 'Peça de ferro revestida com borracha grossa vulcanizada. Troca necessária quando a borracha rasga com o uso.',
+    preco: 25.00, precoRange: 'R$ 15 – R$ 35 o par',
+    badge: null,
+    esgotado: false,
+    img: 'https://images.tcdn.com.br/img/img_prod/756761/pedaleira_cg_125_150_fan_titan_biz_par_dianteira_original_7128_1_20210716094655.jpg'
+  },
+  {
+    id: 22, cat: 'pedaleiras', catLabel: 'PEDALEIRAS',
+    nome: 'Pedaleira Traseira "Bacalhau" Alumínio',
+    desc: 'Mini plataformas vazadas de alumínio polido ou fosco para o passageiro. Comuns em modelos esportivos e urbanos.',
+    preco: 42.50, precoRange: 'R$ 25 – R$ 60 o par',
+    badge: 'destaque', badgeLabel: '🔥 POPULAR',
+    esgotado: false,
+    img: 'https://m.media-amazon.com/images/I/51YGvI-hCxL._AC_SL1000_.jpg'
+  },
+  {
+    id: 23, cat: 'pedaleiras', catLabel: 'PEDALEIRAS',
+    nome: 'Pedaleira Off-Road / Dentada (Anker / Oxxy)',
+    desc: 'Aço ou alumínio largo com "dentes" afiados para evitar que a bota escorregue na lama. Ideal para Bros, Lander e XRE.',
+    preco: 130.00, precoRange: 'R$ 80 – R$ 180 o par',
+    badge: null,
+    esgotado: false,
+    img: 'https://m.media-amazon.com/images/I/51-CL+g-TZL._AC_SL1000_.jpg'
+  },
+  {
+    id: 24, cat: 'pedaleiras', catLabel: 'PEDALEIRAS',
+    nome: 'Pezinho / Cavalete Lateral com Regulagem de Altura',
+    desc: 'Suporte lateral com rosca para ajuste de tamanho. Ideal quando a moto é rebaixada ou elevada.',
+    preco: 55.00, precoRange: 'R$ 35 – R$ 75',
+    badge: null,
+    esgotado: false,
+    img: 'https://m.media-amazon.com/images/I/51KBknlUvPL._AC_SL1000_.jpg'
+  },
+  {
+    id: 25, cat: 'pedaleiras', catLabel: 'PEDALEIRAS',
+    nome: 'Borracha do Pedal de Câmbio / Partida',
+    desc: 'Pequeno tubinho de borracha preta que reveste a alavanca de câmbio. Protege o calçado do piloto.',
+    preco: 10.00, precoRange: 'R$ 5 – R$ 15 a unidade',
+    badge: null,
+    esgotado: false,
+    img: 'https://images.tcdn.com.br/img/img_prod/756761/borracha_pedal_cambio_modelo_universal_universal_8032_1_20210716094655.jpg'
+  },
+];
+
+/* ============================================================
+   CART STATE
+============================================================ */
+let cart = [];
+let selectedPayment = '';
+let currentFilter = 'all';
+
+/* ============================================================
+   RENDER PRODUCTS
+============================================================ */
+const CATEGORIES = [
+  { key: 'retrovisores', icon: '🪞', label: 'RETROVISORES' },
+  { key: 'manetes',      icon: '🤜', label: 'MANETES E MANOPLAS' },
+  { key: 'piscas',       icon: '💡', label: 'PISCAS E SETAS' },
+  { key: 'relacao',      icon: '⛓️', label: 'KIT RELAÇÃO' },
+  { key: 'pedaleiras',   icon: '🦶', label: 'PEDALEIRAS' },
+];
+
+function renderProducts() {
+  const wrap = document.getElementById('storeWrap');
+  wrap.innerHTML = '';
+
+  const filtered = currentFilter === 'all'
+    ? PRODUTOS
+    : PRODUTOS.filter(p => p.cat === currentFilter);
+
+  const catsPresent = CATEGORIES.filter(c =>
+    filtered.some(p => p.cat === c.key)
+  );
+
+  catsPresent.forEach(cat => {
+    const prods = filtered.filter(p => p.cat === cat.key);
+    const section = document.createElement('section');
+    section.dataset.catSection = cat.key;
+
+    section.innerHTML = `
+      <div class="category-header reveal">
+        <span class="cat-icon">${cat.icon}</span>
+        <h2 class="cat-title">${cat.label.split(' ')[0]} <span>${cat.label.split(' ').slice(1).join(' ')}</span></h2>
+        <div class="cat-line"></div>
+        <div class="cat-count">${prods.length} ITENS</div>
+      </div>
+      <div class="products-grid reveal">
+        ${prods.map(p => cardHTML(p)).join('')}
+      </div>
+    `;
+    wrap.appendChild(section);
+  });
+
+  // Re-observe reveals
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+}
+
+function cardHTML(p) {
+  const addDisabled = p.esgotado ? 'disabled' : '';
+  const addText = p.esgotado ? '✕ ESGOTADO' : '+ ADICIONAR';
+  const esgotadoOverlay = p.esgotado
+    ? `<div class="esgotado-overlay"><div class="esgotado-tag">ESGOTADO</div></div>` : '';
+  const badge = p.badge
+    ? `<div class="card-badge ${p.badge}">${p.badgeLabel}</div>` : '';
+  const cardClass = p.esgotado ? 'product-card esgotado' : 'product-card';
+
+  return `
+    <div class="${cardClass}" id="card-${p.id}">
+      <div class="card-img-wrap">
+        <img src="${p.img}" alt="${p.nome}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x200/1A0000/CC0000?text=PEÇA'">
+        ${badge}
+        ${esgotadoOverlay}
+      </div>
+      <div class="card-body">
+        <div class="card-cat">${p.catLabel}</div>
+        <div class="card-name">${p.nome}</div>
+        <div class="card-desc">${p.desc}</div>
+        <div class="card-price">R$ ${p.preco.toFixed(2).replace('.',',')}</div>
+        <div class="card-price-range">${p.precoRange}</div>
+        <button class="btn-add" onclick="addToCart(${p.id})" ${addDisabled}>
+          <span class="icon">${p.esgotado ? '' : '🛒'}</span>
+          ${addText}
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+/* ============================================================
+   FILTER
+============================================================ */
+function filterCat(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts();
+  window.scrollTo({ top: 200, behavior: 'smooth' });
+}
+
+/* ============================================================
+   CART FUNCTIONS
+============================================================ */
+function addToCart(id) {
+  const prod = PRODUTOS.find(p => p.id === id);
+  if (!prod || prod.esgotado) return;
+
+  const existing = cart.find(i => i.id === id);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ ...prod, qty: 1 });
+  }
+
+  updateCartUI();
+  bumpCount();
+
+  // Open cart briefly to show feedback
+  openCart();
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(i => i.id !== id);
+  updateCartUI();
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) {
+    removeFromCart(id);
+    return;
+  }
+  updateCartUI();
+}
+
+function updateCartUI() {
+  const count = cart.reduce((sum, i) => sum + i.qty, 0);
+  const total = cart.reduce((sum, i) => sum + i.preco * i.qty, 0);
+
+  document.getElementById('cartCount').textContent = count;
+  document.getElementById('cartTotal').textContent =
+    'R$ ' + total.toFixed(2).replace('.', ',');
+
+  const el = document.getElementById('cartItemsEl');
+
+  if (cart.length === 0) {
+    el.innerHTML = `
+      <div class="cart-empty">
+        <span class="cart-empty-icon">🛒</span>
+        Carrinho vazio
+      </div>`;
+    return;
+  }
+
+  el.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <img class="cart-item-img" src="${item.img}" alt="${item.nome}"
+        onerror="this.src='https://via.placeholder.com/60x60/1A0000/CC0000?text=?'">
+      <div class="cart-item-info">
+        <div class="cart-item-cat">${item.catLabel}</div>
+        <div class="cart-item-name">${item.nome}</div>
+        <div class="cart-item-controls">
+          <button class="qty-btn" onclick="changeQty(${item.id}, -1)">−</button>
+          <span class="qty-display">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+        </div>
+      </div>
+      <div>
+        <div class="cart-item-price">R$ ${(item.preco * item.qty).toFixed(2).replace('.',',')}</div>
+        <button class="btn-remove" onclick="removeFromCart(${item.id})" title="Remover">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function bumpCount() {
+  const el = document.getElementById('cartCount');
+  el.classList.remove('bump');
+  void el.offsetWidth;
+  el.classList.add('bump');
+}
+
+function openCart() {
+  document.getElementById('cartPanel').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCart() {
+  document.getElementById('cartPanel').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function toggleCart() {
+  const panel = document.getElementById('cartPanel');
+  if (panel.classList.contains('open')) { closeCart(); } else { openCart(); }
+}
+
+/* ============================================================
+   PAYMENT
+============================================================ */
+function selectPayment(method) {
+  selectedPayment = method;
+  document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('selected'));
+  const map = { 'Cartão': 'pay-cartao', 'Pix': 'pay-pix', 'Dinheiro': 'pay-dinheiro' };
+  document.getElementById(map[method])?.classList.add('selected');
+}
+
+/* ============================================================
+   WHATSAPP
+============================================================ */
+function sendWhatsApp() {
+  if (cart.length === 0) {
+    alert('Adicione pelo menos um produto ao carrinho!');
+    return;
+  }
+  if (!selectedPayment) {
+    alert('Selecione uma forma de pagamento!');
+    return;
+  }
+
+  const total = cart.reduce((sum, i) => sum + i.preco * i.qty, 0);
+  const lines = cart.map(i =>
+    `• ${i.nome} (${i.catLabel}) × ${i.qty} = R$ ${(i.preco * i.qty).toFixed(2).replace('.',',')}`
+  ).join('\n');
+
+  const msg =
+`🏍️ *PEDIDO – PEÇAS MENORES*
+*Neilton Motos*
+
+${lines}
+
+💰 *TOTAL: R$ ${total.toFixed(2).replace('.',',')}*
+💳 *PAGAMENTO: ${selectedPayment}*
+
+_Pedido enviado pelo site. Aguardo confirmação!_`;
+
+  const phone = '5585996739891';
+  const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+}
+
+/* ============================================================
+   REVEAL OBSERVER
+============================================================ */
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.08 });
+
+/* ============================================================
+   INTRO COUNTER ANIMATION
+============================================================ */
+(function() {
+  const el = document.getElementById('introPct');
+  let n = 0;
+  const interval = setInterval(() => {
+    n = Math.min(n + Math.ceil(Math.random() * 18), 100);
+    el.textContent = `CARREGANDO ${n}%`;
+    if (n >= 100) {
+      el.textContent = 'PRONTO. BEM-VINDO.';
+      clearInterval(interval);
+    }
+  }, 60);
+})();
+
+/* ============================================================
+   INIT
+============================================================ */
+renderProducts();
+</script>
+</body>
+</html>

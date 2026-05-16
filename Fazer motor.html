@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fazer Motor — Mecânica Profissional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E8000D;
+    --red-dark: #9B0009;
+    --red-glow: rgba(232, 0, 13, 0.35);
+    --black: #080808;
+    --black2: #0F0F0F;
+    --dark: #141414;
+    --dark2: #1C1C1C;
+    --steel: #2A2A2A;
+    --chrome: #888;
+    --chrome-light: #BDBDBD;
+    --white: #F5F5F5;
+    --text: #CCCCCC;
+    --green: #25D366;
+    --green-dark: #128C7E;
+    --pix: #32BCAD;
+    --gold: #F5A623;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #000;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(232,0,13,.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(232,0,13,.07) 1px, transparent 1px);
+    background-size: 60px 60px;
+    animation: gridMove 6s linear infinite;
+  }
+  @keyframes gridMove {
+    0%   { background-position: 0 0; }
+    100% { background-position: 60px 60px; }
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 50% 40%, transparent 30%, #000 100%),
+      linear-gradient(180deg, rgba(232,0,13,.18) 0%, transparent 40%);
+    pointer-events: none;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 20px;
+  }
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: clamp(11px, 2vw, 14px);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp .6s ease forwards .2s;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 14vw, 160px);
+    line-height: .9;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    text-shadow: 0 0 80px rgba(232,0,13,.5), 0 0 200px rgba(232,0,13,.15);
+    opacity: 0;
+    animation: fadeUp .7s ease forwards .35s;
+  }
+  .hero-title span { color: var(--red); }
+  .hero-subtitle {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 300;
+    font-size: clamp(14px, 3vw, 22px);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--chrome-light);
+    margin-top: 14px;
+    opacity: 0;
+    animation: fadeUp .7s ease forwards .5s;
+  }
+  .hero-divider {
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--red), transparent);
+    margin: 28px auto;
+    opacity: 0;
+    animation: fadeUp .7s ease forwards .65s;
+  }
+  .hero-desc {
+    font-size: clamp(13px, 2vw, 16px);
+    color: var(--text);
+    max-width: 580px;
+    margin: 0 auto 36px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp .7s ease forwards .8s;
+  }
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--red);
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 16px 36px;
+    border: none;
+    cursor: pointer;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: background .25s, transform .2s, box-shadow .25s;
+    opacity: 0;
+    animation: fadeUp .7s ease forwards .95s;
+  }
+  .hero-cta:hover {
+    background: #ff1a24;
+    transform: scale(1.04);
+    box-shadow: 0 0 30px var(--red-glow);
+  }
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp .7s ease forwards 1.2s;
+  }
+  .scroll-hint span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--chrome);
+    text-transform: uppercase;
+  }
+  .scroll-arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 2px solid var(--red);
+    border-bottom: 2px solid var(--red);
+    transform: rotate(45deg);
+    animation: bounce 1.4s ease infinite;
+  }
+  @keyframes bounce {
+    0%,100% { transform: rotate(45deg) translateY(0); }
+    50%      { transform: rotate(45deg) translateY(6px); }
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 80px 20px; }
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 7vw, 72px);
+    line-height: 1;
+    color: var(--white);
+  }
+  .section-title span { color: var(--red); }
+
+  /* ── CILINDRADAS ── */
+  #cilindradas {
+    background: var(--black2);
+    position: relative;
+  }
+  #cilindradas::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--red), transparent);
+  }
+  .cil-header { text-align: center; margin-bottom: 48px; }
+  .cil-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    max-width: 900px;
+    margin: 0 auto 48px;
+  }
+  .cil-btn {
+    background: var(--dark2);
+    border: 1px solid var(--steel);
+    color: var(--chrome-light);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    padding: 14px 24px;
+    cursor: pointer;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    transition: all .22s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .cil-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .22s ease;
+    z-index: 0;
+  }
+  .cil-btn span { position: relative; z-index: 1; }
+  .cil-btn:hover, .cil-btn.active {
+    color: #fff;
+    border-color: var(--red);
+    box-shadow: 0 0 20px var(--red-glow);
+  }
+  .cil-btn:hover::before, .cil-btn.active::before { transform: scaleX(1); }
+
+  .motor-card {
+    display: none;
+    max-width: 1000px;
+    margin: 0 auto;
+    background: var(--dark);
+    border: 1px solid var(--steel);
+    position: relative;
+    overflow: hidden;
+    animation: cardIn .4s ease;
+  }
+  .motor-card.visible { display: block; }
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .motor-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--red), #ff4a00);
+  }
+  .motor-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  @media(max-width:700px) { .motor-inner { grid-template-columns: 1fr; } }
+  .motor-img-wrap {
+    position: relative;
+    min-height: 320px;
+    overflow: hidden;
+    background: #0a0a0a;
+  }
+  .motor-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    filter: grayscale(20%) contrast(1.1);
+    transition: transform .5s ease, filter .4s ease;
+  }
+  .motor-img-wrap:hover img { transform: scale(1.04); filter: grayscale(0%) contrast(1.15); }
+  .motor-img-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(232,0,13,.08) 0%, transparent 60%);
+  }
+  .motor-badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: var(--red);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 2px;
+    padding: 4px 14px;
+    clip-path: polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);
+  }
+  .motor-info {
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .motor-models {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+  .motor-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 38px;
+    line-height: 1;
+    color: var(--white);
+  }
+  .tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--steel);
+  }
+  .tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--chrome);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: color .2s, border-color .2s;
+    margin-bottom: -1px;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    color: var(--red);
+    border-color: var(--red);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .price-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .price-table th {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--chrome);
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--steel);
+  }
+  .price-table td {
+    padding: 10px 10px;
+    color: var(--text);
+    border-bottom: 1px solid rgba(255,255,255,.04);
+    vertical-align: middle;
+  }
+  .price-table tr.highlight td { color: var(--white); }
+  .price-table .total-val {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--red);
+  }
+  .service-tag {
+    display: inline-block;
+    background: var(--steel);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    color: var(--chrome-light);
+    margin-bottom: 4px;
+  }
+  .service-tag.full { background: rgba(232,0,13,.25); color: var(--red); }
+  .obs-box {
+    background: rgba(232,0,13,.06);
+    border-left: 3px solid var(--red);
+    padding: 14px 16px;
+    margin-top: 12px;
+  }
+  .obs-box p { font-size: 12px; color: var(--text); line-height: 1.6; }
+  .obs-box strong { color: var(--white); }
+
+  /* ── OBSERVAÇÕES ── */
+  #observacoes { background: var(--black); position: relative; }
+  .obs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px;
+    max-width: 1000px;
+    margin: 40px auto 0;
+  }
+  .obs-item {
+    background: var(--dark2);
+    padding: 28px 24px;
+    border-top: 2px solid var(--red);
+    position: relative;
+  }
+  .obs-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: rgba(232,0,13,.12);
+    line-height: 1;
+    position: absolute;
+    top: 12px;
+    right: 16px;
+  }
+  .obs-item h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .obs-item p { font-size: 13px; color: var(--text); line-height: 1.65; }
+
+  /* ══════════════════════════════════
+     ── AGENDAMENTO REFORMULADO ──
+  ══════════════════════════════════ */
+  #agendamento {
+    background: var(--black2);
+    position: relative;
+  }
+  #agendamento::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--red), transparent);
+  }
+
+  /* Banner de reserva 30% */
+  .reserva-banner {
+    max-width: 760px;
+    margin: 36px auto 0;
+    background: linear-gradient(135deg, rgba(232,0,13,.12) 0%, rgba(232,0,13,.04) 100%);
+    border: 1px solid rgba(232,0,13,.4);
+    padding: 28px 28px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .reserva-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--red);
+  }
+  .reserva-banner-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+  }
+  .reserva-icon {
+    font-size: 36px;
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 2px;
+    filter: drop-shadow(0 0 12px var(--red-glow));
+  }
+  .reserva-text h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 1px;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+  .reserva-text h3 span { color: var(--red); }
+  .reserva-text p {
+    font-size: 13px;
+    color: var(--text);
+    line-height: 1.65;
+    margin-bottom: 4px;
+  }
+  .reserva-text strong { color: var(--chrome-light); }
+
+  /* Opções de pagamento */
+  .payment-section {
+    max-width: 760px;
+    margin: 24px auto 0;
+  }
+  .payment-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--chrome);
+    margin-bottom: 12px;
+    display: block;
+  }
+  .payment-options {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .pay-opt {
+    flex: 1;
+    min-width: 120px;
+    background: var(--dark);
+    border: 2px solid var(--steel);
+    padding: 16px 14px;
+    cursor: pointer;
+    text-align: center;
+    transition: all .22s ease;
+    position: relative;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    user-select: none;
+  }
+  .pay-opt input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .pay-opt:hover {
+    border-color: var(--chrome);
+  }
+  .pay-opt.selected-cartao {
+    border-color: var(--gold);
+    background: rgba(245,166,35,.08);
+    box-shadow: 0 0 18px rgba(245,166,35,.2);
+  }
+  .pay-opt.selected-pix {
+    border-color: var(--pix);
+    background: rgba(50,188,173,.08);
+    box-shadow: 0 0 18px rgba(50,188,173,.2);
+  }
+  .pay-opt.selected-dinheiro {
+    border-color: var(--green);
+    background: rgba(37,211,102,.08);
+    box-shadow: 0 0 18px rgba(37,211,102,.2);
+  }
+  .pay-opt-icon { font-size: 24px; display: block; margin-bottom: 6px; }
+  .pay-opt-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--chrome-light);
+    display: block;
+  }
+  .pay-opt-sub {
+    font-size: 11px;
+    color: var(--chrome);
+    display: block;
+    margin-top: 3px;
+    font-family: 'Barlow', sans-serif;
+  }
+  .pay-opt.selected-cartao .pay-opt-name { color: var(--gold); }
+  .pay-opt.selected-pix .pay-opt-name { color: var(--pix); }
+  .pay-opt.selected-dinheiro .pay-opt-name { color: var(--green); }
+
+  /* Aviso de política de cancelamento */
+  .cancelamento-aviso {
+    max-width: 760px;
+    margin: 20px auto 0;
+    background: rgba(232,0,13,.05);
+    border: 1px solid rgba(232,0,13,.25);
+    padding: 18px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .cancelamento-aviso .warn-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .cancelamento-aviso-text {
+    font-size: 12.5px;
+    color: var(--text);
+    line-height: 1.7;
+  }
+  .cancelamento-aviso-text strong { color: var(--white); }
+  .cancelamento-aviso-text .highlight-red { color: var(--red); font-weight: 600; }
+  .cancelamento-aviso-text .highlight-green { color: #4ade80; font-weight: 600; }
+
+  /* Formulário */
+  .agenda-wrap {
+    max-width: 760px;
+    margin: 28px auto 0;
+  }
+  .agenda-note {
+    font-size: 13px;
+    color: var(--chrome);
+    text-align: center;
+    margin-bottom: 28px;
+    letter-spacing: 1px;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media(max-width:560px) { .form-grid { grid-template-columns: 1fr; } }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--chrome);
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: var(--dark);
+    border: 1px solid var(--steel);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    padding: 12px 14px;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+  }
+  .form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+  }
+  .form-group select option { background: var(--dark); color: var(--white); }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 2px rgba(232,0,13,.15);
+  }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+
+  /* Resumo 30% dinâmico */
+  .resumo-30 {
+    max-width: 760px;
+    margin: 0 auto;
+    background: var(--dark);
+    border: 1px solid var(--steel);
+    border-top: 2px solid var(--red);
+    padding: 20px 22px;
+    display: none;
+  }
+  .resumo-30.show { display: block; }
+  .resumo-30-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--chrome);
+    margin-bottom: 14px;
+  }
+  .resumo-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+    font-size: 13px;
+    color: var(--text);
+  }
+  .resumo-row:last-child { border-bottom: none; }
+  .resumo-row .label { font-family: 'Barlow', sans-serif; }
+  .resumo-row .value { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; color: var(--chrome-light); }
+  .resumo-row.total-row .label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    color: var(--white);
+  }
+  .resumo-row.total-row .value {
+    font-size: 22px;
+    color: var(--red);
+  }
+  .resumo-row.pagamento-row .value {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .badge-pagamento {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 0;
+  }
+  .badge-cartao { background: rgba(245,166,35,.2); color: var(--gold); border: 1px solid var(--gold); }
+  .badge-pix { background: rgba(50,188,173,.2); color: var(--pix); border: 1px solid var(--pix); }
+  .badge-dinheiro { background: rgba(37,211,102,.2); color: var(--green); border: 1px solid var(--green); }
+
+  /* Botão WhatsApp */
+  .whatsapp-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    background: #128C7E;
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 18px 32px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: background .25s, transform .2s, box-shadow .25s;
+  }
+  .whatsapp-btn:hover {
+    background: #25D366;
+    transform: scale(1.02);
+    box-shadow: 0 0 30px rgba(37,211,102,.35);
+  }
+  .whatsapp-btn svg { width: 24px; height: 24px; flex-shrink: 0; }
+
+  /* ── FOOTER CALLOUT ── */
+  #footer-callout {
+    background: var(--black);
+    position: relative;
+    padding: 80px 20px;
+    overflow: hidden;
+    text-align: center;
+  }
+  .bg-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 18vw, 220px);
+    color: rgba(255,255,255,.025);
+    letter-spacing: -4px;
+    pointer-events: none;
+    white-space: nowrap;
+    user-select: none;
+  }
+  .callout-content { position: relative; z-index: 2; }
+  .callout-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 0 20px var(--red-glow));
+  }
+  .callout-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(38px, 8vw, 90px);
+    line-height: .95;
+    color: var(--white);
+    text-shadow: 0 0 60px rgba(232,0,13,.3);
+    margin-bottom: 16px;
+  }
+  .callout-title span { color: var(--red); }
+  .callout-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(14px, 2.5vw, 18px);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--chrome);
+    margin-bottom: 40px;
+  }
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    border: 1px solid var(--steel);
+    max-width: 700px;
+    margin: 0 auto 48px;
+  }
+  .stat {
+    flex: 1;
+    min-width: 140px;
+    padding: 24px 20px;
+    border-right: 1px solid var(--steel);
+    position: relative;
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px;
+    color: var(--red);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--chrome);
+  }
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: none;
+    border: 2px solid var(--steel);
+    color: var(--chrome-light);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 14px 30px;
+    cursor: pointer;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+    transition: all .25s;
+    text-decoration: none;
+  }
+  .back-btn:hover {
+    border-color: var(--red);
+    color: var(--red);
+    box-shadow: 0 0 20px rgba(232,0,13,.2);
+  }
+  .back-btn svg { width: 18px; height: 18px; }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* Mobile tweaks */
+  @media(max-width:480px) {
+    .cil-btn { font-size: 19px; padding: 12px 18px; }
+    .motor-info { padding: 24px 18px; }
+    .motor-name { font-size: 30px; }
+    .stats-bar { flex-direction: column; }
+    .stat { border-right: none; border-bottom: 1px solid var(--steel); }
+    .stat:last-child { border-bottom: none; }
+    .payment-options { flex-direction: column; }
+    .pay-opt { min-width: unset; }
+    .reserva-banner-inner { flex-direction: column; gap: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero" id="top">
+  <div class="hero-content">
+    <p class="hero-eyebrow">⚙ Serviço Especializado</p>
+    <h1 class="hero-title">FAZER<br><span>MOTOR</span></h1>
+    <p class="hero-subtitle">Reconstrução · Revisão · Alta Performance</p>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">
+      Do simples 50cc ao multicilíndrico 600cc — reconstruímos cada motor com precisão cirúrgica, peças de procedência e mão de obra certificada. Seu motor entregue com potência, durabilidade e confiança.
+    </p>
+    <button class="hero-cta" onclick="document.getElementById('cilindradas').scrollIntoView({behavior:'smooth'})">
+      ⚡ Ver Cilindradas & Preços
+    </button>
+  </div>
+  <div class="scroll-hint">
+    <span>Deslize</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ══════════ CILINDRADAS ══════════ -->
+<section id="cilindradas">
+  <div class="cil-header reveal">
+    <p class="section-label">Selecione sua moto</p>
+    <h2 class="section-title">ESCOLHA A<br><span>CILINDRADA</span></h2>
+  </div>
+
+  <div class="cil-grid reveal">
+    <button class="cil-btn active" onclick="showMotor('50cc',this)"><span>50cc</span></button>
+    <button class="cil-btn" onclick="showMotor('125cc',this)"><span>125cc</span></button>
+    <button class="cil-btn" onclick="showMotor('150cc',this)"><span>150cc</span></button>
+    <button class="cil-btn" onclick="showMotor('160cc',this)"><span>160cc</span></button>
+    <button class="cil-btn" onclick="showMotor('190cc',this)"><span>190cc</span></button>
+    <button class="cil-btn" onclick="showMotor('250cc',this)"><span>250cc</span></button>
+    <button class="cil-btn" onclick="showMotor('300cc',this)"><span>300cc</span></button>
+    <button class="cil-btn" onclick="showMotor('600cc',this)"><span>600cc</span></button>
+  </div>
+
+  <!-- 50cc -->
+  <div class="motor-card visible" id="card-50cc">
+    <div class="motor-inner">
+      <div class="motor-img-wrap">
+        <img src="https://images.unsplash.com/photo-1558981852-426c6c22a060?w=600&q=80" alt="Motor 50cc" loading="lazy">
+        <div class="motor-img-overlay"></div>
+        <div class="motor-badge">50cc</div>
+      </div>
+      <div class="motor-info">
+        <p class="motor-models">Shineray · Phoenix · Jet · Pop</p>
+        <h3 class="motor-name">Motor 50cc — Miniatura. Brutal.</h3>
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab(this,'top-50cc')">Parte de Cima</button>
+          <button class="tab-btn" onclick="switchTab(this,'full-50cc')">Motor Completo</button>
+        </div>
+        <div class="tab-panel active" id="top-50cc">
+          <table class="price-table">
+            <tr><th>Item</th><th>Valor</th></tr>
+            <tr><td><span class="service-tag">Peças</span></td><td>R$ 120 – R$ 220</td></tr>
+            <tr><td><span class="service-tag">Mão de Obra</span></td><td>R$ 150 – R$ 250</td></tr>
+            <tr class="highlight"><td><span class="service-tag full">Total Estimado</span></td><td class="total-val">R$ 270 – R$ 470</td></tr>
+          </table>
+        </div>
+        <div class="tab-panel" id="full-50cc">
+          <table class="price-table">
+            <tr><th>Item</th><th>Valor</th></tr>
+            <tr><td><span class="service-tag">Peças</span></td><td>R$ 300 – R$ 500</td></tr>
+            <tr><td><span class="service-tag">Mão de Obra</span></td><td>R$ 250 – R$ 400</td></tr>
+            <tr class="highlight"><td><span class="service-tag full">Total Estimado</span></td><td class="total-val">R$ 550 – R$ 900</td></tr>
+          </table>
+        </div>
+        <div class="obs-box">
+          <p>Kit cilindro paralelo (KMP/Athena) costuma ser mais vantajoso que retífica nessa cilindrada.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 125cc -->
+  <div class="motor-card" id="card-125cc">
+    <div class="motor-inner">
+      <div class="motor-img-wrap">
+        <img src="https://images.unsplash.com/photo-1609630875171-b1321377ee65?w=600&q=80" alt="Motor 125cc" loading="lazy">
+        <div class="motor-img-overlay"></div>
+        <div class="motor-badge">125cc</div>
+      </div>
+      <div class="motor-info">
+        <p class="motor-models">CG 125 · Biz 125 · YBR 125</p>
+        <h3 class="motor-name">Motor 125cc — Clássico Nacional</h3>
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab(this,'top-125cc')">Parte de Cima</button>
+          <button class="tab-btn" onclick="switchTab(this,'full-125cc')">Motor Completo</button>
+        </div>
+        <div class="tab-panel active" id="top-125cc">
+          <table class="price-table">
+            <tr><th>Item</th><th>Valor</th></tr>
+            <tr><td><span class="service-tag">Peças</span></td><td>R$ 150 – R$ 280</td></tr>
+            <tr><td><span class="service-tag">Mão de Obra</span></td><td>R$ 180 – R$ 300</td></tr>
+            <tr class="highlight"><td><span class="service-tag full">Total Estimado</span></td><td class="total-val">R$ 330 – R$ 580</td></tr>
+          </table>
+        </div>
+        <div class="tab-panel" id="full-125cc">
+          <table class="price-table">
+            <tr><th>Item</th><th>Valor</th></tr>
+            <tr><td><span class="service-tag">Peças</span></td><td>R$ 400 – R$ 700</td></tr>
+            <tr><td><span class="service-tag">Mão de Obra</span></td><td>R$ 350 – R$ 550</td></tr>
+            <tr class="highlight"><td><span class="service-tag full">Total Estimado</span></td><td class="total-val">R$ 750 – R$ 1.250</td></tr>
+          </table>
+        </div>
+        <div class="obs-box">
+          <p>Peças de reposição amplamente disponíveis; custo-benefício excelente com kit novo paralelo de qualidade.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 150cc -->
+  <div class="motor-card" id="card-150cc">
+    <div class="motor-inner">
+      <div class="motor-img-wrap">
+        <img src="https://images.unsplash.com/photo-1591637333184-19aa84b3e01f?w=600&q=80" alt="Motor 150cc" loading="lazy">
+        <div class="motor-img-overlay"></div>
+        <div class="motor-badge">150cc</div>
+      </div>
+      <div class="motor-info">
+        <p class="motor-models">CG 150 · Titan 150 · Fazer 150</p>
+        <h3 class="motor-name">Motor 150cc — O Mais Popular</h3>
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab(this,'top-150cc')">Parte de Cima</button>
+          <button class="tab-btn" onclick="switchTab(this,'full-150cc')">Motor Completo</button>
+        </div>
+        <div class="tab-panel active" id="top-150cc">
+          <table class="price-table">
+            <tr><th>Item</th><th>Valor</th></tr>
+            <tr><td><span class="service-tag">Peças</span></td><td>R$ 180 – R$ 320</td></tr>
+            <tr><td><span class="service-tag">Mão de Obra</span></td><td>R$ 200 – R$ 350</td></tr>
+            <tr class="highlight"><td><span class="service-tag full">Total Estimado</span></td><td class="total-val">R$ 380 – R$ 670</td></tr>
+          </table>
+        </div>
+        <div class="tab-panel" id="full-150cc">
+          <table class="price-table">
+            <tr><th>Item</th><th>Valor</th></tr>
+            <tr><td><span class="service-tag">Peças</span></td><td>R$ 450 – R$ 850</td></tr>
+            <tr><td><span class="service-tag">Mão de Obra</span></td><td>R$ 400 – R$ 600</td></tr>
+            <tr class="highlight"><td><span class="service-tag full">Total Estimado</span></td><td class="total-val">R$ 850 – R$ 1.450</td></tr>
+          </table>
+        </div>
+        <div class="obs-box">
+          <p>Motor mais atendido no Brasil. Estoque farto e mão de obra especializada reduzem custos e tempo de serviço.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 160cc -->
+  <div class="motor-card" id="card-160cc">
+    <div class="motor-inner">
+      <div class="motor-img-wrap">
+        <img src="https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?w=600&q=80" alt="Motor 160cc" loading="lazy">
+        <div class="motor-img-overlay"></div>
+        <div class="motor-badge">160cc</div>
+      </div>
+      <div class="motor-info">
+        <p class="motor-models">Titan 160 · Bros 160 · XRE 150/160</p>
+        <h3 class="motor-name">Motor 160cc — Potência Urbana</h3>
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab(this,'top-160cc')">Parte de Cima</button>
+          <button class="tab-btn" onclick="switchTab(this,'full-160cc')">Motor Completo</button>
+        </div>
+        <div class="tab-panel active" id="top-160cc">
+          <table class="price-table">
+            <tr><th>Item</th><th>Valor</th></tr>
+            <tr><td><span class="service-tag">Peças</span></td><td>R$ 220 – R$ 380</td></tr>
+            <tr><td><span class="service-tag">Mão de Obra</span></td><td>R$ 200 – R$ 350</td></tr>
+            <tr class="highlight"><td><span class="service-tag full">Total Estimado</span></td><td class="total-val">R$ 420 – R$ 730</td></tr>
+          </table>
+        </div>
+        <div class="tab-panel" id="full-160cc">
+          <table class="price-table">
+            <tr><th>Item</th><th>Valor</th></tr>
+            <tr><td><span class="service-tag">Peças</span></td><td>R$ 500 – R$ 950</td></tr>
+            <tr><td><span class="service-tag">Mão de Obra</span></td><td>R$ 400 – R$ 650</td></tr>
+            <tr class="highlight"><td><span class="service-tag full">Total Estimado</span></td><td class="total-val">R$ 900 – R$ 1.600</td></tr>
+          </table>
+        </div>
+        <div class="obs-box">
+          <p>Geração atual das semipesadas nacionais. Kit cilindro novo paralelo é a opção mais econômica em relação à retífica.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 190cc -->
+  <div class="motor-card" id="card-190cc">
+    <div class="motor-inner">
+      <div class="motor-img-wrap">
+        <img src="https://images.unsplash.com/photo-1518887668165-1c1ba3cf07a9?w=600&q=80" alt="Motor 190cc" loading="lazy">
+        <div class="motor-img-overlay"></div>
+        <div class="motor-badge">190cc</div>
+      </div>
+      <div class="motor-info">
+        <p class="motor-models">XRE 190 · CB 190R</p>
+        <h3 class="motor-name">Motor 190cc — Trilha & Asfalto</h3>
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab(this,'top-190cc')">Parte de Cima</button>
+          <button class="tab-btn" onclick="switchTab(this,'full-190cc')">Motor Completo</button>
+        </div>
+        <div class="tab-panel active" id="top-190cc">
+          <table class="price-table">
+            <tr><th>Item</th><th>Valor</th></tr>
+            <tr><td><span class="service-tag">Peças</span></td><td>R$ 250 – R$ 450</td></tr>
+            <tr><td><span class="service-tag">Mão de Obra</span></td><td>R$ 250 – R$ 400</td></tr>
+            <tr class="highlight"><td><span class="service-tag full">Total Estimado</span></td><td class="total-val">R$ 500 – R$ 850</td></tr>
+          </table>
+        </div>
+        <div class="tab-panel" id="full-190cc">
+          <table class="price-table">
+            <tr><th>Item</th><th>Valor</th></tr>
+            <tr><td><span class="service-tag">Peças</span></td><td>R$ 600 – R$ 1.100</td></tr>
+            <tr><td><span class="service-tag">Mão de Obra</span></td><td>R$ 450 – R$ 700</td></tr>
+            <tr class="highlight"><td><span class="service-tag full">Total Estimado</span></td><td class="total-val">R$ 1.050 – R$ 1.800</td></tr>
+          </table>
+        </div>
+        <div class="obs-box">
+          <p>Motor on/off com câmbio robusto. Verificar estado dos rolamentos do câmbio na revisão completa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 250cc -->
+  <div class="motor-card" id="card-250cc">
+    <div class="motor-inner">
+      <div class="motor-img-wrap">
+        <img src="https://images.unsplash.com/photo-1547549082-6bc09f2049ae?w=600&q=80" alt="Motor 250cc" loading="lazy">
+        <div class="motor-img-overlay"></div>
+        <div class="motor-badge">250cc</div>
+      </div>
+      <div class="motor-info">
+        <p class="motor-models">Fazer 250 · Twister · Lander 250</p>
+        <h3 class="motor-name">Motor 250cc — Intermediária Forte</h3>
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab(this,'top-250cc')">Parte de Cima</button>
+          <button class="tab-btn" onclick="switchTab(this,'full-250cc')">Motor Completo</button>
+        </div>
+        <div class="tab-panel active" id="top-250cc">
+          <table class="price-table">
+            <tr><th>Item</th><th>Valor</th></tr>
+            <tr><td><span class="service-tag">Peças</span></td><td>R$ 350 – R$ 700</td></tr>
+            <tr><td><span class="service-tag">Mão de Obra</span></td><td>R$ 300 – R$ 500</td></tr>
+            <tr class="highlight"><td><span class="service-tag full">Total Estimado</span></td><td class="total-val">R$ 650 – R$ 1.200</td></tr>
+          </table>
+        </div>
+        <div class="tab-panel" id="full-250cc">
+          <table class="price-table">
+            <tr><th>Item</th><th>Valor</th></tr>
+            <tr><td><span class="service-tag">Peças</span></td><td>R$ 800 – R$ 1.600</td></tr>
+            <tr><td><span class="service-tag">Mão de Obra</span></td><td>R$ 600 – R$ 900</td></tr>
+            <tr class="highlight"><td><span class="service-tag full">Total Estimado</span></td><td class="total-val">R$ 1.400 – R$ 2.500</td></tr>
+          </table>
+        </div>
+        <div class="obs-box">
+          <p>Motores DOHC (Twister nova, Lander) exigem regulagem de folga de válvulas rigorosa durante o serviço.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 300cc -->
+  <div class="motor-card" id="card-300cc">
+    <div class="motor-inner">
+      <div class="motor-img-wrap">
+        <img src="https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=600&q=80" alt="Motor 300cc" loading="lazy">
+        <div class="motor-img-overlay"></div>
+        <div class="motor-badge">300cc</div>
+      </div>
+      <div class="motor-info">
+        <p class="motor-models">XRE 300 · CB 300R · CB 300F</p>
+        <h3 class="motor-name">Motor 300cc — Alto Desempenho</h3>
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab(this,'top-300cc')">Parte de Cima</button>
+          <button class="tab-btn" onclick="switchTab(this,'full-300cc')">Motor Completo</button>
+        </div>
+        <div class="tab-panel active" id="top-300cc">
+          <table class="price-table">
+            <tr><th>Item</th><th>Valor</th></tr>
+            <tr><td><span class="service-tag">Peças</span></td><td>R$ 450 – R$ 900</td></tr>
+            <tr><td><span class="service-tag">Mão de Obra</span></td><td>R$ 350 – R$ 600</td></tr>
+            <tr class="highlight"><td><span class="service-tag full">Total Estimado</span></td><td class="total-val">R$ 800 – R$ 1.500</td></tr>
+          </table>
+          <div class="obs-box" style="margin-top:10px">
+            <p><strong>⚠ Atenção cabeçote:</strong> Trinca no cabeçote (problema conhecido) pode acrescentar R$ 800–R$ 1.200 a este valor.</p>
+          </div>
+        </div>
+        <div class="tab-panel" id="full-300cc">
+          <table class="price-table">
+            <tr><th>Item</th><th>Valor</th></tr>
+            <tr><td><span class="service-tag">Peças</span></td><td>R$ 1.000 – R$ 2.200</td></tr>
+            <tr><td><span class="service-tag">Mão de Obra</span></td><td>R$ 700 – R$ 1.100</td></tr>
+            <tr class="highlight"><td><span class="service-tag full">Total Estimado</span></td><td class="total-val">R$ 1.700 – R$ 3.300</td></tr>
+          </table>
+          <div class="obs-box" style="margin-top:10px">
+            <p><strong>⚠ Atenção cabeçote:</strong> Trinca no cabeçote (problema conhecido) pode acrescentar R$ 800–R$ 1.200 a este valor.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 600cc -->
+  <div class="motor-card" id="card-600cc">
+    <div class="motor-inner">
+      <div class="motor-img-wrap">
+        <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=600&q=80" alt="Motor 600cc" loading="lazy">
+        <div class="motor-img-overlay"></div>
+        <div class="motor-badge">600cc</div>
+      </div>
+      <div class="motor-info">
+        <p class="motor-models">Hornet · XJ6 · XT 660 · Transalp</p>
+        <h3 class="motor-name">Motor 600cc — Nível Elite</h3>
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab(this,'top-600cc')">Parte de Cima</button>
+          <button class="tab-btn" onclick="switchTab(this,'full-600cc')">Motor Completo</button>
+        </div>
+        <div class="tab-panel active" id="top-600cc">
+          <table class="price-table">
+            <tr><th>Item</th><th>Valor</th></tr>
+            <tr><td><span class="service-tag">Peças</span></td><td>R$ 1.200 – R$ 3.000</td></tr>
+            <tr><td><span class="service-tag">Mão de Obra</span></td><td>R$ 600 – R$ 1.200</td></tr>
+            <tr class="highlight"><td><span class="service-tag full">Total Estimado</span></td><td class="total-val">R$ 1.800 – R$ 4.200</td></tr>
+          </table>
+        </div>
+        <div class="tab-panel" id="full-600cc">
+          <table class="price-table">
+            <tr><th>Item</th><th>Valor</th></tr>
+            <tr><td><span class="service-tag">Peças</span></td><td>R$ 4.000 – R$ 8.000</td></tr>
+            <tr><td><span class="service-tag">Mão de Obra</span></td><td>R$ 1.500 – R$ 3.000</td></tr>
+            <tr class="highlight"><td><span class="service-tag full">Total Estimado</span></td><td class="total-val">R$ 5.500 – R$ 11.000</td></tr>
+          </table>
+        </div>
+        <div class="obs-box">
+          <p><strong>4 cilindros</strong> (Hornet, XJ6): 4 pistões, 16 válvulas, bronzinas de biela/mancal. Mão de obra altamente especializada. Peças originais premium.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ OBSERVAÇÕES ══════════ -->
+<section id="observacoes">
+  <div class="reveal" style="text-align:center;margin-bottom:0">
+    <p class="section-label">Técnico e Transparente</p>
+    <h2 class="section-title">OBSERVAÇÕES<br><span>IMPORTANTES</span></h2>
+  </div>
+  <div class="obs-grid reveal">
+    <div class="obs-item">
+      <div class="obs-num">01</div>
+      <h3>O Salto nas 300cc</h3>
+      <p>Modelos como XRE 300 e CB 300R têm histórico de trinca no cabeçote. Se precisar substituir por modelo novo (vela fina), o custo da Parte de Cima pode subir mais R$ 800 a R$ 1.200 além da tabela.</p>
+    </div>
+    <div class="obs-item">
+      <div class="obs-num">02</div>
+      <h3>O Peso das 600cc</h3>
+      <p>Motos 4 cilindros (Hornet, XJ6) usam 4 pistões, 4 jogos de anéis, 16 válvulas e bronzinas em vez de rolamentos comuns. Mão de obra extremamente especializada e peças originais de alto custo.</p>
+    </div>
+    <div class="obs-item">
+      <div class="obs-num">03</div>
+      <h3>Retífica vs. Kit Novo</h3>
+      <p>Para cilindradas menores (50cc até 160cc), muitas vezes compensa mais um Kit Cilindro novo paralelo de qualidade (KMP, Athena) do que mandar o cilindro original para a retífica.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ AGENDAMENTO ══════════ -->
+<section id="agendamento">
+  <div class="reveal" style="text-align:center">
+    <p class="section-label">📅 Agende seu Horário</p>
+    <h2 class="section-title">FAZER<br><span>MOTOR</span></h2>
+  </div>
+
+  <!-- BANNER 30% -->
+  <div class="reserva-banner reveal">
+    <div class="reserva-banner-inner">
+      <div class="reserva-icon">🔒</div>
+      <div class="reserva-text">
+        <h3>RESERVA DE <span>30%</span> OBRIGATÓRIA</h3>
+        <p>Para confirmar o agendamento da sua revisão, é necessário realizar o pagamento antecipado de <strong>30% do valor estimado do serviço</strong>. Este valor garante sua vaga na agenda, a reserva das peças e a dedicação exclusiva da nossa equipe ao seu motor.</p>
+        <p style="margin-top:8px; font-size:12px; color: var(--chrome);">O valor da reserva é descontado integralmente do total no momento da entrega da moto.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMAS DE PAGAMENTO -->
+  <div class="payment-section reveal">
+    <span class="payment-label">💳 Escolha a forma de pagamento da reserva</span>
+    <div class="payment-options">
+
+      <label class="pay-opt" id="opt-cartao" onclick="selecionarPagamento('cartao')">
+        <input type="radio" name="pagamento" value="cartao">
+        <span class="pay-opt-icon">💳</span>
+        <span class="pay-opt-name">Cartão</span>
+        <span class="pay-opt-sub">Débito ou Crédito</span>
+      </label>
+
+      <label class="pay-opt" id="opt-pix" onclick="selecionarPagamento('pix')">
+        <input type="radio" name="pagamento" value="pix">
+        <span class="pay-opt-icon">⚡</span>
+        <span class="pay-opt-name">Pix</span>
+        <span class="pay-opt-sub">Transferência instantânea</span>
+      </label>
+
+      <label class="pay-opt" id="opt-dinheiro" onclick="selecionarPagamento('dinheiro')">
+        <input type="radio" name="pagamento" value="dinheiro">
+        <span class="pay-opt-icon">💵</span>
+        <span class="pay-opt-name">Dinheiro</span>
+        <span class="pay-opt-sub">Na entrada · Presencial</span>
+      </label>
+
+    </div>
+  </div>
+
+  <!-- AVISO CANCELAMENTO -->
+  <div class="cancelamento-aviso reveal">
+    <div class="warn-icon">⚠️</div>
+    <div class="cancelamento-aviso-text">
+      <strong>Política de Cancelamento e Reagendamento:</strong><br>
+      O valor da reserva de 30% <span class="highlight-red">não é reembolsável em caso de desistência</span> — ele cobre os custos de reserva das peças e bloqueio da agenda da nossa equipe técnica.<br><br>
+      <span class="highlight-green">✔ Reagendamento:</span> Caso você precise remarcar, não tem problema! Basta nos avisar com pelo menos <strong>24 horas de antecedência</strong> e sua reserva fica garantida para a nova data, sem qualquer custo adicional.
+    </div>
+  </div>
+
+  <!-- FORMULÁRIO -->
+  <div class="agenda-wrap reveal">
+    <p class="agenda-note">Preencha os dados abaixo — a mensagem será gerada automaticamente para o WhatsApp</p>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="nome">Nome Completo</label>
+        <input type="text" id="nome" placeholder="Seu nome completo">
+      </div>
+      <div class="form-group">
+        <label for="tel">Telefone</label>
+        <input type="tel" id="tel" placeholder="(xx) 9 xxxx-xxxx">
+      </div>
+      <div class="form-group">
+        <label for="moto">Modelo da Moto</label>
+        <input type="text" id="moto" placeholder="Ex: Honda CG 160">
+      </div>
+      <div class="form-group">
+        <label for="cil">Cilindrada</label>
+        <select id="cil" onchange="atualizarResumo()">
+          <option value="">Selecione…</option>
+          <option value="50cc" data-min="270" data-max="470">50cc — R$ 270 a R$ 470</option>
+          <option value="125cc" data-min="330" data-max="580">125cc — R$ 330 a R$ 580</option>
+          <option value="150cc" data-min="380" data-max="670">150cc — R$ 380 a R$ 670</option>
+          <option value="160cc" data-min="420" data-max="730">160cc — R$ 420 a R$ 730</option>
+          <option value="190cc" data-min="500" data-max="850">190cc — R$ 500 a R$ 850</option>
+          <option value="250cc" data-min="650" data-max="1200">250cc — R$ 650 a R$ 1.200</option>
+          <option value="300cc" data-min="800" data-max="1500">300cc — R$ 800 a R$ 1.500</option>
+          <option value="600cc" data-min="1800" data-max="4200">600cc — R$ 1.800 a R$ 4.200</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="servico">Tipo de Serviço</label>
+        <select id="servico" onchange="atualizarResumo()">
+          <option value="">Selecione…</option>
+          <option value="Parte de Cima">Parte de Cima</option>
+          <option value="Motor Completo">Motor Completo</option>
+          <option value="Diagnóstico">Diagnóstico</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="data">Data Desejada</label>
+        <input type="date" id="data">
+      </div>
+      <div class="form-group">
+        <label for="horario">Horário</label>
+        <select id="horario">
+          <option value="">Selecione…</option>
+          <option>08:00</option>
+          <option>09:00</option>
+          <option>10:00</option>
+          <option>11:00</option>
+          <option>13:00</option>
+          <option>14:00</option>
+          <option>15:00</option>
+          <option>16:00</option>
+          <option>17:00</option>
+          <option>18:00</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label for="obs">Observações (opcional)</label>
+        <textarea id="obs" placeholder="Descreva o problema ou detalhe o serviço desejado…"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUMO DINÂMICO 30% -->
+  <div class="resumo-30 reveal" id="resumo30">
+    <div class="resumo-30-title">📋 RESUMO DO AGENDAMENTO — RESERVA 30%</div>
+    <div class="resumo-row">
+      <span class="label">Serviço selecionado</span>
+      <span class="value" id="r-servico">—</span>
+    </div>
+    <div class="resumo-row">
+      <span class="label">Cilindrada</span>
+      <span class="value" id="r-cil">—</span>
+    </div>
+    <div class="resumo-row">
+      <span class="label">Faixa estimada (tabela)</span>
+      <span class="value" id="r-faixa">—</span>
+    </div>
+    <div class="resumo-row pagamento-row">
+      <span class="label">Forma de pagamento da reserva</span>
+      <span class="value" id="r-pagamento">—</span>
+    </div>
+    <div class="resumo-row total-row">
+      <span class="label">⚡ RESERVA A PAGAR AGORA (30%)</span>
+      <span class="value" id="r-total">—</span>
+    </div>
+
+    <button class="whatsapp-btn" onclick="enviarWhatsApp()">
+      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Confirmar Agendamento pelo WhatsApp
+    </button>
+  </div>
+
+  <!-- Botão WhatsApp sem resumo (fallback) -->
+  <div class="agenda-wrap" id="btn-fallback" style="margin-top:20px">
+    <button class="whatsapp-btn" onclick="enviarWhatsApp()">
+      <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Enviar Agendamento pelo WhatsApp
+    </button>
+  </div>
+
+</section>
+
+<!-- ══════════ FOOTER CALLOUT ══════════ -->
+<section id="footer-callout">
+  <div class="bg-text">MOTOR</div>
+  <div class="callout-content reveal">
+    <div class="callout-icon">🔧</div>
+    <h2 class="callout-title">MAIS DE<br><span>10 ANOS</span><br>NO BLOCO</h2>
+    <p class="callout-sub">Precisão · Procedência · Potência</p>
+    <div class="stats-bar">
+      <div class="stat">
+        <span class="stat-num">+800</span>
+        <span class="stat-label">Motores Feitos</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">8</span>
+        <span class="stat-label">Cilindradas</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">100%</span>
+        <span class="stat-label">Garantia</span>
+      </div>
+    </div>
+    <a href="./index.html" class="back-btn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 5l-7 7 7 7"/>
+      </svg>
+      Voltar ao Início
+    </a>
+  </div>
+</section>
+
+<script>
+  // ── Estado global ──
+  let pagamentoSelecionado = '';
+
+  // ── Motor card switch ──
+  function showMotor(id, btn) {
+    document.querySelectorAll('.motor-card').forEach(c => c.classList.remove('visible'));
+    document.querySelectorAll('.cil-btn').forEach(b => b.classList.remove('active'));
+    const card = document.getElementById('card-' + id);
+    if (card) card.classList.add('visible');
+    btn.classList.add('active');
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ── Tab switch ──
+  function switchTab(btn, panelId) {
+    const card = btn.closest('.motor-card');
+    card.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    card.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(panelId).classList.add('active');
+  }
+
+  // ── Selecionar forma de pagamento ──
+  function selecionarPagamento(tipo) {
+    pagamentoSelecionado = tipo;
+    document.querySelectorAll('.pay-opt').forEach(el => {
+      el.classList.remove('selected-cartao', 'selected-pix', 'selected-dinheiro');
+    });
+    document.getElementById('opt-' + tipo).classList.add('selected-' + tipo);
+    document.querySelector(`input[value="${tipo}"]`).checked = true;
+    atualizarResumo();
+  }
+
+  // ── Atualizar resumo dinâmico ──
+  function atualizarResumo() {
+    const cilSelect = document.getElementById('cil');
+    const servicoSelect = document.getElementById('servico');
+    const resumo = document.getElementById('resumo30');
+    const fallback = document.getElementById('btn-fallback');
+
+    const cilOpt = cilSelect.options[cilSelect.selectedIndex];
+    const cil = cilSelect.value;
+    const servico = servicoSelect.value;
+
+    if (!cil || !servico) {
+      resumo.classList.remove('show');
+      fallback.style.display = 'block';
+      return;
+    }
+
+    // Pega faixas de valores (usa dados do "Parte de Cima" como base para estimativa rápida)
+    let minVal = parseInt(cilOpt.dataset.min) || 0;
+    let maxVal = parseInt(cilOpt.dataset.max) || 0;
+
+    // Se for Motor Completo, multiplica por fator aproximado
+    if (servico === 'Motor Completo') {
+      minVal = Math.round(minVal * 2.2);
+      maxVal = Math.round(maxVal * 2.5);
+    } else if (servico === 'Diagnóstico') {
+      minVal = 80;
+      maxVal = 150;
+    }
+
+    const reservaMin = Math.round(minVal * 0.30);
+    const reservaMax = Math.round(maxVal * 0.30);
+
+    // Formatar moeda BR
+    const fmt = v => 'R$ ' + v.toLocaleString('pt-BR');
+
+    document.getElementById('r-servico').textContent = servico;
+    document.getElementById('r-cil').textContent = cil;
+    document.getElementById('r-faixa').textContent = fmt(minVal) + ' – ' + fmt(maxVal);
+    document.getElementById('r-total').textContent = fmt(reservaMin) + ' – ' + fmt(reservaMax);
+
+    // Pagamento badge
+    const pagEl = document.getElementById('r-pagamento');
+    if (pagamentoSelecionado) {
+      const labels = { cartao: '💳 Cartão', pix: '⚡ Pix', dinheiro: '💵 Dinheiro' };
+      pagEl.innerHTML = `<span class="badge-pagamento badge-${pagamentoSelecionado}">${labels[pagamentoSelecionado]}</span>`;
+    } else {
+      pagEl.textContent = 'Não selecionada ainda';
+    }
+
+    resumo.classList.add('show');
+    fallback.style.display = 'none';
+  }
+
+  // ── WhatsApp ──
+  function enviarWhatsApp() {
+    const nome    = document.getElementById('nome').value.trim();
+    const tel     = document.getElementById('tel').value.trim();
+    const moto    = document.getElementById('moto').value.trim();
+    const cilEl   = document.getElementById('cil');
+    const cil     = cilEl.value;
+    const servico = document.getElementById('servico').value;
+    const data    = document.getElementById('data').value;
+    const horario = document.getElementById('horario').value;
+    const obs     = document.getElementById('obs').value.trim();
+
+    if (!nome || !cil || !servico || !horario) {
+      alert('⚠️ Por favor, preencha pelo menos: Nome, Cilindrada, Serviço e Horário.');
+      return;
+    }
+
+    if (!pagamentoSelecionado) {
+      alert('⚠️ Selecione a forma de pagamento da reserva (Cartão, Pix ou Dinheiro).');
+      return;
+    }
+
+    // Calcular reserva
+    const cilOpt = cilEl.options[cilEl.selectedIndex];
+    let minVal = parseInt(cilOpt.dataset.min) || 0;
+    let maxVal = parseInt(cilOpt.dataset.max) || 0;
+    if (servico === 'Motor Completo') { minVal = Math.round(minVal * 2.2); maxVal = Math.round(maxVal * 2.5); }
+    else if (servico === 'Diagnóstico') { minVal = 80; maxVal = 150; }
+    const reservaMin = Math.round(minVal * 0.30);
+    const reservaMax = Math.round(maxVal * 0.30);
+    const fmt = v => 'R$ ' + v.toLocaleString('pt-BR');
+
+    const dataFormatada = data
+      ? new Date(data + 'T12:00:00').toLocaleDateString('pt-BR')
+      : 'A combinar';
+
+    const pagLabels = { cartao: 'Cartão (Débito/Crédito)', pix: 'Pix', dinheiro: 'Dinheiro (Presencial)' };
+    const pagLabel = pagLabels[pagamentoSelecionado];
+
+    const msg =
+`🔧 *AGENDAMENTO — FAZER MOTOR*
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+👤 *Cliente:* ${nome}
+📞 *Telefone:* ${tel || 'Não informado'}
+🏍️ *Moto:* ${moto || 'Não informado'}
+⚙️ *Cilindrada:* ${cil}
+🛠️ *Serviço:* ${servico}
+📅 *Data:* ${dataFormatada}
+🕐 *Horário:* ${horario}
+${obs ? `📝 *Observações:* ${obs}\n` : ''}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💰 *RESERVA DE 30% (obrigatória)*
+• Faixa estimada do serviço: ${fmt(minVal)} – ${fmt(maxVal)}
+• *Valor da reserva: ${fmt(reservaMin)} – ${fmt(reservaMax)}*
+• Forma de pagamento escolhida: *${pagLabel}*
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ℹ️ *Política de reserva:*
+✔️ O valor pago agora será descontado integralmente no total do serviço.
+❌ A reserva *não é reembolsável* em caso de desistência.
+🔄 Reagendamento sem custo com aviso de 24h de antecedência.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Aguardo confirmação e instruções de pagamento da reserva! 🤝`;
+
+    // 🔴 Substitua pelo número real da mecânica (apenas dígitos com DDI)
+    const numero = '5585999999999';
+    window.open('https://wa.me/' + numero + '?text=' + encodeURIComponent(msg), '_blank');
+  }
+
+  // ── Scroll reveal ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.10 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── Set min date ──
+  const inp = document.getElementById('data');
+  inp.min = new Date().toISOString().split('T')[0];
+
+  // Esconde fallback inicialmente se não há seleção
+  document.getElementById('btn-fallback').style.display = 'block';
+</script>
+</body>
+</html>

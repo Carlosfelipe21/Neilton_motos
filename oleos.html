@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Óleos de Motor – Neilton Motos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================
+   VARIABLES & RESET
+============================================ */
+:root {
+  --red:        #CC0000;
+  --red-hot:    #FF1A1A;
+  --red-glow:   #FF000066;
+  --wine:       #6B0000;
+  --wine-deep:  #3D0000;
+  --black:      #080808;
+  --black-card: #111111;
+  --black-mid:  #1A1A1A;
+  --white:      #F5F5F5;
+  --white-dim:  #AAAAAA;
+  --chrome:     #C0C0C0;
+  --chrome-dim: #888888;
+  --gold:       #D4AF37;
+  --gold-dim:   #A08020;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-ui:      'Rajdhani', sans-serif;
+  --font-tech:    'Orbitron', sans-serif;
+
+  --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+  --glow-red: 0 0 18px #CC000088, 0 0 40px #CC000033;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+/* noise overlay */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.35;
+}
+
+/* ============================================
+   HERO / ENTRANCE
+============================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 80px 24px;
+  text-align: center;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 100% 70% at 50% 120%, #6B000060 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 10% 30%, #CC000018 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 90% 10%, #CC000018 0%, transparent 60%),
+    linear-gradient(170deg, #0D0000 0%, #050000 40%, #000000 100%);
+}
+
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(#CC000008 1px, transparent 1px),
+    linear-gradient(90deg, #CC000008 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+}
+
+.hero-scan {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 0%, #CC000008 50%, transparent 100%);
+  background-size: 100% 6px;
+  animation: scan 10s linear infinite;
+  pointer-events: none;
+}
+@keyframes scan {
+  0%   { background-position: 0 -100vh; }
+  100% { background-position: 0 200vh; }
+}
+
+/* corner brackets */
+.hero::before, .hero::after {
+  content: '';
+  position: absolute;
+  width: 80px; height: 80px;
+  border-style: solid;
+  border-color: var(--red);
+  border-width: 0;
+  opacity: 0.6;
+  z-index: 2;
+}
+.hero::before { top: 24px; left: 24px; border-top-width: 2px; border-left-width: 2px; }
+.hero::after  { bottom: 24px; right: 24px; border-bottom-width: 2px; border-right-width: 2px; }
+
+.hero-content { position: relative; z-index: 3; }
+
+.hero-eyebrow {
+  font-family: var(--font-tech);
+  font-size: 0.6rem;
+  letter-spacing: 6px;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  animation: fadeDown 0.8s ease both;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: '';
+  flex: 1; max-width: 80px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--red));
+}
+.hero-eyebrow::after { background: linear-gradient(90deg, var(--red), transparent); }
+
+/* animated oil drop icon */
+.hero-icon-wrap {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 32px;
+  animation: fadeDown 0.9s ease 0.1s both;
+}
+
+.oil-drop-svg {
+  width: 120px; height: 120px;
+  filter: drop-shadow(0 0 30px #CC000099) drop-shadow(0 0 80px #CC000033);
+  animation: float 4s ease-in-out infinite;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-14px); }
+}
+
+.hero-ring {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  border: 1px solid #CC000044;
+  animation: spin-ring 15s linear infinite;
+  pointer-events: none;
+}
+.hero-ring::before {
+  content: '';
+  position: absolute;
+  top: -4px; left: 50%;
+  width: 7px; height: 7px;
+  background: var(--red);
+  border-radius: 50%;
+  box-shadow: 0 0 14px var(--red);
+}
+.hero-ring-2 {
+  width: 210px; height: 210px;
+  border-color: #CC000022;
+  animation-duration: 25s;
+  animation-direction: reverse;
+}
+@keyframes spin-ring {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 12vw, 9rem);
+  letter-spacing: 4px;
+  line-height: 0.9;
+  color: var(--white);
+  text-shadow: 0 0 60px #CC000044;
+  animation: fadeDown 0.9s ease 0.2s both;
+}
+.hero-title span { color: var(--red-hot); text-shadow: 0 0 40px #FF000077; }
+
+.hero-subtitle {
+  font-family: var(--font-ui);
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  font-weight: 600;
+  color: var(--chrome);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-top: 16px;
+  animation: fadeDown 0.9s ease 0.3s both;
+}
+
+.hero-desc {
+  max-width: 560px;
+  margin: 24px auto 0;
+  font-size: 1rem;
+  color: var(--white-dim);
+  line-height: 1.7;
+  animation: fadeDown 0.9s ease 0.4s both;
+}
+
+.hero-badges {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  justify-content: center;
+  margin-top: 32px;
+  animation: fadeDown 0.9s ease 0.5s both;
+}
+.hero-badge {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 18px;
+  border: 1px solid #CC000044;
+  border-radius: 40px;
+  background: #CC000011;
+  font-family: var(--font-tech);
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  color: var(--chrome);
+  text-transform: uppercase;
+}
+.hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); box-shadow: 0 0 8px var(--red); }
+
+.scroll-cta {
+  margin-top: 48px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  animation: fadeDown 0.9s ease 0.6s both;
+  cursor: pointer;
+}
+.scroll-cta span {
+  font-family: var(--font-tech);
+  font-size: 0.55rem;
+  letter-spacing: 4px;
+  color: var(--chrome-dim);
+}
+.scroll-arrow {
+  width: 30px; height: 30px;
+  border: 1px solid #CC000055;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  animation: bounce 2s ease-in-out infinite;
+}
+.scroll-arrow svg { width: 14px; height: 14px; fill: var(--red); }
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(8px); }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   FILTER BAR
+============================================ */
+.filter-section {
+  position: sticky; top: 0;
+  z-index: 50;
+  background: #080808ee;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #CC000033;
+  padding: 16px 24px;
+}
+
+.filter-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.filter-label {
+  font-family: var(--font-tech);
+  font-size: 0.55rem;
+  letter-spacing: 3px;
+  color: var(--chrome-dim);
+  text-transform: uppercase;
+  margin-right: 4px;
+}
+
+.filter-btn {
+  padding: 8px 20px;
+  border-radius: 4px;
+  border: 1px solid #CC000033;
+  background: transparent;
+  color: var(--white-dim);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.filter-btn::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--transition);
+  z-index: -1;
+}
+.filter-btn:hover, .filter-btn.active {
+  border-color: var(--red);
+  color: var(--white);
+  box-shadow: 0 0 16px #CC000033;
+}
+.filter-btn.active::before { transform: scaleX(1); }
+
+.filter-btn.v10 { border-color: #0066CC44; }
+.filter-btn.v10.active { border-color: #0099FF; background: #0066CC; box-shadow: 0 0 16px #0066CC55; }
+.filter-btn.v10.active::before { background: #0066CC; }
+
+.filter-btn.v20 { border-color: #CC660044; }
+.filter-btn.v20.active { border-color: #FF8800; background: #CC5500; box-shadow: 0 0 16px #CC550055; }
+.filter-btn.v20.active::before { background: #CC5500; }
+
+.cart-btn-wrap {
+  position: relative;
+}
+.cart-float-btn {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 22px;
+  background: var(--red);
+  border: none;
+  border-radius: 4px;
+  color: var(--white);
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  box-shadow: var(--glow-red);
+  transition: all var(--transition);
+}
+.cart-float-btn:hover { background: var(--red-hot); transform: translateY(-1px); }
+.cart-badge {
+  display: none;
+  position: absolute;
+  top: -6px; right: -6px;
+  width: 20px; height: 20px;
+  background: var(--white);
+  color: var(--red);
+  border-radius: 50%;
+  font-family: var(--font-tech);
+  font-size: 0.6rem;
+  font-weight: 700;
+  align-items: center;
+  justify-content: center;
+}
+.cart-badge.show { display: flex; }
+
+/* ============================================
+   OILS GRID
+============================================ */
+.oils-section {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.section-eyebrow {
+  font-family: var(--font-tech);
+  font-size: 0.58rem;
+  letter-spacing: 5px;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: 3px;
+  line-height: 1;
+}
+.section-divider {
+  display: flex; align-items: center; gap: 16px;
+  margin-top: 16px;
+  justify-content: center;
+}
+.section-divider::before, .section-divider::after {
+  content: '';
+  flex: 1; max-width: 120px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--red));
+}
+.section-divider::after { background: linear-gradient(90deg, var(--red), transparent); }
+.div-diamond {
+  width: 8px; height: 8px;
+  background: var(--red);
+  transform: rotate(45deg);
+  box-shadow: 0 0 10px var(--red);
+}
+
+.viscosity-label {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 28px;
+  margin-top: 48px;
+}
+.viscosity-label:first-of-type { margin-top: 0; }
+.viscosity-tag {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 3px;
+}
+.viscosity-tag.w10 { background: linear-gradient(135deg, #003366, #0055AA); border: 1px solid #0077CC55; color: #66BBFF; }
+.viscosity-tag.w20 { background: linear-gradient(135deg, #553300, #884400); border: 1px solid #CC660055; color: #FFAA44; }
+.viscosity-desc {
+  font-size: 0.85rem;
+  color: var(--white-dim);
+  max-width: 420px;
+}
+
+.oils-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: 20px;
+}
+
+/* ============================================
+   OIL CARD
+============================================ */
+.oil-card {
+  background: var(--black-card);
+  border: 1px solid #CC000022;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  transition: all var(--transition);
+  display: flex; flex-direction: column;
+  animation: cardIn 0.5s ease both;
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.oil-card:hover {
+  border-color: var(--red);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 40px #CC000033, 0 0 0 1px #CC000033;
+}
+.oil-card.out-of-stock {
+  opacity: 0.55;
+  filter: grayscale(0.4);
+}
+.oil-card.out-of-stock:hover {
+  transform: none;
+  border-color: #CC000022;
+  box-shadow: none;
+}
+.oil-card.hidden { display: none; }
+
+/* image area */
+.card-img-wrap {
+  position: relative;
+  height: 200px;
+  background: linear-gradient(135deg, #0D0000, #1A0000);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.card-img-wrap::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 60% at 50% 50%, #CC000018, transparent);
+}
+.card-img {
+  height: 160px;
+  width: auto;
+  object-fit: contain;
+  position: relative; z-index: 1;
+  transition: transform var(--transition);
+  filter: drop-shadow(0 8px 20px #00000088);
+}
+.oil-card:hover .card-img { transform: scale(1.06); }
+
+.card-viscosity-badge {
+  position: absolute;
+  top: 12px; left: 12px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-family: var(--font-tech);
+  font-size: 0.55rem;
+  letter-spacing: 2px;
+  font-weight: 700;
+  z-index: 2;
+}
+.badge-10 { background: #0055AA; color: #99DDFF; border: 1px solid #0077CC66; }
+.badge-20 { background: #884400; color: #FFCC88; border: 1px solid #CC660066; }
+
+.card-quality-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-family: var(--font-tech);
+  font-size: 0.52rem;
+  letter-spacing: 1px;
+  z-index: 2;
+}
+.badge-semi { background: #1A1A00; color: #DDCC00; border: 1px solid #AAAA0066; }
+.badge-min  { background: #001A0D; color: #00DDAA; border: 1px solid #00AA7766; }
+
+.out-of-stock-overlay {
+  display: none;
+  position: absolute; inset: 0;
+  background: #000000AA;
+  align-items: center; justify-content: center;
+  z-index: 3;
+}
+.oil-card.out-of-stock .out-of-stock-overlay { display: flex; }
+.out-of-stock-label {
+  padding: 8px 20px;
+  background: #CC000033;
+  border: 1px solid var(--red);
+  border-radius: 4px;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+  color: var(--red-hot);
+  text-shadow: 0 0 20px var(--red);
+}
+
+/* card body */
+.card-body {
+  padding: 20px;
+  display: flex; flex-direction: column; flex: 1;
+}
+
+.card-brand {
+  font-family: var(--font-tech);
+  font-size: 0.55rem;
+  letter-spacing: 3px;
+  color: var(--chrome-dim);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.card-name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  color: var(--white);
+  margin-bottom: 8px;
+  line-height: 1.1;
+}
+
+.card-price {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--chrome);
+  margin-bottom: 16px;
+}
+.price-from { font-size: 0.8rem; color: var(--chrome-dim); font-weight: 400; margin-right: 4px; }
+.price-range { color: var(--white); font-size: 1.1rem; }
+
+.card-tags {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-bottom: 16px;
+}
+.card-tag {
+  padding: 3px 10px;
+  border-radius: 3px;
+  font-family: var(--font-tech);
+  font-size: 0.5rem;
+  letter-spacing: 1px;
+  border: 1px solid #FFFFFF15;
+  color: var(--white-dim);
+  background: #FFFFFF08;
+}
+
+.card-note {
+  font-size: 0.8rem;
+  color: var(--white-dim);
+  line-height: 1.5;
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.card-add-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--wine-deep);
+  border: 1px solid var(--red);
+  border-radius: 4px;
+  color: var(--white);
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all var(--transition);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.card-add-btn:hover:not(:disabled) {
+  background: var(--red);
+  box-shadow: var(--glow-red);
+  transform: scale(1.01);
+}
+.card-add-btn:disabled {
+  opacity: 0.4; cursor: not-allowed;
+  border-color: #555;
+}
+.card-add-btn.in-cart {
+  background: #003300;
+  border-color: #00AA44;
+  color: #00DD66;
+}
+
+/* shine effect */
+.oil-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, #FFFFFF06, transparent);
+  transition: left 0.5s ease;
+  pointer-events: none;
+}
+.oil-card:hover::after { left: 150%; }
+
+/* ============================================
+   INFO BOX
+============================================ */
+.info-box {
+  max-width: 1300px;
+  margin: 0 auto 60px;
+  padding: 0 24px;
+}
+.info-inner {
+  background: linear-gradient(135deg, #0A0500, #0D0000);
+  border: 1px solid #CC000033;
+  border-radius: 8px;
+  padding: 28px 32px;
+  display: flex; gap: 20px; align-items: flex-start;
+}
+.info-icon { font-size: 2rem; flex-shrink: 0; margin-top: 2px; }
+.info-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.info-text { font-size: 0.9rem; color: var(--white-dim); line-height: 1.7; }
+.info-text strong { color: var(--white); }
+
+/* ============================================
+   CART SIDEBAR
+============================================ */
+.cart-overlay {
+  position: fixed; inset: 0;
+  background: #000000CC;
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  opacity: 0; pointer-events: none;
+  transition: opacity var(--transition);
+}
+.cart-overlay.visible { opacity: 1; pointer-events: all; }
+
+.cart-drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: min(440px, 100vw);
+  background: linear-gradient(180deg, #0D0000, #0A0000);
+  border-left: 1px solid #CC000044;
+  z-index: 201;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+.cart-drawer.open { transform: translateX(0); }
+
+.cart-header {
+  padding: 24px 24px 20px;
+  border-bottom: 1px solid #CC000033;
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(135deg, #110000, #0A0000);
+}
+.cart-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  letter-spacing: 3px;
+  color: var(--white);
+}
+.cart-close {
+  width: 40px; height: 40px;
+  border: 1px solid #CC000033;
+  border-radius: 4px;
+  color: var(--white-dim);
+  font-size: 1.2rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--transition);
+}
+.cart-close:hover { background: var(--red); border-color: var(--red); color: var(--white); }
+
+.cart-items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+.cart-empty {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 16px;
+  color: var(--white-dim);
+  text-align: center;
+  padding: 40px;
+}
+.cart-empty-icon { font-size: 3rem; opacity: 0.4; }
+.cart-empty-text { font-family: var(--font-ui); font-size: 1rem; font-weight: 600; letter-spacing: 1px; }
+
+.cart-item {
+  display: flex; gap: 12px; align-items: center;
+  background: #FFFFFF08;
+  border: 1px solid #FFFFFF0A;
+  border-radius: 6px;
+  padding: 12px;
+  transition: border-color var(--transition);
+}
+.cart-item:hover { border-color: #CC000033; }
+.cart-item-img { width: 56px; height: 56px; object-fit: contain; flex-shrink: 0; }
+.cart-item-info { flex: 1; min-width: 0; }
+.cart-item-name {
+  font-family: var(--font-ui);
+  font-weight: 700; font-size: 0.85rem;
+  color: var(--white);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cart-item-visc {
+  font-family: var(--font-tech);
+  font-size: 0.5rem; letter-spacing: 2px; color: var(--chrome-dim);
+}
+.cart-item-price { font-size: 0.85rem; font-weight: 700; color: var(--chrome); }
+.cart-item-qty {
+  display: flex; align-items: center; gap: 8px;
+}
+.qty-btn {
+  width: 26px; height: 26px;
+  border: 1px solid #CC000055;
+  border-radius: 3px;
+  color: var(--white);
+  font-size: 1rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--transition);
+}
+.qty-btn:hover { background: var(--red); border-color: var(--red); }
+.qty-val { font-family: var(--font-tech); font-size: 0.7rem; font-weight: 700; min-width: 20px; text-align: center; }
+.cart-item-remove {
+  color: #CC000088;
+  font-size: 1.1rem;
+  transition: color var(--transition);
+  padding: 4px;
+}
+.cart-item-remove:hover { color: var(--red-hot); }
+
+/* ============================================
+   CART PAYMENT & CHECKOUT
+============================================ */
+.cart-footer {
+  border-top: 1px solid #CC000033;
+  padding: 20px 24px;
+  background: #080808;
+  display: flex; flex-direction: column; gap: 16px;
+}
+
+.cart-total-row {
+  display: flex; justify-content: space-between; align-items: center;
+}
+.cart-total-label { font-family: var(--font-tech); font-size: 0.6rem; letter-spacing: 3px; color: var(--chrome-dim); }
+.cart-total-val { font-family: var(--font-display); font-size: 1.8rem; color: var(--white); }
+
+/* payment */
+.pay-section-title {
+  font-family: var(--font-tech);
+  font-size: 0.58rem; letter-spacing: 3px;
+  color: var(--chrome-dim); text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.pay-options {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+.pay-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 12px 8px;
+  border: 1px solid #FFFFFF1A;
+  border-radius: 5px;
+  background: #FFFFFF06;
+  color: var(--white-dim);
+  font-family: var(--font-ui);
+  font-size: 0.8rem; font-weight: 600;
+  transition: all var(--transition);
+}
+.pay-btn .pay-icon { font-size: 1.4rem; }
+.pay-btn:hover, .pay-btn.active { border-color: var(--red); background: #CC000015; color: var(--white); }
+.pay-btn.active { box-shadow: 0 0 12px #CC000033; }
+
+/* scheduling */
+.schedule-section {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.schedule-warning {
+  display: flex; gap: 10px; align-items: flex-start;
+  background: #1A0A00;
+  border: 1px solid #CC660033;
+  border-radius: 5px;
+  padding: 10px 12px;
+  font-size: 0.8rem; color: #FFCC88; line-height: 1.4;
+}
+.schedule-warning .warn-icon { font-size: 1rem; flex-shrink: 0; }
+
+.schedule-time-label {
+  font-family: var(--font-tech);
+  font-size: 0.55rem; letter-spacing: 2px; color: var(--chrome-dim);
+  margin-bottom: 6px;
+}
+.time-slots {
+  display: flex; flex-wrap: wrap; gap: 6px;
+}
+.time-slot {
+  padding: 6px 12px;
+  border: 1px solid #FFFFFF15;
+  border-radius: 4px;
+  background: #FFFFFF06;
+  color: var(--white-dim);
+  font-family: var(--font-tech);
+  font-size: 0.58rem; letter-spacing: 1px;
+  transition: all var(--transition);
+}
+.time-slot:hover:not(.disabled), .time-slot.selected {
+  border-color: var(--red); background: #CC000020; color: var(--white);
+}
+.time-slot.disabled { opacity: 0.35; cursor: not-allowed; }
+
+.checkout-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #006600, #00AA00);
+  border: 1px solid #00CC0066;
+  border-radius: 5px;
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 3px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  transition: all var(--transition);
+  box-shadow: 0 0 20px #00660033;
+}
+.checkout-btn:hover:not(:disabled) { background: linear-gradient(135deg, #007700, #00CC00); box-shadow: 0 0 30px #00880055; }
+.checkout-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ============================================
+   FOOTER SECTION
+============================================ */
+.page-footer {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(170deg, #0D0000, #050000);
+  border-top: 1px solid #CC000033;
+  padding: 80px 24px 40px;
+  text-align: center;
+}
+
+.footer-fire-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 100%, #CC000022, transparent);
+  pointer-events: none;
+}
+
+.footer-tagline {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 6vw, 4rem);
+  letter-spacing: 6px;
+  color: var(--white);
+  line-height: 1;
+  position: relative; z-index: 2;
+  margin-bottom: 8px;
+}
+.footer-tagline span { color: var(--red-hot); text-shadow: 0 0 40px var(--red-glow); }
+
+.footer-sub {
+  font-family: var(--font-tech);
+  font-size: 0.6rem;
+  letter-spacing: 5px;
+  color: var(--chrome-dim);
+  text-transform: uppercase;
+  position: relative; z-index: 2;
+  margin-bottom: 40px;
+}
+
+.footer-gear {
+  position: relative; z-index: 2;
+  width: 100px; height: 100px;
+  margin: 0 auto 32px;
+  opacity: 0.15;
+  animation: spin-ring 30s linear infinite;
+}
+
+.back-btn {
+  position: relative; z-index: 2;
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 16px 40px;
+  background: linear-gradient(135deg, var(--wine-deep), var(--wine));
+  border: 2px solid var(--red);
+  border-radius: 4px;
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 4px;
+  box-shadow: var(--glow-red), inset 0 1px 0 #FFFFFF15;
+  transition: all var(--transition);
+}
+.back-btn:hover {
+  background: linear-gradient(135deg, var(--red), #990000);
+  box-shadow: 0 0 40px #CC000088, 0 0 80px #CC000033;
+  transform: translateY(-2px);
+}
+
+.footer-copy {
+  position: relative; z-index: 2;
+  margin-top: 40px;
+  font-family: var(--font-tech);
+  font-size: 0.52rem;
+  letter-spacing: 2px;
+  color: #555;
+  text-transform: uppercase;
+}
+
+/* ============================================
+   RESPONSIVE
+============================================ */
+@media (max-width: 768px) {
+  .hero { padding: 60px 16px; }
+  .hero::before, .hero::after { width: 50px; height: 50px; top: 16px; left: 16px; }
+  .hero::after { bottom: 16px; right: 16px; }
+  .hero-ring { width: 150px; height: 150px; }
+  .hero-ring-2 { width: 180px; height: 180px; }
+  .filter-inner { gap: 10px; }
+  .filter-section { padding: 12px 16px; }
+  .oils-section { padding: 40px 16px; }
+  .oils-grid { grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 14px; }
+  .info-inner { flex-direction: column; gap: 12px; padding: 20px; }
+  .cart-drawer { width: 100vw; }
+  .pay-options { grid-template-columns: 1fr 1fr 1fr; }
+  .page-footer { padding: 60px 16px 32px; }
+  .viscosity-label { flex-direction: column; align-items: flex-start; gap: 8px; }
+}
+
+@media (max-width: 480px) {
+  .hero-title { letter-spacing: 2px; }
+  .hero-badges { gap: 8px; }
+  .hero-badge { padding: 6px 12px; }
+  .oils-grid { grid-template-columns: 1fr; }
+  .filter-group { gap: 6px; }
+  .filter-btn { padding: 7px 14px; font-size: 0.8rem; }
+  .pay-options { grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+}
+
+/* ============================================
+   REVEAL ANIMATION
+============================================ */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-scan"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">⬡ Neilton Motos ⬡ Lubrificantes Premium</div>
+
+    <div class="hero-icon-wrap">
+      <div class="hero-ring"></div>
+      <div class="hero-ring hero-ring-2"></div>
+      <!-- Oil drop SVG -->
+      <svg class="oil-drop-svg" viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="oilGrad" cx="40%" cy="35%" r="70%">
+            <stop offset="0%" stop-color="#FF4444"/>
+            <stop offset="40%" stop-color="#CC0000"/>
+            <stop offset="100%" stop-color="#440000"/>
+          </radialGradient>
+          <radialGradient id="shineGrad" cx="30%" cy="25%" r="50%">
+            <stop offset="0%" stop-color="#FFFFFF44"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="4" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <path d="M60 8 C60 8 14 55 14 82 C14 109 34 128 60 128 C86 128 106 109 106 82 C106 55 60 8 60 8Z" fill="url(#oilGrad)" filter="url(#glow)"/>
+        <path d="M60 8 C60 8 14 55 14 82 C14 109 34 128 60 128 C86 128 106 109 106 82 C106 55 60 8 60 8Z" fill="url(#shineGrad)"/>
+        <path d="M38 88 C38 74 46 62 55 55" stroke="#FF666688" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="74" cy="60" r="4" fill="#FF666644"/>
+      </svg>
+    </div>
+
+    <h1 class="hero-title">ÓLEOS<br><span>MOTOR</span></h1>
+    <p class="hero-subtitle">Linha Completa · Motos Nacionais</p>
+    <p class="hero-desc">Lubrificantes originais para sua moto rodar com potência máxima e vida útil prolongada. Escolha a viscosidade certa para o seu modelo.</p>
+
+    <div class="hero-badges">
+      <div class="hero-badge"><span class="dot"></span>10W30 Semissintético</div>
+      <div class="hero-badge"><span class="dot"></span>20W50 Mineral</div>
+      <div class="hero-badge"><span class="dot"></span>25 Marcas Premium</div>
+    </div>
+
+    <div class="scroll-cta" onclick="document.querySelector('.filter-section').scrollIntoView({behavior:'smooth'})">
+      <span>Ver Catálogo</span>
+      <div class="scroll-arrow">
+        <svg viewBox="0 0 14 14"><path d="M7 2v10M2 7l5 5 5-5"/><style>path{fill:none;stroke:#CC0000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}</style></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FILTER BAR ============ -->
+<div class="filter-section" id="filterBar">
+  <div class="filter-inner">
+    <div class="filter-group">
+      <span class="filter-label">Filtrar:</span>
+      <button class="filter-btn active" data-filter="all" onclick="setFilter(this,'all')">Todos</button>
+      <button class="filter-btn v10" data-filter="10w30" onclick="setFilter(this,'10w30')">10W30</button>
+      <button class="filter-btn v20" data-filter="20w50" onclick="setFilter(this,'20w50')">20W50</button>
+      <button class="filter-btn" data-filter="semi" onclick="setFilter(this,'semi')">Semissintético</button>
+      <button class="filter-btn" data-filter="mineral" onclick="setFilter(this,'mineral')">Mineral</button>
+    </div>
+    <div class="cart-btn-wrap">
+      <button class="cart-float-btn" onclick="openCart()">
+        🛒 Carrinho
+      </button>
+      <div class="cart-badge" id="cartBadge">0</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ OILS SECTION ============ -->
+<section class="oils-section">
+
+  <!-- 10W30 header -->
+  <div class="viscosity-label reveal" id="label10">
+    <div class="viscosity-tag w10">🔵 10W30</div>
+    <p class="viscosity-desc">Recomendados para Honda CG 160, Biz e Bros a partir de 2011/2012 e outros modelos recentes. Semissintéticos para maior proteção.</p>
+  </div>
+
+  <div class="oils-grid" id="grid10"></div>
+
+  <!-- 20W50 header -->
+  <div class="viscosity-label reveal" id="label20" style="margin-top:60px;">
+    <div class="viscosity-tag w20">🟠 20W50</div>
+    <p class="viscosity-desc">Indicados para Yamaha YBR, Fazer, modelos Honda até 2010, Suzuki e motos de maior desgaste. Minerais com formulação robusta.</p>
+  </div>
+
+  <div class="oils-grid" id="grid20"></div>
+
+</section>
+
+<!-- ============ TIP BOX ============ -->
+<div class="info-box reveal">
+  <div class="info-inner">
+    <div class="info-icon">⚠️</div>
+    <div>
+      <div class="info-title">DICA IMPORTANTE DO MECÂNICO</div>
+      <p class="info-text">
+        Antes de realizar a troca, consulte sempre o <strong>manual do proprietário</strong> da sua moto.
+        Garanta que você está escolhendo a <strong>viscosidade correta</strong> (10W30 ou 20W50) e a
+        <strong>classificação API</strong> (SL, SM ou SN) exigidas pelo fabricante.
+        Uma escolha errada pode comprometer o motor da sua moto.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PAGE FOOTER ============ -->
+<footer class="page-footer reveal">
+  <div class="footer-fire-bg"></div>
+
+  <svg class="footer-gear" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="20" stroke="#CC0000" stroke-width="3"/>
+    <circle cx="50" cy="50" r="8" stroke="#CC0000" stroke-width="2"/>
+    <g stroke="#CC0000" stroke-width="3" stroke-linecap="round">
+      <line x1="50" y1="20" x2="50" y2="12"/><line x1="50" y1="88" x2="50" y2="80"/>
+      <line x1="20" y1="50" x2="12" y2="50"/><line x1="88" y1="50" x2="80" y2="50"/>
+      <line x1="29.3" y1="29.3" x2="23.7" y2="23.7"/><line x1="76.3" y1="76.3" x2="70.7" y2="70.7"/>
+      <line x1="70.7" y1="29.3" x2="76.3" y2="23.7"/><line x1="23.7" y1="76.3" x2="29.3" y2="70.7"/>
+    </g>
+  </svg>
+
+  <div class="footer-tagline">MANTÉM<br><span>NA ESTRADA</span></div>
+  <div class="footer-sub">Neilton Motos · Mecânica Especializada · Fortaleza – CE</div>
+
+  <a href="index.html" class="back-btn" onclick="history.back(); return false;">
+    ← VOLTAR AO INÍCIO
+  </a>
+
+  <div class="footer-copy">© 2025 Neilton Motos · Rua Canguru, 281A · (85) 99673-9891</div>
+</footer>
+
+<!-- ============ CART OVERLAY ============ -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+
+<!-- ============ CART DRAWER ============ -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <div class="cart-title">🛒 CARRINHO</div>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+
+  <div class="cart-items" id="cartItems">
+    <!-- populated by JS -->
+  </div>
+
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <!-- Total -->
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total Estimado</span>
+      <span class="cart-total-val" id="cartTotal">R$ 0,00</span>
+    </div>
+
+    <!-- Payment -->
+    <div>
+      <div class="pay-section-title">Forma de Pagamento</div>
+      <div class="pay-options">
+        <button class="pay-btn" onclick="selectPay(this,'Cartão')" data-pay="Cartão">
+          <span class="pay-icon">💳</span>
+          <span>Cartão</span>
+        </button>
+        <button class="pay-btn" onclick="selectPay(this,'Pix')" data-pay="Pix">
+          <span class="pay-icon">📲</span>
+          <span>Pix</span>
+        </button>
+        <button class="pay-btn" onclick="selectPay(this,'Dinheiro')" data-pay="Dinheiro">
+          <span class="pay-icon">💵</span>
+          <span>Dinheiro</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Scheduling -->
+    <div class="schedule-section">
+      <div class="pay-section-title">⏱ Agendar Horário da Troca</div>
+      <div class="schedule-warning">
+        <span class="warn-icon">⚠️</span>
+        <span><strong>ATENÇÃO:</strong> A troca de óleo deve ser realizada <strong>no mesmo dia da compra</strong>. Marque seu horário abaixo!</span>
+      </div>
+      <div class="schedule-time-label">Selecione o horário para hoje</div>
+      <div class="time-slots" id="timeSlots">
+        <!-- generated by JS -->
+      </div>
+    </div>
+
+    <!-- Checkout -->
+    <button class="checkout-btn" id="checkoutBtn" onclick="sendWhatsApp()" disabled>
+      <span>📲</span> ENVIAR PELO WHATSAPP
+    </button>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+/* =====================================================
+   OILS DATA — set esgotado: true to mark as out of stock
+===================================================== */
+const OILS_10W30 = [
+  {
+    id: 1, name: "Pro Honda 10W30", brand: "Honda", viscosity: "10W30", quality: "Semissintético",
+    priceMin: 35, priceMax: 45,
+    note: "Desenvolvido especificamente para motores Honda 4 tempos. Ideal para CG 160, Biz, Bros e demais modelos Honda a partir de 2011.",
+    imgUrl: "https://m.media-amazon.com/images/I/71JY5jPxsIL._AC_SL1500_.jpg",
+    tags: ["API SN", "JASO MA2", "Honda OEM"],
+    esgotado: true
+  },
+  {
+    id: 2, name: "Mobil Super Moto 10W30", brand: "Mobil", viscosity: "10W30", quality: "Semissintético",
+    priceMin: 30, priceMax: 40,
+    note: "Formulação semissintética da Mobil com excelente proteção contra desgaste e alta estabilidade térmica em temperaturas elevadas.",
+    imgUrl: "https://m.media-amazon.com/images/I/71cVFmGX5JL._AC_SL1500_.jpg",
+    tags: ["API SN", "JASO MA2", "Semissintético"],
+    esgotado: false
+  },
+  {
+    id: 3, name: "Motul 5000 10W30", brand: "Motul", viscosity: "10W30", quality: "Semissintético",
+    priceMin: 50, priceMax: 60,
+    note: "Tecnologia semissintética Motul com base Technosynthese®. Proteção superior para motores de alto desempenho e uso urbano intenso.",
+    imgUrl: "https://m.media-amazon.com/images/I/71V3nD5TpKL._AC_SL1500_.jpg",
+    tags: ["API SL/SJ", "JASO MA", "Technosynthese"],
+    esgotado: false
+  },
+  {
+    id: 4, name: "Castrol Actevo 10W30", brand: "Castrol", viscosity: "10W30", quality: "Semissintético",
+    priceMin: 35, priceMax: 45,
+    note: "Tecnologia TRIZONE da Castrol que protege simultaneamente motor, câmbio e embreagem. Excelente para motos de uso diário.",
+    imgUrl: "https://m.media-amazon.com/images/I/61mSwOwIGKL._AC_SL1500_.jpg",
+    tags: ["API SN", "JASO MA2", "TRIZONE"],
+    esgotado: false
+  },
+  {
+    id: 5, name: "Lubrax Moto 4 10W30", brand: "Lubrax", viscosity: "10W30", quality: "Semissintético",
+    priceMin: 28, priceMax: 35,
+    note: "Produto nacional da Petrobras Distribuidora. Ótimo custo-benefício para motos Honda modernas com exigência de 10W30.",
+    imgUrl: "https://m.media-amazon.com/images/I/61A9PkY6-HL._AC_SL1500_.jpg",
+    tags: ["API SN", "JASO MA2", "Petrobras"],
+    esgotado: false
+  },
+  {
+    id: 6, name: "Ipiranga Moto Performance 10W30", brand: "Ipiranga", viscosity: "10W30", quality: "Semissintético",
+    priceMin: 30, priceMax: 38,
+    note: "Desenvolvido para proporcionar alta proteção ao motor com partidas a frio rápidas e eficientes. Produto nacional de qualidade.",
+    imgUrl: "https://m.media-amazon.com/images/I/613s2gfxnRL._AC_SL1500_.jpg",
+    tags: ["API SN", "JASO MA", "Nacional"],
+    esgotado: false
+  },
+  {
+    id: 7, name: "Yamalube 10W30", brand: "Yamaha", viscosity: "10W30", quality: "Semissintético",
+    priceMin: 40, priceMax: 50,
+    note: "Óleo oficial da Yamaha Motor, formulado para atender as especificações técnicas dos modelos mais recentes com embreagem a óleo.",
+    imgUrl: "https://m.media-amazon.com/images/I/71A0CsmNg4L._AC_SL1500_.jpg",
+    tags: ["API SN", "JASO MA2", "Yamaha OEM"],
+    esgotado: false
+  },
+  {
+    id: 8, name: "Shell Advance AX7 10W30", brand: "Shell", viscosity: "10W30", quality: "Semissintético",
+    priceMin: 35, priceMax: 45,
+    note: "Tecnologia Active Cleansing da Shell que mantém o motor limpo e protegido. Alto desempenho para uso urbano e estrada.",
+    imgUrl: "https://m.media-amazon.com/images/I/71sdvMJu+ZL._AC_SL1500_.jpg",
+    tags: ["API SN", "JASO MA2", "Active Cleansing"],
+    esgotado: false
+  },
+  {
+    id: 9, name: "Havoline Moto 4T 10W30", brand: "Havoline", viscosity: "10W30", quality: "Semissintético",
+    priceMin: 30, priceMax: 38,
+    note: "Óleo semissintético com tecnologia Deposit Shield que previne a formação de depósitos e prolonga a vida útil do motor.",
+    imgUrl: "https://m.media-amazon.com/images/I/61cEQ1RL0OL._AC_SL1500_.jpg",
+    tags: ["API SN", "JASO MA2", "Deposit Shield"],
+    esgotado: false
+  },
+  {
+    id: 10, name: "Repsol Moto Sintético 10W30", brand: "Repsol", viscosity: "10W30", quality: "Semissintético",
+    priceMin: 55, priceMax: 65,
+    note: "Alta performance com tecnologia da marca oficial da Honda Racing. Máxima proteção e estabilidade mesmo em condições extremas.",
+    imgUrl: "https://m.media-amazon.com/images/I/61J6Kpf65bL._AC_SL1500_.jpg",
+    tags: ["API SN", "JASO MA2", "Racing Tech"],
+    esgotado: false
+  },
+  {
+    id: 11, name: "Elf Moto 4 Road 10W30", brand: "Elf", viscosity: "10W30", quality: "Semissintético",
+    priceMin: 40, priceMax: 50,
+    note: "Marca parceira da Motul, com base semissintética de alto desempenho. Excelente para quem roda muito em cidade e estrada.",
+    imgUrl: "https://m.media-amazon.com/images/I/71k3kXLCQ+L._AC_SL1500_.jpg",
+    tags: ["API SN", "JASO MA2", "Elf Racing"],
+    esgotado: false
+  },
+  {
+    id: 12, name: "Petronas Sprinta F500 10W30", brand: "Petronas", viscosity: "10W30", quality: "Semissintético",
+    priceMin: 35, priceMax: 42,
+    note: "Desenvolvido com a Yamaha Motor, combina tecnologia de base sintética para proteção superior de motores 4 tempos modernos.",
+    imgUrl: "https://m.media-amazon.com/images/I/712N-oqb0eL._AC_SL1500_.jpg",
+    tags: ["API SN", "JASO MA2", "Yamaha Tech"],
+    esgotado: false
+  }
+];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const OILS_20W50 = [
+  {
+    id: 13, name: "Mobil Super Moto 20W50", brand: "Mobil", viscosity: "20W50", quality: "Mineral",
+    priceMin: 25, priceMax: 35,
+    note: "Óleo mineral de alta qualidade para motos Yamaha e Honda antigas. Excelente custo-benefício para uso diário e entregadores.",
+    imgUrl: "https://m.media-amazon.com/images/I/71cVFmGX5JL._AC_SL1500_.jpg",
+    tags: ["API SL", "JASO MA", "Mineral"],
+    esgotado: false
+  },
+  {
+    id: 14, name: "Yamalube 4T 20W50", brand: "Yamaha", viscosity: "20W50", quality: "Mineral",
+    priceMin: 35, priceMax: 45,
+    note: "Óleo original Yamaha Motor para modelos YBR, Factor e Fazer. Formulado para proteger embreagem a óleo e caixa de câmbio.",
+    imgUrl: "https://m.media-amazon.com/images/I/71A0CsmNg4L._AC_SL1500_.jpg",
+    tags: ["API SG", "JASO MA", "Yamaha OEM"],
+    esgotado: false
+  },
+  {
+    id: 15, name: "Castrol Actevo 20W50", brand: "Castrol", viscosity: "20W50", quality: "Mineral",
+    priceMin: 30, priceMax: 40,
+    note: "Tecnologia TRIZONE mineral que garante proteção completa para motor, câmbio e embreagem. Ideal para motos de uso intenso.",
+    imgUrl: "https://m.media-amazon.com/images/I/61mSwOwIGKL._AC_SL1500_.jpg",
+    tags: ["API SL", "JASO MA", "TRIZONE"],
+    esgotado: false
+  },
+  {
+    id: 16, name: "Lubrax Moto 4 20W50", brand: "Lubrax", viscosity: "20W50", quality: "Mineral",
+    priceMin: 25, priceMax: 32,
+    note: "Produto da Petrobras, excelente desempenho para motos mais antigas que exigem 20W50. Ótima proteção a custo acessível.",
+    imgUrl: "https://m.media-amazon.com/images/I/61A9PkY6-HL._AC_SL1500_.jpg",
+    tags: ["API SL", "JASO MA", "Petrobras"],
+    esgotado: false
+  },
+  {
+    id: 17, name: "Ipiranga Moto Proteção 20W50", brand: "Ipiranga", viscosity: "20W50", quality: "Mineral",
+    priceMin: 24, priceMax: 30,
+    note: "Formulado para motores 4 tempos de motos nacionais. Máxima proteção contra desgaste com custo muito acessível.",
+    imgUrl: "https://m.media-amazon.com/images/I/613s2gfxnRL._AC_SL1500_.jpg",
+    tags: ["API SL", "JASO MA", "Nacional"],
+    esgotado: false
+  },
+  {
+    id: 18, name: "Motul 3000 20W50", brand: "Motul", viscosity: "20W50", quality: "Mineral",
+    priceMin: 40, priceMax: 50,
+    note: "Base mineral de alta qualidade com aditivos Motul. Proteção robusta para motores de alta cilindrada e uso pesado.",
+    imgUrl: "https://m.media-amazon.com/images/I/71V3nD5TpKL._AC_SL1500_.jpg",
+    tags: ["API SL", "JASO MA", "Motul Pro"],
+    esgotado: false
+  },
+  {
+    id: 19, name: "Shell Advance AX5 20W50", brand: "Shell", viscosity: "20W50", quality: "Mineral",
+    priceMin: 28, priceMax: 35,
+    note: "Fórmula mineral com tecnologia Shell de limpeza ativa. Mantém o motor protegido contra depósitos e oxidação.",
+    imgUrl: "https://m.media-amazon.com/images/I/71sdvMJu+ZL._AC_SL1500_.jpg",
+    tags: ["API SL", "JASO MA", "Active Cleansing"],
+    esgotado: false
+  },
+  {
+    id: 20, name: "Havoline Premium 4T 20W50", brand: "Havoline", viscosity: "20W50", quality: "Mineral",
+    priceMin: 25, priceMax: 32,
+    note: "Óleo mineral premium com Deposit Shield para motores com maior quilometragem. Protege e prolonga a vida do motor.",
+    imgUrl: "https://m.media-amazon.com/images/I/61cEQ1RL0OL._AC_SL1500_.jpg",
+    tags: ["API SL", "JASO MA", "Deposit Shield"],
+    esgotado: false
+  },
+  {
+    id: 21, name: "Elf Moto 4 Cruise 20W50", brand: "Elf", viscosity: "20W50", quality: "Mineral",
+    priceMin: 30, priceMax: 38,
+    note: "Formulado para motos de passeio urbano com motor de alto desgaste. Estabilidade viscométrica excepcional em altas temperaturas.",
+    imgUrl: "https://m.media-amazon.com/images/I/71k3kXLCQ+L._AC_SL1500_.jpg",
+    tags: ["API SL", "JASO MA", "Cruise Tech"],
+    esgotado: false
+  },
+  {
+    id: 22, name: "Petronas Sprinta F300 20W50", brand: "Petronas", viscosity: "20W50", quality: "Mineral",
+    priceMin: 26, priceMax: 33,
+    note: "Óleo mineral com tecnologia de ponta para motos clássicas e de maior uso. Proteção total e controle de temperatura.",
+    imgUrl: "https://m.media-amazon.com/images/I/712N-oqb0eL._AC_SL1500_.jpg",
+    tags: ["API SL", "JASO MA", "Yamaha Approved"],
+    esgotado: false
+  },
+  {
+    id: 23, name: "Repsol Moto Town 20W50", brand: "Repsol", viscosity: "20W50", quality: "Mineral",
+    priceMin: 32, priceMax: 40,
+    note: "Mineral premium da Repsol para motos de uso urbano intenso. Alta proteção contra desgaste mesmo com trocas mais espaçadas.",
+    imgUrl: "https://m.media-amazon.com/images/I/61J6Kpf65bL._AC_SL1500_.jpg",
+    tags: ["API SL", "JASO MA", "Town Series"],
+    esgotado: false
+  },
+  {
+    id: 24, name: "Valvoline 4T 20W50", brand: "Valvoline", viscosity: "20W50", quality: "Mineral",
+    priceMin: 28, priceMax: 35,
+    note: "Marca centenária americana com excelente reputação. Óleo mineral robusto com alta resistência à oxidação e desgaste.",
+    imgUrl: "https://m.media-amazon.com/images/I/71RB7GZEXLL._AC_SL1500_.jpg",
+    tags: ["API SL", "JASO MA", "USA Formula"],
+    esgotado: false
+  },
+  {
+    id: 25, name: "Bardahl Promax Moto 4T 20W50", brand: "Bardahl", viscosity: "20W50", quality: "Mineral",
+    priceMin: 25, priceMax: 30,
+    note: "Formulado com aditivos Bardahl de tratamento de metal que reduzem o atrito e prolongam a vida útil do motor.",
+    imgUrl: "https://m.media-amazon.com/images/I/61m5n9B1TKL._AC_SL1500_.jpg",
+    tags: ["API SL", "JASO MA", "Metal Treatment"],
+    esgotado: false
+  }
+];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =====================================================
+   CART STATE
+===================================================== */
+let cart = []; // { id, name, priceMin, priceMax, qty, viscosity, imgUrl }
+let selectedPay = '';
+let selectedTime = '';
+
+/* =====================================================
+   BUILD CARDS
+===================================================== */
+function buildCard(oil) {
+  const badgeClass  = oil.viscosity === '10W30' ? 'badge-10' : 'badge-20';
+  const badgeText   = oil.viscosity;
+  const qualClass   = oil.quality === 'Semissintético' ? 'badge-semi' : 'badge-min';
+  const qualText    = oil.quality === 'Semissintético' ? '◆ Semissintético' : '◇ Mineral';
+  const outCls      = oil.esgotado ? ' out-of-stock' : '';
+  const filterClass = `visc-${oil.viscosity === '10W30' ? '10w30' : '20w50'} qual-${oil.quality === 'Semissintético' ? 'semi' : 'mineral'}`;
+  const tags = oil.tags.map(t => `<span class="card-tag">${t}</span>`).join('');
+
+  return `
+  <div class="oil-card ${outCls} ${filterClass}" id="card-${oil.id}" data-id="${oil.id}">
+    <div class="card-img-wrap">
+      <img class="card-img" src="${oil.imgUrl}" alt="${oil.name}"
+           onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 80 120%22><rect width=%2280%22 height=%22120%22 fill=%22%231A0000%22/><text x=%2240%22 y=%2265%22 text-anchor=%22middle%22 font-size=%2210%22 fill=%22%23CC0000%22>${oil.brand}</text></svg>'">
+      <span class="card-viscosity-badge ${badgeClass}">${badgeText}</span>
+      <span class="card-quality-badge ${qualClass}">${qualText}</span>
+      <div class="out-of-stock-overlay"><div class="out-of-stock-label">ESGOTADO</div></div>
+    </div>
+    <div class="card-body">
+      <div class="card-brand">${oil.brand}</div>
+      <div class="card-name">${oil.name}</div>
+      <div class="card-price">
+        <span class="price-from">R$</span>
+        <span class="price-range">${oil.priceMin},00 – ${oil.priceMax},00</span>
+      </div>
+      <div class="card-tags">${tags}</div>
+      <div class="card-note">${oil.note}</div>
+      <button class="card-add-btn" id="addbtn-${oil.id}"
+        onclick="addToCart(${oil.id})"
+        ${oil.esgotado ? 'disabled' : ''}>
+        ${oil.esgotado ? '✕  ESGOTADO' : '+ ADICIONAR AO CARRINHO'}
+      </button>
+    </div>
+  </div>`;
+}
+
+document.getElementById('grid10').innerHTML = OILS_10W30.map(buildCard).join('');
+document.getElementById('grid20').innerHTML = OILS_20W50.map(buildCard).join('');
+
+/* =====================================================
+   FILTER
+===================================================== */
+function setFilter(btn, filter) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const all10 = document.querySelectorAll('#grid10 .oil-card');
+  const all20 = document.querySelectorAll('#grid20 .oil-card');
+  const allCards = [...all10, ...all20];
+
+  allCards.forEach(card => {
+    let show = false;
+    if (filter === 'all') {
+      show = true;
+    } else if (filter === '10w30') {
+      show = card.classList.contains('visc-10w30');
+    } else if (filter === '20w50') {
+      show = card.classList.contains('visc-20w50');
+    } else if (filter === 'semi') {
+      show = card.classList.contains('qual-semi');
+    } else if (filter === 'mineral') {
+      show = card.classList.contains('qual-mineral');
+    }
+    card.classList.toggle('hidden', !show);
+  });
+
+  // show/hide viscosity labels
+  const show10 = (filter === 'all' || filter === '10w30' || filter === 'semi');
+  const show20 = (filter === 'all' || filter === '20w50' || filter === 'mineral' || filter === 'semi');
+  document.getElementById('label10').style.display = show10 ? '' : 'none';
+  document.getElementById('label20').style.display = show20 ? '' : 'none';
+}
+
+/* =====================================================
+   CART FUNCTIONS
+===================================================== */
+function findOil(id) {
+  return [...OILS_10W30, ...OILS_20W50].find(o => o.id === id);
+}
+
+function addToCart(id) {
+  const oil = findOil(id);
+  if (!oil || oil.esgotado) return;
+  const existing = cart.find(i => i.id === id);
+  if (existing) {
+    existing.qty++;
+  } else {
+    cart.push({ id: oil.id, name: oil.name, priceMin: oil.priceMin, priceMax: oil.priceMax, qty: 1, viscosity: oil.viscosity, imgUrl: oil.imgUrl, brand: oil.brand });
+  }
+  updateCartBadge();
+  renderCartItems();
+  const btn = document.getElementById(`addbtn-${id}`);
+  btn.classList.add('in-cart');
+  btn.textContent = '✓ ADICIONADO';
+  setTimeout(() => {
+    if (cart.find(i => i.id === id)) {
+      btn.textContent = '✓ NO CARRINHO';
+    } else {
+      btn.classList.remove('in-cart');
+      btn.textContent = '+ ADICIONAR AO CARRINHO';
+    }
+  }, 1500);
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(i => i.id !== id);
+  updateCartBadge();
+  renderCartItems();
+  const btn = document.getElementById(`addbtn-${id}`);
+  if (btn) {
+    btn.classList.remove('in-cart');
+    btn.textContent = '+ ADICIONAR AO CARRINHO';
+  }
+}
+
+function changeQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) { removeFromCart(id); return; }
+  updateCartBadge();
+  renderCartItems();
+}
+
+function updateCartBadge() {
+  const total = cart.reduce((s, i) => s + i.qty, 0);
+  const badge = document.getElementById('cartBadge');
+  badge.textContent = total;
+  badge.classList.toggle('show', total > 0);
+}
+
+function renderCartItems() {
+  const container = document.getElementById('cartItems');
+  const footer = document.getElementById('cartFooter');
+
+  if (cart.length === 0) {
+    container.innerHTML = `
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🛢</div>
+        <div class="cart-empty-text">Nenhum óleo no carrinho</div>
+        <div style="font-size:.8rem;color:#666;">Adicione produtos para continuar</div>
+      </div>`;
+    footer.style.display = 'none';
+    return;
+  }
+
+  footer.style.display = 'flex';
+  container.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <img class="cart-item-img" src="${item.imgUrl}" alt="${item.name}"
+           onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 56 56%22><rect width=%2256%22 height=%2256%22 fill=%22%231A0000%22/></svg>'">
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-visc">${item.viscosity} · ${item.brand}</div>
+        <div class="cart-item-price">R$ ${item.priceMin},00 – R$ ${item.priceMax},00</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+        <div class="cart-item-qty">
+          <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+          <span class="qty-val">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${item.id},1)">+</button>
+        </div>
+        <button class="cart-item-remove" onclick="removeFromCart(${item.id})" title="Remover">🗑</button>
+      </div>
+    </div>`).join('');
+
+  // calc total (uses priceMin for estimate)
+  const totalMin = cart.reduce((s, i) => s + i.priceMin * i.qty, 0);
+  document.getElementById('cartTotal').textContent = `R$ ${totalMin.toFixed(2).replace('.', ',')}`;
+
+  generateTimeSlots();
+  updateCheckoutBtn();
+}
+
+/* =====================================================
+   TIME SLOTS
+===================================================== */
+function generateTimeSlots() {
+  const container = document.getElementById('timeSlots');
+  if (container.dataset.generated) return; // already built
+  container.dataset.generated = 'true';
+
+  const now = new Date();
+  const nowH = now.getHours();
+  const nowM = now.getMinutes();
+  const slots = [];
+
+  // 08:00 to 17:30, every 30 min
+  for (let h = 8; h <= 17; h++) {
+    for (let m of [0, 30]) {
+      if (h === 17 && m === 30) continue;
+      const past = h < nowH || (h === nowH && m <= nowM);
+      slots.push({ h, m, past });
+    }
+  }
+
+  container.innerHTML = slots.map(s => {
+    const label = `${String(s.h).padStart(2,'0')}:${String(s.m).padStart(2,'0')}`;
+    const disabled = s.past ? ' disabled' : '';
+    return `<button class="time-slot${s.past ? ' disabled' : ''}"${disabled} onclick="selectTime(this,'${label}')">${label}</button>`;
+  }).join('');
+}
+
+function selectTime(btn, time) {
+  document.querySelectorAll('.time-slot').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedTime = time;
+  updateCheckoutBtn();
+}
+
+/* =====================================================
+   PAYMENT
+===================================================== */
+function selectPay(btn, pay) {
+  document.querySelectorAll('.pay-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedPay = pay;
+  updateCheckoutBtn();
+}
+
+function updateCheckoutBtn() {
+  const btn = document.getElementById('checkoutBtn');
+  btn.disabled = !(cart.length > 0 && selectedPay && selectedTime);
+}
+
+/* =====================================================
+   OPEN / CLOSE CART
+===================================================== */
+function openCart() {
+  document.getElementById('cartDrawer').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('visible');
+  document.body.style.overflow = 'hidden';
+  renderCartItems();
+}
+
+function closeCart() {
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('visible');
+  document.body.style.overflow = '';
+}
+
+/* =====================================================
+   WHATSAPP
+===================================================== */
+function sendWhatsApp() {
+  if (!selectedPay || !selectedTime || cart.length === 0) return;
+
+  const lines = cart.map(i => `• ${i.name} (${i.viscosity}) x${i.qty} — R$ ${(i.priceMin * i.qty).toFixed(2).replace('.',',')}`).join('\n');
+  const totalMin = cart.reduce((s, i) => s + i.priceMin * i.qty, 0);
+
+  const msg = encodeURIComponent(
+`🛢 *PEDIDO DE ÓLEOS – NEILTON MOTOS*
+
+${lines}
+
+💰 *Total estimado:* R$ ${totalMin.toFixed(2).replace('.',',')}
+💳 *Pagamento:* ${selectedPay}
+⏱ *Horário da troca:* ${selectedTime} (HOJE)
+
+⚠️ Troca de óleo agendada para hoje às ${selectedTime}. Chego aí!`
+  );
+
+  window.open(`https://wa.me/5585996739891?text=${msg}`, '_blank');
+}
+
+/* =====================================================
+   SCROLL REVEAL
+===================================================== */
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+/* stagger card animation */
+document.querySelectorAll('.oil-card').forEach((card, i) => {
+  card.style.animationDelay = `${(i % 4) * 0.07}s`;
+});
+</script>
+</body>
+</html>

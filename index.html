@@ -1,0 +1,2221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neilton Motos – Mecânica Especializada</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================
+   CSS VARIABLES & RESET
+============================================ */
+:root {
+  --red:        #CC0000;
+  --red-hot:    #FF1A1A;
+  --red-glow:   #FF000066;
+  --wine:       #6B0000;
+  --wine-deep:  #3D0000;
+  --black:      #080808;
+  --black-card: #111111;
+  --black-mid:  #1A1A1A;
+  --white:      #F5F5F5;
+  --white-dim:  #AAAAAA;
+  --chrome:     #C0C0C0;
+  --chrome-dim: #888888;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-ui:      'Rajdhani', sans-serif;
+  --font-tech:    'Orbitron', sans-serif;
+
+  --sidebar-w: 260px;
+  --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+  --glow-red: 0 0 18px #CC000088, 0 0 40px #CC000033;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+/* ============================================
+   SCROLLBAR
+============================================ */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--black); }
+::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+/* ============================================
+   NOISE OVERLAY
+============================================ */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.35;
+}
+
+/* ============================================
+   LAYOUT WRAPPER
+============================================ */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ============================================
+   SIDEBAR
+============================================ */
+.sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  background: linear-gradient(180deg, #0D0000 0%, #140000 40%, #0A0000 100%);
+  border-right: 1px solid #CC000033;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 100;
+  transition: transform var(--transition);
+}
+
+.sidebar::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+}
+
+.sidebar-logo {
+  padding: 24px 20px 16px;
+  border-bottom: 1px solid #CC000022;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sidebar-logo img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px #CC000077);
+}
+
+.sidebar-brand {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.sidebar-brand .name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--red-hot);
+  letter-spacing: 2px;
+  text-shadow: 0 0 12px #CC0000AA;
+}
+
+.sidebar-brand .sub {
+  font-family: var(--font-tech);
+  font-size: 0.52rem;
+  color: var(--chrome-dim);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-label {
+  font-family: var(--font-tech);
+  font-size: 0.55rem;
+  color: var(--chrome-dim);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  padding-left: 4px;
+}
+
+.nav-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  border-radius: 6px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--white-dim);
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-align: left;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-btn::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--red);
+  transform: scaleY(0);
+  transition: transform var(--transition);
+  border-radius: 0 2px 2px 0;
+}
+
+.nav-btn:hover {
+  background: #CC000015;
+  border-color: #CC000044;
+  color: var(--white);
+  box-shadow: inset 0 0 20px #CC000010;
+}
+
+.nav-btn:hover::before { transform: scaleY(1); }
+
+.nav-btn .icon {
+  font-size: 1.1rem;
+  width: 20px;
+  text-align: center;
+  filter: drop-shadow(0 0 4px currentColor);
+}
+
+.sidebar-footer {
+  padding: 16px;
+  border-top: 1px solid #CC000022;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-tech);
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #00FF88;
+  box-shadow: 0 0 8px #00FF88;
+  animation: pulse-dot 2s infinite;
+}
+
+.status-dot.closed {
+  background: #FF4444;
+  box-shadow: 0 0 8px #FF4444;
+  animation: none;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.85); }
+}
+
+/* ============================================
+   MOBILE SIDEBAR TOGGLE
+============================================ */
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 14px; left: 14px;
+  z-index: 200;
+  width: 44px; height: 44px;
+  background: var(--wine);
+  border: 1px solid var(--red);
+  border-radius: 6px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  box-shadow: var(--glow-red);
+}
+
+.sidebar-toggle span {
+  display: block;
+  width: 22px; height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: all var(--transition);
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: #000000BB;
+  z-index: 99;
+  backdrop-filter: blur(2px);
+}
+
+/* ============================================
+   MAIN CONTENT
+============================================ */
+.main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================================
+   HERO SECTION
+============================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 60px 40px 80px;
+  text-align: center;
+}
+
+/* Animated background */
+.hero-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 110%, #6B000044 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 20% 20%, #CC000011 0%, transparent 60%),
+    radial-gradient(ellipse 30% 30% at 80% 10%, #CC000011 0%, transparent 60%),
+    linear-gradient(160deg, #0D0000 0%, #050000 40%, #000000 100%);
+}
+
+/* Grid lines */
+.hero-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(#CC000008 1px, transparent 1px),
+    linear-gradient(90deg, #CC000008 1px, transparent 1px);
+  background-size: 50px 50px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+}
+
+.hero-scan {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 0%, #CC000006 50%, transparent 100%);
+  background-size: 100% 6px;
+  animation: scan 8s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scan {
+  0%   { background-position: 0 -100vh; }
+  100% { background-position: 0 100vh; }
+}
+
+/* Corner decorations */
+.hero::before, .hero::after {
+  content: '';
+  position: absolute;
+  width: 120px; height: 120px;
+  border-style: solid;
+  border-color: var(--red);
+  border-width: 0;
+  opacity: 0.5;
+}
+.hero::before {
+  top: 30px; left: 30px;
+  border-top-width: 2px;
+  border-left-width: 2px;
+}
+.hero::after {
+  bottom: 30px; right: 30px;
+  border-bottom-width: 2px;
+  border-right-width: 2px;
+}
+
+.hero-content { position: relative; z-index: 2; }
+
+/* Logo */
+.hero-logo-wrap {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 32px;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}
+
+.hero-logo-wrap::before {
+  content: '';
+  position: absolute;
+  bottom: -20px; left: 50%;
+  transform: translateX(-50%);
+  width: 70%; height: 30px;
+  background: radial-gradient(ellipse, #CC000055 0%, transparent 70%);
+  filter: blur(8px);
+  animation: shadow-pulse 4s ease-in-out infinite;
+}
+
+@keyframes shadow-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) scaleX(0.8); }
+  50%       { opacity: 1;   transform: translateX(-50%) scaleX(1); }
+}
+
+.hero-logo {
+  width: min(380px, 80vw);
+  height: auto;
+  filter: drop-shadow(0 0 30px #CC000099) drop-shadow(0 0 80px #CC000044);
+  transition: filter 0.5s;
+  border-radius: 150px;
+}
+
+.hero-logo:hover {
+  filter: drop-shadow(0 0 50px #FF0000BB) drop-shadow(0 0 100px #CC000066);
+}
+
+/* Ring animation behind logo */
+.hero-ring {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 420px; height: 420px;
+  border-radius: 50%;
+  border: 1px solid #CC000033;
+  animation: spin-ring 20s linear infinite;
+  pointer-events: none;
+}
+
+.hero-ring::before {
+  content: '';
+  position: absolute;
+  top: -3px; left: 50%;
+  width: 6px; height: 6px;
+  background: var(--red);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--red);
+}
+
+@keyframes spin-ring {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Hero text */
+.hero-tag {
+  font-family: var(--font-tech);
+  font-size: 0.65rem;
+  letter-spacing: 6px;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.hero-tag::before, .hero-tag::after {
+  content: '';
+  flex: 1;
+  max-width: 80px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--red));
+}
+.hero-tag::after {
+  background: linear-gradient(90deg, var(--red), transparent);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 0.9;
+  letter-spacing: 6px;
+  color: var(--white);
+  text-shadow: 0 0 30px #CC000066;
+  margin-bottom: 8px;
+}
+
+.hero-title span {
+  color: var(--red-hot);
+  text-shadow: var(--glow-red), 0 0 60px #FF000044;
+}
+
+.hero-subtitle {
+  font-family: var(--font-ui);
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  font-weight: 500;
+  color: var(--chrome);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+/* Hero CTA Buttons */
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.btn-primary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, var(--red), var(--wine));
+  border: 1px solid var(--red);
+  border-radius: 4px;
+  color: var(--white);
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all var(--transition);
+  box-shadow: 0 4px 20px #CC000055;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--red-hot), var(--red));
+  box-shadow: 0 6px 30px #CC000088, 0 0 50px #CC000033;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 32px;
+  background: transparent;
+  border: 1px solid #CC000066;
+  border-radius: 4px;
+  color: var(--white-dim);
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: all var(--transition);
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+
+.btn-secondary:hover {
+  border-color: var(--red);
+  color: var(--white);
+  background: #CC000011;
+}
+
+/* Stats bar */
+.hero-stats {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  background: linear-gradient(90deg, transparent, #CC000011, transparent);
+  border-top: 1px solid #CC000033;
+}
+
+.stat-item {
+  padding: 16px 32px;
+  text-align: center;
+  border-right: 1px solid #CC000022;
+  position: relative;
+}
+
+.stat-item:last-child { border-right: none; }
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--red-hot);
+  line-height: 1;
+  text-shadow: 0 0 20px #CC000077;
+}
+
+.stat-label {
+  font-family: var(--font-tech);
+  font-size: 0.55rem;
+  color: var(--chrome-dim);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* ============================================
+   SECTION COMMONS
+============================================ */
+section {
+  padding: 80px 40px;
+  position: relative;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-eyebrow {
+  font-family: var(--font-tech);
+  font-size: 0.6rem;
+  letter-spacing: 5px;
+  color: var(--red);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.section-eyebrow::before, .section-eyebrow::after {
+  content: '';
+  width: 40px; height: 1px;
+  background: var(--red);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: 4px;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.section-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.section-divider::before, .section-divider::after {
+  content: '';
+  height: 1px;
+  width: 80px;
+  background: linear-gradient(90deg, transparent, #CC000066);
+}
+.section-divider::after {
+  background: linear-gradient(90deg, #CC000066, transparent);
+}
+
+.divider-diamond {
+  width: 8px; height: 8px;
+  background: var(--red);
+  transform: rotate(45deg);
+  box-shadow: 0 0 10px var(--red);
+}
+
+/* ============================================
+   HOURS SECTION
+============================================ */
+.hours-section {
+  background: linear-gradient(135deg, #0D0000 0%, #0A0000 100%);
+  border-top: 1px solid #CC000022;
+  border-bottom: 1px solid #CC000022;
+}
+
+.hours-card {
+  max-width: 700px;
+  margin: 0 auto;
+  background: var(--black-card);
+  border: 1px solid #CC000033;
+  border-radius: 8px;
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hours-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+}
+
+.hours-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px 40px;
+  align-items: center;
+}
+
+.hours-day {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--chrome);
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hours-day::before {
+  content: '';
+  width: 4px; height: 4px;
+  background: var(--red);
+  border-radius: 50%;
+}
+
+.hours-time {
+  font-family: var(--font-tech);
+  font-size: 0.85rem;
+  color: var(--white);
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+
+.hours-separator {
+  grid-column: 1 / -1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #CC000033, transparent);
+}
+
+/* Status banner */
+.status-banner {
+  margin-top: 28px;
+  padding: 16px 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.status-banner.open {
+  background: #003322;
+  border: 1px solid #00FF8844;
+}
+
+.status-banner.closed {
+  background: #220000;
+  border: 1px solid #FF000044;
+}
+
+.status-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.status-indicator {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-banner.open .status-indicator {
+  background: #00FF88;
+  box-shadow: 0 0 12px #00FF88;
+  animation: pulse-dot 2s infinite;
+}
+
+.status-banner.closed .status-indicator {
+  background: #FF4444;
+  box-shadow: 0 0 12px #FF4444;
+}
+
+.status-text {
+  font-family: var(--font-tech);
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.status-banner.open .status-text { color: #00FF88; }
+.status-banner.closed .status-text { color: #FF4444; }
+
+/* ============================================
+   CONTACTS SECTION
+============================================ */
+.contacts-section {
+  background: var(--black);
+}
+
+.contacts-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.contact-card {
+  flex: 1;
+  min-width: 220px;
+  max-width: 280px;
+  background: var(--black-card);
+  border: 1px solid #CC000022;
+  border-radius: 8px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: all var(--transition);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+}
+
+.contact-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--color, var(--red));
+  transform: scaleX(0);
+  transition: transform var(--transition);
+}
+
+.contact-card:hover {
+  border-color: var(--color, var(--red));
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px var(--shadow, #CC000033);
+}
+
+.contact-card:hover::before { transform: scaleX(1); }
+
+.contact-icon-wrap {
+  width: 72px; height: 72px;
+  margin: 0 auto 20px;
+  background: #CC000011;
+  border: 1px solid #CC000033;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  transition: all var(--transition);
+}
+
+.contact-card:hover .contact-icon-wrap {
+  background: var(--icon-bg, #CC000022);
+  border-color: var(--color, var(--red));
+  box-shadow: 0 0 20px var(--shadow, #CC000033);
+}
+
+/* WhatsApp icon SVG */
+.wpp-icon {
+  width: 38px; height: 38px;
+}
+
+.insta-icon {
+  width: 36px; height: 36px;
+}
+
+.maps-icon {
+  width: 36px; height: 36px;
+}
+
+.contact-label {
+  font-family: var(--font-tech);
+  font-size: 0.6rem;
+  letter-spacing: 4px;
+  color: var(--chrome-dim);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.contact-value {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  line-height: 1.3;
+}
+
+/* ============================================
+   WHY US SECTION
+============================================ */
+.why-section {
+  background: linear-gradient(180deg, #0D0000 0%, var(--black) 100%);
+  border-top: 1px solid #CC000022;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.why-card {
+  background: var(--black-card);
+  border: 1px solid #CC000022;
+  border-radius: 8px;
+  padding: 36px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition);
+}
+
+.why-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #CC000008 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.why-card:hover {
+  border-color: #CC000055;
+  box-shadow: 0 0 40px #CC000022;
+  transform: translateY(-4px);
+}
+
+.why-card:hover::after { opacity: 1; }
+
+.why-num {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  color: #CC000015;
+  line-height: 1;
+  position: absolute;
+  top: 16px; right: 20px;
+  pointer-events: none;
+}
+
+.why-icon {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  display: block;
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+.why-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  color: var(--white);
+  margin-bottom: 10px;
+}
+
+.why-desc {
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  color: var(--chrome-dim);
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.why-bar {
+  margin-top: 20px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--red), transparent);
+  width: 40%;
+  border-radius: 2px;
+}
+
+/* ============================================
+   REVIEWS SECTION
+============================================ */
+.reviews-section {
+  background: var(--black);
+  border-top: 1px solid #CC000022;
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.review-card {
+  background: var(--black-card);
+  border: 1px solid #CC000022;
+  border-radius: 8px;
+  padding: 32px 28px;
+  position: relative;
+  transition: all var(--transition);
+}
+
+.review-card:hover {
+  border-color: #CC000044;
+  box-shadow: 0 8px 30px #CC000022;
+  transform: translateY(-3px);
+}
+
+.review-quote {
+  font-size: 3rem;
+  color: var(--red);
+  line-height: 0.8;
+  font-family: Georgia, serif;
+  opacity: 0.6;
+  margin-bottom: 12px;
+}
+
+.review-text {
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  color: var(--chrome);
+  line-height: 1.7;
+  margin-bottom: 24px;
+  font-weight: 400;
+}
+
+.review-footer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.review-avatar {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--wine), var(--red));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--white);
+  border: 2px solid #CC000044;
+  flex-shrink: 0;
+}
+
+.review-info { flex: 1; }
+
+.review-name {
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.review-stars {
+  color: #FFB800;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  filter: drop-shadow(0 0 4px #FFB80077);
+}
+
+.review-date {
+  font-family: var(--font-tech);
+  font-size: 0.55rem;
+  color: var(--chrome-dim);
+  letter-spacing: 2px;
+  margin-top: 2px;
+}
+
+/* ============================================
+   FOOTER
+============================================ */
+footer {
+  background: var(--wine-deep);
+  border-top: 1px solid #CC000033;
+  padding: 32px 40px;
+  text-align: center;
+  position: relative;
+}
+
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 200px; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+}
+
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  letter-spacing: 4px;
+  color: var(--red-hot);
+  text-shadow: 0 0 20px #CC000077;
+  margin-bottom: 8px;
+}
+
+.footer-tag {
+  font-family: var(--font-tech);
+  font-size: 0.55rem;
+  letter-spacing: 5px;
+  color: var(--chrome-dim);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.footer-copy {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: #55444444;
+  letter-spacing: 1px;
+}
+
+/* ============================================
+   RESPONSIVE
+============================================ */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    transform: translateX(-100%);
+    z-index: 150;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+    box-shadow: 10px 0 60px #000000AA;
+  }
+
+  .sidebar-overlay.visible { display: block; }
+
+  .sidebar-toggle { display: flex; }
+
+  .layout { display: block; }
+
+  .hero { padding: 90px 24px 60px; }
+  .hero::before, .hero::after { width: 60px; height: 60px; }
+
+  .hero-stats { display: none; }
+
+  .hero-ring { width: 300px; height: 300px; }
+
+  section { padding: 60px 24px; }
+
+  .stat-item { padding: 12px 16px; }
+
+  .hours-card { padding: 28px 20px; }
+  .hours-grid { gap: 12px 20px; }
+
+  .reviews-grid { grid-template-columns: 1fr; }
+
+  footer { padding: 24px 20px; }
+
+  .hero-tag { font-size: 0.55rem; }
+}
+
+@media (max-width: 480px) {
+  .hero-logo { width: 85vw; }
+  .contacts-grid { flex-direction: column; align-items: center; }
+  .contact-card { min-width: 100%; max-width: 100%; }
+}
+
+/* ============================================
+   ANIMATIONS ON LOAD
+============================================ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-logo-wrap { animation: float 4s ease-in-out infinite, fadeUp 0.8s ease both; }
+.hero-tag       { animation: fadeUp 0.8s 0.2s ease both; }
+.hero-title     { animation: fadeUp 0.8s 0.35s ease both; }
+.hero-subtitle  { animation: fadeUp 0.8s 0.5s ease both; }
+.hero-ctas      { animation: fadeUp 0.8s 0.65s ease both; }
+
+/* ============================================
+   SCROLL REVEAL
+============================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- ===== ENTRADA SURREAL ===== -->
+<div id="entradaSurreal">
+
+  <!-- Canvas de partículas -->
+  <canvas id="entradaCanvas"></canvas>
+
+  <!-- Linhas de escaneamento -->
+  <div class="entrada-scanlines"></div>
+
+  <!-- Conteúdo central -->
+  <div class="entrada-core">
+
+    <!-- Emblema central giratório -->
+    <div class="entrada-emblem">
+      <svg class="emblem-outer-ring" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="150" cy="150" r="140" fill="none" stroke="#CC000033" stroke-width="1"/>
+        <circle cx="150" cy="150" r="120" fill="none" stroke="#CC000055" stroke-width="0.5" stroke-dasharray="4 8"/>
+        <!-- Marcadores de grau -->
+        <g stroke="#CC0000" stroke-width="1.5" opacity="0.6">
+          <line x1="150" y1="10"  x2="150" y2="24"/>
+          <line x1="150" y1="276" x2="150" y2="290"/>
+          <line x1="10"  y1="150" x2="24"  y2="150"/>
+          <line x1="276" y1="150" x2="290" y2="150"/>
+        </g>
+        <g stroke="#CC000066" stroke-width="1" opacity="0.4">
+          <line x1="225" y1="22"  x2="218" y2="34"/>
+          <line x1="75"  y1="22"  x2="82"  y2="34"/>
+          <line x1="225" y1="278" x2="218" y2="266"/>
+          <line x1="75"  y1="278" x2="82"  y2="266"/>
+        </g>
+      </svg>
+
+      <svg class="emblem-mid-ring" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="90" fill="none" stroke="#CC000044" stroke-width="1" stroke-dasharray="2 6"/>
+        <polygon points="100,5 115,35 148,35 123,55 132,88 100,70 68,88 77,55 52,35 85,35"
+                 fill="none" stroke="#CC000077" stroke-width="1" opacity="0.5"/>
+      </svg>
+
+      <!-- Logo / iniciais centrais -->
+      <div class="emblem-center">
+        <div class="emblem-nm"> <img src="./imgs/logo.png" alt=""> </div>
+        <div class="emblem-line"></div>
+        <div class="emblem-sub">MECÂNICA</div>
+      </div>
+
+      <!-- Ponto orbital -->
+      <div class="orbital-dot"></div>
+    </div>
+
+    <!-- Glitch text -->
+    <div class="entrada-glitch-wrap">
+      <h1 class="entrada-glitch" data-text="NEILTON MOTOS">NEILTON MOTOS</h1>
+    </div>
+
+    <!-- Subtítulo com texto digitando -->
+    <div class="entrada-typewriter">
+      <span id="entradaTyped"></span><span class="cursor-blink">|</span>
+    </div>
+
+    <!-- Barra de inicialização -->
+    <div class="entrada-boot">
+      <div class="boot-label">INICIALIZANDO SISTEMA</div>
+      <div class="boot-bar-wrap">
+        <div class="boot-bar" id="bootBar"></div>
+      </div>
+      <div class="boot-percent" id="bootPercent">0%</div>
+    </div>
+
+    <!-- Código de status rodando -->
+    <div class="entrada-status-log" id="entradaLog">
+      <div>▶ CONECTANDO BANCO DE DADOS TÉCNICO...</div>
+    </div>
+
+
+  </div><!-- /entrada-core -->
+
+  <!-- Cantos HUD -->
+  <div class="hud-corner hud-tl">
+    <span class="hud-label">SYS / ONLINE</span>
+  </div>
+  <div class="hud-corner hud-tr">
+    <span class="hud-label" id="hudClock">00:00:00</span>
+  </div>
+  <div class="hud-corner hud-bl">
+    <span class="hud-label">FORTALEZA · CE · BR</span>
+  </div>
+  <div class="hud-corner hud-br">
+    <span class="hud-label">v3.0.1 · SECURE</span>
+  </div>
+
+</div><!-- /entradaSurreal -->
+
+<style>
+/* ============================================================
+   ENTRADA SURREAL — ESTILOS PRÓPRIOS (sem tocar no restante)
+============================================================ */
+#entradaSurreal {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: #020000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+#entradaSurreal.saindo {
+  opacity: 0;
+  transform: scale(1.04);
+  pointer-events: none;
+}
+
+/* Canvas partículas */
+#entradaCanvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Scanlines */
+.entrada-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(204,0,0,0.015) 2px,
+    rgba(204,0,0,0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Core */
+.entrada-core {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  text-align: center;
+  padding: 40px 24px;
+}
+
+/* ---- EMBLEMA ---- */
+.entrada-emblem {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emblem-outer-ring {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  animation: entrada-spin 18s linear infinite;
+}
+
+.emblem-mid-ring {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  animation: entrada-spin-rev 12s linear infinite;
+}
+
+@keyframes entrada-spin     { to { transform: rotate(360deg);  } }
+@keyframes entrada-spin-rev { to { transform: rotate(-360deg); } }
+
+.emblem-center {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.emblem-nm {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.2rem;
+  color: #FF1A1A;
+  line-height: 1;
+  text-shadow: 0 0 24px #CC0000AA, 0 0 60px #CC000044;
+  letter-spacing: 4px;
+}
+
+.emblem-line {
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #CC0000, transparent);
+}
+
+.emblem-sub {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.42rem;
+  color: #888;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+}
+
+/* Ponto orbital */
+.orbital-dot {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: entrada-spin 5s linear infinite;
+}
+.orbital-dot::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 8px; height: 8px;
+  background: #CC0000;
+  border-radius: 50%;
+  box-shadow: 0 0 14px #CC0000, 0 0 30px #CC000077;
+}
+
+/* ---- GLITCH TITLE ---- */
+.entrada-glitch-wrap {
+  position: relative;
+}
+
+.entrada-glitch {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.4rem, 8vw, 4.8rem);
+  letter-spacing: 8px;
+  color: #F5F5F5;
+  text-shadow: 0 0 20px #CC000055;
+  position: relative;
+  animation: entrada-pulse 3s ease-in-out infinite;
+}
+
+.entrada-glitch::before,
+.entrada-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  overflow: hidden;
+}
+.entrada-glitch::before {
+  color: #FF1A1A;
+  clip-path: polygon(0 30%, 100% 30%, 100% 50%, 0 50%);
+  animation: glitch-a 4s infinite;
+  transform: translateX(-3px);
+}
+.entrada-glitch::after {
+  color: #00CCFF22;
+  clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+  animation: glitch-b 4s infinite 0.5s;
+  transform: translateX(3px);
+}
+
+@keyframes entrada-pulse {
+  0%,100% { text-shadow: 0 0 20px #CC000055; }
+  50%      { text-shadow: 0 0 40px #CC000099, 0 0 80px #CC000033; }
+}
+
+@keyframes glitch-a {
+  0%,90%,100% { transform: translateX(-3px); opacity: 0; }
+  91%          { transform: translateX(4px);  opacity: 0.7; }
+  93%          { transform: translateX(-5px); opacity: 0.5; }
+  95%          { transform: translateX(2px);  opacity: 0; }
+}
+
+@keyframes glitch-b {
+  0%,88%,100% { transform: translateX(3px); opacity: 0; }
+  89%          { transform: translateX(-4px); opacity: 0.4; }
+  92%          { transform: translateX(5px);  opacity: 0.3; }
+  94%          { transform: translateX(-2px); opacity: 0; }
+}
+
+/* ---- TYPEWRITER ---- */
+.entrada-typewriter {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(0.55rem, 1.5vw, 0.75rem);
+  letter-spacing: 4px;
+  color: #CC0000;
+  text-transform: uppercase;
+  min-height: 20px;
+}
+
+.cursor-blink {
+  animation: blink 0.8s step-end infinite;
+  color: #CC0000;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ---- BOOT BAR ---- */
+.entrada-boot {
+  width: min(400px, 80vw);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.boot-label {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.5rem;
+  letter-spacing: 5px;
+  color: #555;
+  text-transform: uppercase;
+}
+
+.boot-bar-wrap {
+  width: 100%;
+  height: 3px;
+  background: #1A0000;
+  border: 1px solid #CC000033;
+  position: relative;
+  overflow: hidden;
+}
+
+.boot-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #6B0000, #CC0000, #FF1A1A);
+  box-shadow: 0 0 12px #CC0000;
+  transition: width 0.15s linear;
+  position: relative;
+}
+.boot-bar::after {
+  content: '';
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 20px;
+  background: linear-gradient(90deg, transparent, #FF000088);
+}
+
+.boot-percent {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.55rem;
+  color: #CC0000;
+  letter-spacing: 3px;
+}
+
+/* ---- LOG ---- */
+.entrada-status-log {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.48rem;
+  color: #CC000077;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 56px;
+  width: min(420px, 85vw);
+  text-align: left;
+  overflow: hidden;
+}
+
+/* ---- BOTÃO ENTRAR ---- */
+.entrada-btn {
+  position: relative;
+  padding: 16px 40px;
+  background: transparent;
+  border: 1px solid #CC0000;
+  color: #F5F5F5;
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(0.65rem, 1.8vw, 0.85rem);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+  animation: btn-appear 0.5s ease both;
+  animation-play-state: paused;
+  opacity: 0;
+}
+
+.entrada-btn.pronto {
+  animation-play-state: running;
+}
+
+@keyframes btn-appear {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.entrada-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #CC000000, #CC000033);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+}
+.entrada-btn:hover::before { transform: translateX(0); }
+
+.entrada-btn:hover {
+  box-shadow: 0 0 30px #CC000066, inset 0 0 20px #CC000022;
+  border-color: #FF1A1A;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.btn-brackets {
+  color: #CC0000;
+  font-size: 1.1em;
+}
+
+.btn-glow {
+  position: absolute;
+  bottom: -1px; left: 20%; right: 20%;
+  height: 2px;
+  background: var(--red, #CC0000);
+  box-shadow: 0 0 12px #CC0000;
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%,100% { opacity: 0.5; transform: scaleX(0.7); }
+  50%      { opacity: 1;   transform: scaleX(1); }
+}
+
+/* ---- HUD CORNERS ---- */
+.hud-corner {
+  position: absolute;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.48rem;
+  letter-spacing: 3px;
+  color: #CC000066;
+  text-transform: uppercase;
+  padding: 14px 18px;
+}
+
+.hud-tl { top: 0; left: 0; border-top: 1px solid #CC000033; border-left: 1px solid #CC000033; }
+.hud-tr { top: 0; right: 0; border-top: 1px solid #CC000033; border-right: 1px solid #CC000033; }
+.hud-bl { bottom: 0; left: 0; border-bottom: 1px solid #CC000033; border-left: 1px solid #CC000033; }
+.hud-br { bottom: 0; right: 0; border-bottom: 1px solid #CC000033; border-right: 1px solid #CC000033; }
+</style>
+
+<script>
+(function(){
+  /* ---------- RELÓGIO HUD ---------- */
+  function tickClock(){
+    const n=new Date();
+    const pad=x=>String(x).padStart(2,'0');
+    document.getElementById('hudClock').textContent=
+      pad(n.getHours())+':'+pad(n.getMinutes())+':'+pad(n.getSeconds());
+  }
+  tickClock(); setInterval(tickClock,1000);
+
+  /* ---------- CANVAS PARTÍCULAS ---------- */
+  const canvas=document.getElementById('entradaCanvas');
+  const ctx=canvas.getContext('2d');
+  let W,H,particles=[];
+
+  function resize(){
+    W=canvas.width=window.innerWidth;
+    H=canvas.height=window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize',resize);
+
+  function mkParticle(){
+    return {
+      x:Math.random()*W, y:Math.random()*H,
+      vx:(Math.random()-0.5)*0.5, vy:-Math.random()*0.8-0.2,
+      size:Math.random()*1.5+0.5,
+      alpha:Math.random()*0.6+0.1,
+      hue:Math.random()<0.7 ? 0 : 200
+    };
+  }
+
+  for(let i=0;i<120;i++) particles.push(mkParticle());
+
+  function animParticles(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach((p,i)=>{
+      p.x+=p.vx; p.y+=p.vy; p.alpha-=0.0008;
+      if(p.alpha<=0||p.y<-10) particles[i]=mkParticle();
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+      ctx.fillStyle=p.hue===0
+        ? `rgba(204,0,0,${p.alpha})`
+        : `rgba(180,180,180,${p.alpha*0.3})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(animParticles);
+  }
+  animParticles();
+
+  /* ---------- TYPEWRITER ---------- */
+  const frases=[
+    'MECÂNICA ESPECIALIZADA EM MOTOS',
+    'PRECISÃO QUE VOCÊ PODE SENTIR',
+    'CONFIANÇA CONSTRUÍDA NO FERRO',
+    'EXPERTISE · FORTALEZA · CE'
+  ];
+  let fi=0, ci=0, typed='', deleting=false, tw=document.getElementById('entradaTyped');
+
+  function typeStep(){
+    const f=frases[fi];
+    if(!deleting){ typed=f.slice(0,++ci); if(ci>=f.length){deleting=true;setTimeout(typeStep,1200);return;} }
+    else{ typed=f.slice(0,--ci); if(ci<=0){deleting=false;fi=(fi+1)%frases.length;setTimeout(typeStep,400);return;} }
+    tw.textContent=typed;
+    setTimeout(typeStep,deleting?40:60);
+  }
+  typeStep();
+
+  /* ---------- BOOT BAR ---------- */
+  const bar=document.getElementById('bootBar');
+  const pct=document.getElementById('bootPercent');
+  const log=document.getElementById('entradaLog');
+  
+
+  const logs=[
+    '▶ CONECTANDO BANCO DE DADOS TÉCNICO...',
+    '▶ CARREGANDO PROTOCOLOS DE SEGURANÇA...',
+    '▶ VERIFICANDO CERTIFICADOS DE PEÇAS...',
+    '▶ SINCRONIZANDO HISTÓRICO DE SERVIÇOS...',
+    '▶ CALIBRANDO INTERFACE DO SISTEMA...',
+    '✔ TODOS OS SISTEMAS OPERACIONAIS'
+  ];
+
+  let progress=0, li=0;
+
+  function bootStep(){
+if(progress>=100){
+  progress = 100;
+
+  bar.style.width = '100%';
+  pct.textContent = '100%';
+
+  // adiciona log final
+  const d = document.createElement('div');
+  d.textContent = '✔ ACESSO LIBERADO';
+  d.style.color = '#00FF88';
+  log.appendChild(d);
+
+  // entra automaticamente
+  setTimeout(() => {
+    fecharEntrada();
+  }, 700);
+
+  return;
+}
+    const inc=Math.random()*4+1;
+    progress=Math.min(100,progress+inc);
+    bar.style.width=progress+'%';
+    pct.textContent=Math.round(progress)+'%';
+
+    const logIdx=Math.floor(progress/17);
+    if(logIdx>li && li<logs.length){
+      const d=document.createElement('div');
+      d.textContent=logs[li];
+      d.style.color= li===logs.length-1 ? '#00FF88AA' : '#CC000077';
+      log.appendChild(d);
+      if(log.children.length>4) log.removeChild(log.firstChild);
+      li++;
+    }
+    setTimeout(bootStep, progress<60 ? 80 : progress<90 ? 120 : 200);
+  }
+  setTimeout(bootStep,600);
+
+  /* ---------- FECHAR ---------- */
+  window.fecharEntrada=function(){
+    const el=document.getElementById('entradaSurreal');
+    el.classList.add('saindo');
+    document.body.style.overflow='';
+    setTimeout(()=>{ el.remove(); },950);
+  };
+
+  document.body.style.overflow='hidden';
+})();
+</script>
+
+<!-- ===== SIDEBAR TOGGLE (mobile) ===== -->
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="Abrir menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ===== LAYOUT ===== -->
+<div class="layout">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-logo">
+      <img src="./imgs/logo.png" alt="Neilton Motos Logo" onerror="this.style.display='none'">
+      <div class="sidebar-brand">
+        <span class="name">NEILTON</span>
+        <span class="sub">Motos &amp; Mecânica</span>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <p class="sidebar-label">Serviços</p>
+
+      <button class="nav-btn">
+        <span class="icon">🔧</span>
+        <a href="./revisoes.html">Revisões</a>
+      </button>
+
+      <button class="nav-btn">
+        <span class="icon">⚙️</span>
+        <a href="./Fazer motor.html">Fazer Motor</a>
+      </button>
+
+      <button class="nav-btn">
+        <span class="icon">🛢️</span>
+        <a href="./oleos.html">Óleos</a>
+      </button>
+
+      <button class="nav-btn">
+        <span class="icon">🔩</span>
+        <a href="./Pecasmaiores.html">Peças Maiores</a>
+      </button>
+
+      <button class="nav-btn">
+        <span class="icon">🪛</span>
+        <a href="./Pecas menore.html">Peças Menores</a>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="status-badge" id="sidebarStatus">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">CARREGANDO...</span>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <main class="main">
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-scan"></div>
+
+      <div class="hero-content">
+        <div class="hero-logo-wrap">
+          <div class="hero-ring"></div>
+          <img
+            class="hero-logo"
+            src="./imgs/logo.png"
+            alt="Neilton Motos"
+            onerror="this.outerHTML='<div style=\'font-family:var(--font-display);font-size:4rem;color:var(--red-hot);text-shadow:var(--glow-red);letter-spacing:6px;\'>NEILTON<br>MOTOS</div>'"
+          >
+        </div>
+
+        <p class="hero-tag">Mecânica Especializada em Motos</p>
+
+        <h1 class="hero-title">
+          PRECISÃO<br>
+          <span>SEM</span> LIMITES
+        </h1>
+
+        <p class="hero-subtitle">Qualidade · Confiança · Expertise</p>
+
+        <div class="hero-ctas">
+          <a href="https://wa.me/5585996739891?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20orçamento." class="btn-primary" target="_blank">
+            <!-- WhatsApp SVG -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Fale Conosco
+          </a>
+          <a href="#por-que" class="btn-secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+            Saiba Mais
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Anos de Exp.</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">5K+</div>
+          <div class="stat-label">Motos Atendidas</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Comprometimento</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">★ 5.0</div>
+          <div class="stat-label">Avaliação</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== HORÁRIO ===== -->
+    <section class="hours-section reveal">
+      <div class="section-header">
+        <p class="section-eyebrow">Atendimento</p>
+        <h2 class="section-title">HORÁRIO DE <span style="color:var(--red-hot)">FUNCIONAMENTO</span></h2>
+        <div class="section-divider"><div class="divider-diamond"></div></div>
+      </div>
+
+      <div class="hours-card">
+        <div class="hours-grid">
+          <div class="hours-day">Segunda à Sexta</div>
+          <div class="hours-time">08:00 – 18:00</div>
+          <div class="hours-separator"></div>
+          <div class="hours-day">Sábado</div>
+          <div class="hours-time">08:00 – 18:00</div>
+          <div class="hours-separator"></div>
+          <div class="hours-day">Domingo</div>
+          <div class="hours-time" style="color:var(--chrome-dim)">Fechado</div>
+        </div>
+
+        <div class="status-banner" id="statusBanner">
+          <div class="status-left">
+            <div class="status-indicator"></div>
+            <span class="status-text" id="statusBannerText"></span>
+          </div>
+          <div style="font-family:var(--font-tech);font-size:0.6rem;color:var(--chrome-dim);letter-spacing:2px;" id="hourNote"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTATOS ===== -->
+    <section class="contacts-section reveal">
+      <div class="section-header">
+        <p class="section-eyebrow">Entre em Contato</p>
+        <h2 class="section-title">FALE COM A <span style="color:var(--red-hot)">GENTE</span></h2>
+        <div class="section-divider"><div class="divider-diamond"></div></div>
+      </div>
+
+      <div class="contacts-grid">
+
+        <!-- WhatsApp -->
+        <a
+          href="https://wa.me/5585996739891?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20orçamento."
+          target="_blank"
+          class="contact-card"
+          style="--color:#25D366;--shadow:#25D36633;--icon-bg:#25D36611;"
+        >
+          <div class="contact-icon-wrap">
+            <svg class="wpp-icon" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </div>
+          <p class="contact-label">WhatsApp</p>
+          <p class="contact-value">(85) 99673-9891</p>
+        </a>
+
+        <!-- Instagram -->
+        <a
+          href="https://instagram.com/neiltonmotos"
+          target="_blank"
+          class="contact-card"
+          style="--color:#E1306C;--shadow:#E1306C33;--icon-bg:#E1306C11;"
+        >
+          <div class="contact-icon-wrap">
+            <svg class="insta-icon" viewBox="0 0 24 24"><defs><linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FFDC80"/><stop offset="25%" stop-color="#FCAF45"/><stop offset="50%" stop-color="#F77737"/><stop offset="75%" stop-color="#C13584"/><stop offset="100%" stop-color="#833AB4"/></linearGradient></defs><path fill="url(#ig)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </div>
+          <p class="contact-label">Instagram</p>
+          <p class="contact-value">@neiltonmotos</p>
+        </a>
+
+        <!-- Google Maps -->
+        <a
+          href="https://maps.google.com/?q=Rua+Canguru,+281A,+Fortaleza,+CE"
+          target="_blank"
+          class="contact-card"
+          style="--color:#4285F4;--shadow:#4285F433;--icon-bg:#4285F411;"
+        >
+          <div class="contact-icon-wrap">
+            <svg class="maps-icon" viewBox="0 0 24 24"><path fill="#34A853" d="M12 11.5A2.5 2.5 0 0 1 9.5 9 2.5 2.5 0 0 1 12 6.5 2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7z"/><path fill="#4285F4" d="M12 2a7 7 0 0 0-7 7c0 1.874.727 3.575 1.9 4.85L12 22l5.1-8.15A6.965 6.965 0 0 0 19 9a7 7 0 0 0-7-7z" opacity=".4"/><path fill="#EA4335" d="M12 2a7 7 0 0 1 7 7c0 1.874-.727 3.575-1.9 4.85L12 6.5V2z" opacity=".8"/></svg>
+          </div>
+          <p class="contact-label">Endereço</p>
+          <p class="contact-value">Rua Canguru, 281A</p>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ===== POR QUE NÓS ===== -->
+    <section class="why-section reveal" id="por-que">
+      <div class="section-header">
+        <p class="section-eyebrow">Nossa Diferença</p>
+        <h2 class="section-title">POR QUE <span style="color:var(--red-hot)">NEILTON MOTOS</span>?</h2>
+        <div class="section-divider"><div class="divider-diamond"></div></div>
+      </div>
+
+      <div class="why-grid">
+
+        <div class="why-card">
+          <div class="why-num">01</div>
+          <span class="why-icon" style="color:#FF8800;">🏆</span>
+          <h3 class="why-title">Experiência Real</h3>
+          <p class="why-desc">Mais de uma década trabalhando com motos de todas as marcas e modelos. Conhecimento técnico adquirido na prática, não só no papel.</p>
+          <div class="why-bar"></div>
+        </div>
+
+        <div class="why-card">
+          <div class="why-num">02</div>
+          <span class="why-icon" style="color:#00CCFF;">🔬</span>
+          <h3 class="why-title">Diagnóstico Preciso</h3>
+          <p class="why-desc">Identificamos o problema na raiz, sem achismo. Diagnóstico honesto que poupa o seu tempo e o seu dinheiro.</p>
+          <div class="why-bar"></div>
+        </div>
+
+        <div class="why-card">
+          <div class="why-num">03</div>
+          <span class="why-icon" style="color:#00FF88;">🛡️</span>
+          <h3 class="why-title">Peças Garantidas</h3>
+          <p class="why-desc">Trabalhamos apenas com peças originais e de procedência comprovada. Garantia em todos os serviços realizados.</p>
+          <div class="why-bar"></div>
+        </div>
+
+        <div class="why-card">
+          <div class="why-num">04</div>
+          <span class="why-icon" style="color:#CC0000;">⚡</span>
+          <h3 class="why-title">Agilidade e Prazo</h3>
+          <p class="why-desc">Respeitamos o seu tempo. Prazo combinado é prazo cumprido. Sua moto de volta pronta para a estrada.</p>
+          <div class="why-bar"></div>
+        </div>
+
+        <div class="why-card">
+          <div class="why-num">05</div>
+          <span class="why-icon" style="color:#FFB800;">💎</span>
+          <h3 class="why-title">Transparência Total</h3>
+          <p class="why-desc">Orçamento claro e sem surpresas. Você sabe exatamente o que será feito antes de qualquer serviço iniciar.</p>
+          <div class="why-bar"></div>
+        </div>
+
+        <div class="why-card">
+          <div class="why-num">06</div>
+          <span class="why-icon" style="color:#AA44FF;">🤝</span>
+          <h3 class="why-title">Atendimento Humano</h3>
+          <p class="why-desc">Tratamos cada cliente como parceiro. Relacionamento de longo prazo baseado em confiança e resultados reais.</p>
+          <div class="why-bar"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== AVALIAÇÕES ===== -->
+    <section class="reviews-section reveal">
+      <div class="section-header">
+        <p class="section-eyebrow">O que dizem</p>
+        <h2 class="section-title">AVALIAÇÕES DOS <span style="color:var(--red-hot)">CLIENTES</span></h2>
+        <div class="section-divider"><div class="divider-diamond"></div></div>
+      </div>
+
+      <div class="reviews-grid">
+
+        <div class="review-card">
+          <div class="review-quote">"</div>
+          <p class="review-text">Levei minha Fazer 250 com um barulho estranho no motor. O Neilton identificou o problema rapidinho e resolveu no mesmo dia. Melhor mecânico da região, sem dúvida!</p>
+          <div class="review-footer">
+            <div class="review-avatar">RB</div>
+            <div class="review-info">
+              <div class="review-name">Ricardo Barbosa</div>
+              <div class="review-stars">★★★★★</div>
+              <div class="review-date">MARÇO 2025</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-quote">"</div>
+          <p class="review-text">Serviço de qualidade e preço justo. Fiz a revisão completa da minha moto e fiquei impressionado com o profissionalismo. Já indiquei para vários amigos!</p>
+          <div class="review-footer">
+            <div class="review-avatar">ML</div>
+            <div class="review-info">
+              <div class="review-name">Marcos Lima</div>
+              <div class="review-stars">★★★★★</div>
+              <div class="review-date">JANEIRO 2025</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-quote">"</div>
+          <p class="review-text">Precisei fazer o motor da minha CB 300 do zero. A Neilton Motos entregou no prazo, com garantia e o serviço ficou impecável. Muito satisfeita!</p>
+          <div class="review-footer">
+            <div class="review-avatar">CS</div>
+            <div class="review-info">
+              <div class="review-name">Carla Santos</div>
+              <div class="review-stars">★★★★★</div>
+              <div class="review-date">DEZEMBRO 2024</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-quote">"</div>
+          <p class="review-text">Atendimento excelente desde o primeiro contato. Transparente no orçamento, sem enrolação. Voltarei com certeza. Recomendo de olhos fechados!</p>
+          <div class="review-footer">
+            <div class="review-avatar">FM</div>
+            <div class="review-info">
+              <div class="review-name">Felipe Moreira</div>
+              <div class="review-stars">★★★★★</div>
+              <div class="review-date">NOVEMBRO 2024</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <div class="review-quote">"</div>
+          <p class="review-text">Minha Honda Biz tava com problema na transmissão. Resolvi em menos de 2 horas! Lugar limpo, organizado e com pessoal super atencioso. 5 estrelas merecidas!</p>
+          <div class="review-footer">
+            <div class="review-avatar">AO</div>
+            <div class="review-info">
+              <div class="review-name">Anderson Oliveira</div>
+              <div class="review-stars">★★★★★</div>
+              <div class="review-date">OUTUBRO 2024</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+      <div class="footer-logo">NEILTON MOTOS</div>
+      <div class="footer-tag">Mecânica Especializada · Fortaleza – CE</div>
+      <div class="footer-copy">© 2025 Neilton Motos · Rua Canguru, 281A · (85) 99673-9891</div>
+    </footer>
+
+  </main><!-- /main -->
+</div><!-- /layout -->
+
+<script>
+
+
+
+
+
+
+
+
+
+
+
+/* ================================================
+   HORARIO — altere OPEN para false para fechar
+================================================ */
+const OPEN = true; // true = aberto | false = fechado manualmente
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================================================
+   STATUS DE HORÁRIO
+================================================ */
+function updateStatus() {
+  const now        = new Date();
+  const day        = now.getDay();   // 0=Dom, 1=Seg, ..., 6=Sab
+  const hour       = now.getHours();
+  const min        = now.getMinutes();
+  const totalMins  = hour * 60 + min;
+
+  let isOpen = false;
+
+  if (OPEN) {
+    if (day >= 1 && day <= 5) {
+      // Seg-Sex: 08:00 – 18:00
+      isOpen = totalMins >= 480 && totalMins < 1080; //HORARIO DA SEMANA
+
+      
+    } else if (day === 6) {
+      // Sáb: 08:00 – 13:00
+      isOpen = totalMins >= 480 && totalMins < 1080; //HORARIO DO SABADO
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // Sidebar status
+  const dot  = document.getElementById('statusDot');
+  const txt  = document.getElementById('statusText');
+  const banner  = document.getElementById('statusBanner');
+  const bannerTxt = document.getElementById('statusBannerText');
+  const hourNote  = document.getElementById('hourNote');
+
+  if (isOpen) {
+    dot.className = 'status-dot';
+    txt.textContent = 'ABERTO AGORA';
+    banner.className = 'status-banner open';
+    bannerTxt.textContent = 'ESTAMOS ABERTOS AGORA';
+    hourNote.textContent = 'Atendimento até as 18:00';
+  } else {
+    dot.className = 'status-dot closed';
+    txt.textContent = 'FECHADO';
+    banner.className = 'status-banner closed';
+    bannerTxt.textContent = 'NO MOMENTO ESTAMOS FECHADOS';
+    if (!OPEN) {
+      hourNote.textContent = 'Voltamos em breve!';
+    } else if (day === 0) {
+      hourNote.textContent = 'Retornamos segunda-feira às 08:00';
+    } else if (day === 6 && totalMins >= 780) {
+      hourNote.textContent = 'Retornamos segunda-feira às 08:00';
+    } else {
+      hourNote.textContent = 'Abrimos hoje às 08:00';
+    }
+  }
+}
+
+updateStatus();
+setInterval(updateStatus, 60000);
+
+/* ================================================
+   MOBILE SIDEBAR
+================================================ */
+const toggle   = document.getElementById('sidebarToggle');
+const sidebar  = document.getElementById('sidebar');
+const overlay  = document.getElementById('sidebarOverlay');
+
+toggle.addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('visible');
+});
+
+overlay.addEventListener('click', () => {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('visible');
+});
+
+/* ================================================
+   SCROLL REVEAL
+================================================ */
+const reveals = document.querySelectorAll('.reveal');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+
+reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
