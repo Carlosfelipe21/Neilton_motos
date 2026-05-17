@@ -1535,7 +1535,7 @@ body.store-closed .closed-hero-banner { display: block; }
     <section class="hero">
       <!-- Banner fechado no topo da hero -->
       <div class="closed-hero-banner" id="closedHeroBanner">
-        🔒 &nbsp; LOJA FECHADA — RETORNAREMOS EM BREVE · HORÁRIO: SEG-SÁB 08:00–18:00 &nbsp; 🔒
+        🔒 &nbsp; LOJA FECHADA — RETORNAREMOS EM BREVE · HORÁRIO: SEG-SÁB 08:00–18:00 & DOM 08:00–12:00 &nbsp; 🔒
       </div>
 
       <div class="hero-bg"></div>
@@ -1595,17 +1595,36 @@ body.store-closed .closed-hero-banner { display: block; }
         <div class="section-divider"><div class="divider-diamond"></div></div>
       </div>
 
-      <div class="hours-card">
+
+
+
+
+
+
+
+
+
+
+
+
+      <div class="hours-card"> 
         <div class="hours-grid">
-          <div class="hours-day">Segunda à Sexta</div>
-          <div class="hours-time">08:00 – 18:00</div>
-          <div class="hours-separator"></div>
-          <div class="hours-day">Sábado</div>
+          <div class="hours-day">Segunda à Sábado</div>
           <div class="hours-time">08:00 – 18:00</div>
           <div class="hours-separator"></div>
           <div class="hours-day">Domingo</div>
-          <div class="hours-time" style="color:var(--chrome-dim)">Fechado</div>
+          <div class="hours-time">08:00 – 12:00</div>
         </div>
+
+
+
+
+
+
+
+
+
+
 
         <div class="status-banner" id="statusBanner">
           <div class="status-left">
@@ -1767,23 +1786,57 @@ function showLockToast(msg) {
   toastTimer = setTimeout(() => toast.classList.remove('visible'), 3000);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ================================================
    LÓGICA DE ABERTO / FECHADO
 ================================================ */
 function checkIsOpen() {
   const now = new Date();
-  const day = now.getDay();       // 0=Dom, 1=Seg … 6=Sáb
+  const day = now.getDay(); // 0=Dom, 1=Seg … 6=Sáb
   const total = now.getHours() * 60 + now.getMinutes();
+
   if (!OPEN) return false;
-  if (day === 0) return false;    // Domingo sempre fechado
-  return total >= 480 && total < 1080; // 08:00–18:00
+
+  // Domingo → 08:00 às 12:00
+  if (day === 0) {
+    return total >= 480 && total < 720;
+  }
+
+  // Segunda a sábado → 08:00 às 18:00
+  return total >= 480 && total < 1080;
 }
+
+
+
+
+
 
 /* ================================================
    APLICAR ESTADO FECHADO
 ================================================ */
 function applyClosedState() {
   document.body.classList.add('store-closed');
+
+
+
+
+
+
+
+
+
 
   /* ---- Botões hero ---- */
   const heroBtnWpp = document.getElementById('heroBtnWpp');
@@ -1824,6 +1877,19 @@ function applyClosedState() {
     card.addEventListener('click', e => { e.preventDefault(); showLockToast(toastMsgs[i]); });
   });
 
+
+
+
+
+
+
+
+
+
+
+
+
+/*ATIVAR BLOQUEIO DOS BOTÔES
   /* ---- Botões da sidebar ---- */
   const navIds = ['navOleos', 'navPecasMaiores', 'navPecasMenores'];
   navIds.forEach(id => {
@@ -1845,6 +1911,17 @@ function applyClosedState() {
     });
   });
 }
+
+
+
+
+
+
+
+
+
+
+
 
 /* ================================================
    APLICAR ESTADO ABERTO (padrão)
