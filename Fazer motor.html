@@ -867,6 +867,19 @@
     .pay-opt { min-width: unset; }
     .reserva-banner-inner { flex-direction: column; gap: 10px; }
   }
+
+  /* Datas bloqueadas */
+  .data-bloqueada-msg {
+    margin-top: 10px;
+    padding: 12px 14px;
+    border: 1px solid rgba(232,0,13,.35);
+    background: rgba(232,0,13,.08);
+    color: #ff8087;
+    font-size: 12px;
+    line-height: 1.5;
+    display: none;
+  }
+
 </style>
 </head>
 <body>
@@ -1342,6 +1355,9 @@
       <div class="form-group">
         <label for="data">Data Desejada</label>
         <input type="date" id="data">
+        <div class="data-bloqueada-msg" id="domingoMsg">
+          ⚠️ Domingos estão indisponíveis para agendamento. Escolha outro dia.
+        </div>
       </div>
       <div class="form-group">
         <label for="horario">Horário</label>
@@ -1610,5 +1626,49 @@ Aguardo confirmação e instruções de pagamento da reserva! 🤝`;
   // Esconde fallback inicialmente se não há seleção
   document.getElementById('btn-fallback').style.display = 'block';
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const dataInput = document.getElementById('data');
+  const domingoMsg = document.getElementById('domingoMsg');
+
+  if (!dataInput) return;
+
+  // Impede datas passadas
+  const hoje = new Date();
+  hoje.setHours(0,0,0,0);
+  dataInput.min = hoje.toISOString().split('T')[0];
+
+  function validarData() {
+    if (!dataInput.value) {
+      domingoMsg.style.display = 'none';
+      return;
+    }
+
+    const partes = dataInput.value.split('-');
+    const dataSelecionada = new Date(
+      parseInt(partes[0]),
+      parseInt(partes[1]) - 1,
+      parseInt(partes[2])
+    );
+
+    const diaSemana = dataSelecionada.getDay();
+
+    // Domingo = 0
+    if (diaSemana === 0) {
+      domingoMsg.style.display = 'block';
+      dataInput.value = '';
+      setTimeout(() => {
+        alert('Domingos estão bloqueados para agendamento.');
+      }, 100);
+    } else {
+      domingoMsg.style.display = 'none';
+    }
+  }
+
+  dataInput.addEventListener('change', validarData);
+});
+</script>
+
 </body>
 </html>
