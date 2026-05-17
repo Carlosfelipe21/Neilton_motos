@@ -1505,22 +1505,56 @@ function populateMonths() {
 function populateDays() {
   const monthSel = document.getElementById('schedMonth');
   const daySel   = document.getElementById('schedDay');
+
   daySel.innerHTML = '<option value="">Selecione o dia...</option>';
+
   if (!monthSel.value) return;
+
   const [year, monthIdx] = monthSel.value.split('-').map(Number);
+
   const totalDays = getDaysInMonth(monthIdx + 1, year);
+
   const now = getNow();
-  const isCurrentMonth = (year === now.getFullYear() && monthIdx === now.getMonth());
+
+  const isCurrentMonth =
+    (year === now.getFullYear() && monthIdx === now.getMonth());
+
   const minDay = isCurrentMonth ? now.getDate() : 1;
+
   for (let d = 1; d <= totalDays; d++) {
+
+    const date = new Date(year, monthIdx, d);
+    const weekDay = date.getDay(); // 0 = Domingo
+
     const opt = document.createElement('option');
+
     opt.value = d;
-    opt.textContent = d;
-    if (d < minDay) { opt.disabled = true; opt.textContent = `${d} (passado)`; }
+
+    // DOMINGO BLOQUEADO
+    if (weekDay === 0) {
+      opt.disabled = true;
+      opt.textContent = `${d} • DOMINGO FECHADO`;
+    }
+
+    // DIA PASSADO
+    else if (d < minDay) {
+      opt.disabled = true;
+      opt.textContent = `${d} (passado)`;
+    }
+
+    // DIAS NORMAIS
+    else {
+      opt.textContent = d;
+    }
+
     daySel.appendChild(opt);
   }
-  const firstAvail = daySel.querySelector('option:not([disabled]):not([value=""])');
+
+  const firstAvail =
+    daySel.querySelector('option:not([disabled]):not([value=""])');
+
   if (firstAvail) firstAvail.selected = true;
+
   updateTimeSlots();
   updateSummary();
 }
